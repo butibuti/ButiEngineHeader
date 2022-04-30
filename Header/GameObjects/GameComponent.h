@@ -27,9 +27,6 @@ public:
 	virtual void OnShowUI() {}
 	virtual void OnSet();
 	virtual void OnRemove();
-	virtual void OnCollision(Value_weak_ptr<GameObject> arg_other) {}
-	virtual void OnCollisionEnter(Value_weak_ptr<GameObject> arg_other) {}
-	virtual void OnCollisionEnd(Value_weak_ptr<GameObject> arg_other) {}
 	virtual std::string GetGameComponentName()const = 0;
 	virtual Value_ptr<GameComponent> Clone() = 0;
 	/// <summary>

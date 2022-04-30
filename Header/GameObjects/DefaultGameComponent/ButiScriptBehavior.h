@@ -48,9 +48,6 @@ public:
 	bool CheckByName(const std::string& arg_name)const override {
 		return scriptTag.GetID() == arg_name;
 	}
-	void OnCollision(Value_weak_ptr<GameObject> arg_other)override;
-	void OnCollisionEnter(Value_weak_ptr<GameObject> arg_other)override;
-	void OnCollisionEnd(Value_weak_ptr<GameObject> arg_other) override;
 private:
 
 	std::vector<std::pair< Value_ptr<IValuePtrRestoreObject>,std::int32_t>> vec_pair_saveObject_typeIndex;

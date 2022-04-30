@@ -143,9 +143,9 @@ public:
 
 	void OnBeforeStepSimulation_Deprecated() override;
 	void OnAfterStepSimulation() override;
-	void OnCollisionEnter(ButiBullet::PhysicsObject* otherObject, ButiBullet::ContactPoint* contact)override;
-	void OnCollisionLeave(ButiBullet::PhysicsObject* otherObject, ButiBullet::ContactPoint* contact)override;
-	void OnCollisionStay(ButiBullet::PhysicsObject* otherObject, ButiBullet::ContactPoint* contact) override;
+	void OnCollisionEnter(ButiBullet::PhysicsObject* arg_p_otherObject, ButiBullet::ContactPoint* arg_p_contact)override;
+	void OnCollisionLeave(ButiBullet::PhysicsObject* arg_p_otherObject, ButiBullet::ContactPoint* arg_p_contact)override;
+	void OnCollisionStay(ButiBullet::PhysicsObject* arg_p_otherObject, ButiBullet::ContactPoint* arg_p_contact) override;
 
 	void OnShowUI()override;
 
@@ -160,7 +160,7 @@ public:
 	void SetAngularDamping(const float arg_angularDamping); 
 	void SetGroup(std::int32_t arg_group);
 	void SetGroupMask(std::int32_t arg_groupMask);
-	
+	void TransformApply();
 	Value_ptr<ButiBullet::IRigidBody> GetRigidBody()const;
 
 	template<class Archive>

@@ -1,10 +1,17 @@
 #pragma once
 #include<memory>
 #include<vector>
-
-
+#include<functional>
 namespace ButiEngine {
 class GameObject;
+}
+namespace ButiBullet {
+class PhysicsObject;
+class ContactPoint;
+struct ContactData;
+}
+
+namespace ButiEngine {
 using GameObjectTag = ID<GameObject>;
 class GameComponent;
 class GameObjectManager;
@@ -41,16 +48,17 @@ public:
 
 	virtual void OnUpdate();
 
-	virtual void Hit(Value_ptr<GameObject> vlp_other);
+	void Hit(Value_ptr<GameObject> arg_vlp_other);
+
+	void HitStay(ButiBullet::ContactData& arg_contact);
+	void HitEnter(ButiBullet::ContactData& arg_contact);
+	void HitLeave(ButiBullet::ContactData& arg_contact);
 
 	virtual void Release();
 
 	virtual void Initialize();
 
 	virtual void PreInitialize();
-
-	void RegistReactionComponent(Value_ptr<GameComponent> arg_vlp_gameComponent);
-
 	Value_ptr<GameComponent> AddGameComponent(Value_ptr<GameComponent> arg_vlp_gameComponent);
 
 	template<class T, typename... Ts>
@@ -134,6 +142,9 @@ public:
 	inline std::int32_t HasGameObjectTag(const std::string& arg_tagName)const {
 		return HasGameObjectTag(GameObjectTag(arg_tagName));
 	}
+	void AddCollisionStayReaction(std::function< void(ButiBullet::ContactData&)>  arg_reactionFunc);
+	void AddCollisionEnterReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
+	void AddCollisionLeaveReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
 
 	Value_weak_ptr<GameObjectManager> GetGameObjectManager();
 	Value_weak_ptr<IApplication> GetApplication();
@@ -170,18 +181,15 @@ protected:
 	bool isRemove = false;
 
 	std::vector< Value_ptr<GameComponent>>  vec_gameComponents;
-	std::vector< Value_ptr<GameComponent>>  vec_collisionReactionComponents;
 	std::vector<Value_ptr<GameComponent>> vec_newGameComponent;
 
 	std::string objectName;
 
 	Value_weak_ptr<GameObjectManager> vwp_gameObjManager;
-
-	std::vector<Value_ptr<GameObject>> vec_collisionObject;
-	std::vector<Value_ptr<GameObject>> vec_befCollisionObject;
-
 	std::unordered_map<GameObjectTag, std::uint32_t> map_gameObjectTags;
-
+	List<std::function< void(ButiBullet::ContactData&)> > list_collisionStayReaction;
+	List<std::function< void(ButiBullet::ContactData&)> > list_collisionEnterReaction;
+	List<std::function< void(ButiBullet::ContactData&)> > list_collisionLeaveReaction;
 };
 
 
