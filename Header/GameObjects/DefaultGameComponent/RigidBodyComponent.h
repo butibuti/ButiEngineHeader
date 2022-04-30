@@ -39,12 +39,13 @@ public:
 	public:
 		virtual Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const=0;
 		virtual bool ShowGUI() = 0;
+		virtual Value_ptr<ShapeParam> Clone()const =0;
 	};
 	class SphereShapeParam :public ShapeParam {
 	public:
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
 		bool ShowGUI();
-
+		Value_ptr<ShapeParam> Clone()const override;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
@@ -57,6 +58,7 @@ public:
 	public:
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
 		bool ShowGUI();
+		Value_ptr<ShapeParam> Clone()const override;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
@@ -70,6 +72,7 @@ public:
 	public:
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
 		bool ShowGUI();
+		Value_ptr<ShapeParam> Clone()const override;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
@@ -82,6 +85,7 @@ public:
 	public:
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
 		bool ShowGUI();
+		Value_ptr<ShapeParam> Clone()const override;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
@@ -94,6 +98,7 @@ public:
 	public:
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
 		bool ShowGUI();
+		Value_ptr<ShapeParam> Clone()const override;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
@@ -108,6 +113,7 @@ public:
 	public:
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
 		bool ShowGUI();
+		Value_ptr<ShapeParam> Clone()const override;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
@@ -122,6 +128,7 @@ public:
 	public:
 		MeshShapeParam()  {}
 		Value_ptr<ButiBullet::CollisionShape> CreateShape(Value_ptr<GameObject> arg_ownerObject)const;
+		Value_ptr<ShapeParam> Clone()const override;
 		bool ShowGUI();
 		template<class Archive>
 		void serialize(Archive& archive)
