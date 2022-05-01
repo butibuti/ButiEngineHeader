@@ -18,13 +18,13 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(meshTag);
-			archive(shaderTag);
-			archive(modelTag);
-			archive(materialTag);
+			archive(m_meshTag);
+			archive(m_shaderTag);
+			archive(m_modelTag);
+			archive(m_materialTag);
 			archive(isActive);
-			archive(vlp_transform);
-			archive(vlp_drawInfo);
+			archive(m_vlp_transform);
+			archive(m_vlp_drawInfo);
 			archive(vlp_meshDrawComponent);
 		}
 		void Regist()override;

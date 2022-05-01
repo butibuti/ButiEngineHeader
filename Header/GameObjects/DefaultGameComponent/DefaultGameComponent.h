@@ -32,19 +32,17 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(cameraName);
+		archive(m_cameraName);
 	}
 	Value_ptr<GameComponent> Clone()override {
 		return ObjectFactory::Create<CameraMan>();
 	}
 	void OnShowUI()override;
 private:
-	float vertQuake;
-	static float vertQuakeMax;
-	float horizonQuake;
-	static float horizonQuakeMax;
-	Value_ptr<Transform> child;
-	std::string cameraName = "main";
+	float m_vertQuake;
+	float m_horizonQuake;
+	Value_ptr<Transform> m_child;
+	std::string m_cameraName = "main";
 };
 namespace Collision {
 enum class CollisionPrimType {
@@ -73,13 +71,13 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_collisionPrim);
-		archive(layerNum);
+		archive(m_vlp_collisionPrim);
+		archive(m_layerNum);
 		archive(isActive);
 	}
 private:
-	std::uint32_t layerNum = 0;
-	Value_ptr<CollisionPrimitive> vlp_collisionPrim;
+	std::uint32_t m_layerNum = 0;
+	Value_ptr<CollisionPrimitive> m_vlp_collisionPrim;
 };
 }
 
@@ -94,10 +92,10 @@ public:
 	Value_ptr<Transform> GetInitTransform();
 	Value_ptr<Transform> GetTargetTransform();
 	virtual void SetInitTransform(Value_ptr<Transform> arg_vlp_InitTransform);
-	void SetEaseType(const Easing::EasingType type);
+	void SetEaseType(const Easing::EasingType arg_type);
 	void SetSpeed(const float arg_speed);
 	void SetTime(const float arg_time);
-	void SetReverse(const bool isReverse);
+	void SetReverse(const bool arg_isReverse);
 	Value_ptr<GameComponent> Clone()override;
 
 	virtual void _cdecl SetTargetTransform(Value_ptr<Transform> arg_vlp_targetTransform);
@@ -105,26 +103,26 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(speed);
-		archive(t);
-		archive(vlp_targetTransform);
-		archive(vlp_initTransform);
-		archive(easeType);
-		archive(isReverse);
+		archive(m_speed);
+		archive(m_t);
+		archive(m_vlp_targetTransform);
+		archive(m_vlp_initTransform);
+		archive(m_easeType);
+		archive(m_isReverse);
 	}
 	void OnShowUI()override;
 	virtual void PositionSet();
 	void OnSet()override;
 protected:
-	std::int32_t direction = 1;
-	float t = 0;
-	Value_ptr<Transform> vlp_targetTransform;
-	Quat initRotate;
-	Quat targetRotate;
-	Value_ptr<Transform> vlp_initTransform;
-	float speed = 0.002f;
-	Easing::EasingType easeType = Easing::EasingType::EaseIn;
-	bool isReverse = false;
+	std::int32_t m_direction = 1;
+	float m_t = 0;
+	Value_ptr<Transform> m_vlp_targetTransform;
+	Quat m_initRotate;
+	Quat m_targetRotate;
+	Value_ptr<Transform> m_vlp_initTransform;
+	float m_speed = 0.002f;
+	Easing::EasingType m_easeType = Easing::EasingType::EaseIn;
+	bool m_isReverse = false;
 };
 class UIAnimation :public TransformAnimation
 {
@@ -142,15 +140,15 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(speed);
-		archive(t);
-		archive(vlp_targetTransform);
-		archive(vlp_initTransform);
-		archive(easeType);
-		archive(isReverse);
+		archive(m_speed);
+		archive(m_t);
+		archive(m_vlp_targetTransform);
+		archive(m_vlp_initTransform);
+		archive(m_easeType);
+		archive(m_isReverse);
 	}
 protected:
-	Vector2 size;
+	Vector2 m_size;
 };
 class CubeTransformAnimation :public TransformAnimation
 {
@@ -166,22 +164,22 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(speed);
-		archive(t);
-		archive(vlp_targetTransform);
-		archive(vlp_initTransform);
-		archive(easeType);
-		archive(xEaseType);
-		archive(yEaseType);
-		archive(zEaseType);
-		archive(isReverse);
+		archive(m_speed);
+		archive(m_t);
+		archive(m_vlp_targetTransform);
+		archive(m_vlp_initTransform);
+		archive(m_easeType);
+		archive(m_xEaseType);
+		archive(m_yEaseType);
+		archive(m_zEaseType);
+		archive(m_isReverse);
 	}
 	void OnShowUI()override;
 	void PositionSet()override;
 protected:
-	Easing::EasingType xEaseType = Easing::EasingType::none;
-	Easing::EasingType yEaseType = Easing::EasingType::none;
-	Easing::EasingType zEaseType = Easing::EasingType::none;
+	Easing::EasingType m_xEaseType = Easing::EasingType::none;
+	Easing::EasingType m_yEaseType = Easing::EasingType::none;
+	Easing::EasingType m_zEaseType = Easing::EasingType::none;
 };
 
 class FPSViewBehavior :public GameComponent
@@ -200,7 +198,7 @@ public:
 		archive(isActive);
 	}
 private:
-	bool isCenter = true;
+	bool m_isCenter = true;
 };
 class ChaseComponent :public GameComponent
 {
@@ -219,14 +217,14 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_target);
-		archive(speed);
+		archive(m_vlp_target);
+		archive(m_speed);
 		archive(isActive);
 	}
 
 private:
-	Value_ptr<Transform> vlp_target;
-	float speed;
+	Value_ptr<Transform> m_vlp_target;
+	float m_speed;
 };
 class IKComponent :public GameComponent
 {
@@ -248,16 +246,16 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(vec_ikData);
+		archive(m_vec_ikData);
 	}
 
 
 protected:
 	void RegistIK();
 private:
-	Value_ptr<ButiRendering::IModelObject> vlp_modelData;
-	std::vector<Value_ptr<ButiRendering::Bone>> vec_endBones;
-	std::vector<Value_ptr<ButiRendering::IKData>> vec_ikData;
+	Value_ptr<ButiRendering::IModelObject> m_vlp_modelData;
+	std::vector<Value_ptr<ButiRendering::Bone>> m_vec_endBones;
+	std::vector<Value_ptr<ButiRendering::IKData>> m_vec_ikData;
 };
 
 
@@ -302,18 +300,22 @@ public:
 	void AddParticle(const Particle3D& arg_particle);
 	Value_ptr<GameComponent> Clone()override;
 	void OnRemove()override;
+	List<Particle3D>& GetParticles();
+	const List<Particle3D>& GetParticles()const;
+	void OnShowUI()override;
+	void CreateParticleBuffer();
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(meshTag);
+		archive(m_meshTag);
 	}
 private:
-	std::vector<Particle3D> vec_particleInfo;
-	MeshTag meshTag;
-	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> vlp_backUp;
-	Value_ptr<ButiRendering::Resource_RealTimeMesh> vlp_mesh;
-	std::int32_t addParticleCount = 0;
+	List<Particle3D> m_list_particleInfo;
+	MeshTag m_meshTag;
+	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
+	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
+	std::int32_t m_addParticleCount = 0;
 };
 class LookAtComponent :public GameComponent
 {
@@ -331,12 +333,12 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_lookTarget);
+		archive(m_vlp_lookTarget);
 		archive(isActive);
 	}
 	void OnShowUI();
 private:
-	Value_ptr<Transform> vlp_lookTarget;
+	Value_ptr<Transform> m_vlp_lookTarget;
 };
 class PostEffectParamUpdater :public GameComponent
 {
@@ -354,12 +356,12 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(pase);
+		archive(m_pase);
 		archive(isActive);
 	}
 private:
-	Vector4 pase;
-	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> vlp_param;
+	Vector4 m_pase;
+	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> m_vlp_param;
 };
 class SplineCurveMover :public GameComponent
 {
@@ -373,9 +375,9 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(speed);
-		archive(t);
-		archive(splineCurve);
+		archive(m_speed);
+		archive(m_t);
+		archive(m_splineCurve);
 	}
 	void OnShowUI()override;
 	void PositionSet();
@@ -383,9 +385,9 @@ public:
 	void SetSpeed(const float spped);
 private:
 
-	SplineCurve splineCurve;
-	float t = 0;
-	float speed = 0.0025f;;
+	SplineCurve m_splineCurve;
+	float m_t = 0;
+	float m_speed = 0.0025f;;
 };
 class SucideComponent :public GameComponent
 {
@@ -401,13 +403,13 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(count);
-		archive(vlp_timer);
+		archive(m_count);
+		archive(m_vlp_timer);
 		archive(isActive);
 	}
 private:
-	Value_ptr<RelativeTimer> vlp_timer;
-	float count;
+	Value_ptr<RelativeTimer> m_vlp_timer;
+	float m_count;
 };
 class UIComponent :public GameComponent
 {
@@ -420,8 +422,8 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(relativePos);
-		archive(relativeScale);
+		archive(m_relativePos);
+		archive(m_relativeScale);
 	}
 	void OnShowUI()override;
 	void OnUpdate()override {}
@@ -431,8 +433,8 @@ public:
 	void SetScalse(const Vector2& arg_relativeScale);
 protected:
 	void SetRelativeTransform();
-	Vector2 relativePos;
-	Vector2 relativeScale = Vector2(1, 1);
+	Vector2 m_relativePos;
+	Vector2 m_relativeScale = Vector2(1, 1);
 };
 
 class MeshDrawComponent :public GameComponent
@@ -470,31 +472,31 @@ public:
 	Value_ptr<ButiRendering::CBuffer< T>> CreateCBuffer(const std::string& arg_cBufferName, const std::uint32_t arg_slot, Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice);
 	template <class T>
 	Value_ptr<ButiRendering::CBuffer<T>> GetCBuffer(const std::string& arg_cBufferName) {
-		return data->GetDrawData().GetCBuffer<T>(arg_cBufferName);
+		return m_data->GetDrawData().GetCBuffer<T>(arg_cBufferName);
 	}
 
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(meshTag);
-		archive(shaderTag);
-		archive(modelTag);
-		archive(materialTag);
+		archive(m_meshTag);
+		archive(m_shaderTag);
+		archive(m_modelTag);
+		archive(m_materialTag);
 		archive(isActive);
-		archive(vlp_transform);
-		archive(vlp_drawInfo);
+		archive(m_vlp_transform);
+		archive(m_vlp_drawInfo);
 	}
 protected:
 	void ShowDrawSettingsUI(Value_ptr< ButiRendering::DrawInformation >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
 	void ShowExCBufferUI(Value_ptr<ButiRendering::DrawInformation >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
-	Value_ptr< ButiRendering::DrawObject > data;
+	Value_ptr< ButiRendering::DrawObject > m_data;
 	virtual void CreateData();
-	MeshTag meshTag;
-	ShaderTag shaderTag;
-	ModelTag modelTag;
-	Value_ptr<Transform> vlp_transform;
-	Value_ptr< ButiRendering::DrawInformation >vlp_drawInfo = nullptr;
-	std::vector<MaterialTag> materialTag;
+	MeshTag m_meshTag;
+	ShaderTag m_shaderTag;
+	ModelTag m_modelTag;
+	Value_ptr<Transform> m_vlp_transform;
+	Value_ptr< ButiRendering::DrawInformation >m_vlp_drawInfo = nullptr;
+	std::vector<MaterialTag> m_materialTag;
 
 	bool isCereal = true;
 };
@@ -514,13 +516,13 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(meshTag);
-		archive(shaderTag);
-		archive(modelTag);
-		archive(materialTag);
+		archive(m_meshTag);
+		archive(m_shaderTag);
+		archive(m_modelTag);
+		archive(m_materialTag);
 		archive(isActive);
-		archive(vlp_transform);
-		archive(vlp_drawInfo);
+		archive(m_vlp_transform);
+		archive(m_vlp_drawInfo);
 	}
 protected:
 };
@@ -536,24 +538,24 @@ public:
 	Value_ptr<GameComponent> Clone()override;
 	void OnShowUI()override;
 	const std::string& GetText()const {
-		return text;
+		return m_text;
 	}
 	void OnRemove()override;
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(fontTag);
-		archive(text);
-		archive(shaderTag);
-		archive(modelTag);
-		archive(materialTag);
+		archive(m_fontTag);
+		archive(m_text);
+		archive(m_shaderTag);
+		archive(m_modelTag);
+		archive(m_materialTag);
 		archive(isActive);
-		archive(vlp_transform);
-		archive(vlp_drawInfo);
-		archive(map_size);
-		archive(map_color);
-		archive(textMeshSize);
-		archive(just);
+		archive(m_vlp_transform);
+		archive(m_vlp_drawInfo);
+		archive(m_map_size);
+		archive(m_map_color);
+		archive(m_textMeshSize);
+		archive(m_just);
 	}
 	void SetText(const std::string& arg_text);
 	void SetText(const std::string& arg_text,const Vector4& arg_color);
@@ -570,13 +572,13 @@ public:
 
 	void CreateTextMesh();
 protected:
-	FontTag fontTag;
-	std::map< std::int32_t, float > map_size;
-	std::map< std::int32_t, Vector4> map_color;
-	std::string text;
-	std::int32_t textMeshSize = 256;
-	TextJustified just=TextJustified::left;
-	Value_ptr<ButiRendering::Resource_RealTimeMesh> vlp_mesh;
+	FontTag m_fontTag;
+	std::map< std::int32_t, float > m_map_size;
+	std::map< std::int32_t, Vector4> m_map_color;
+	std::string m_text;
+	std::int32_t m_textMeshSize = 256;
+	TextJustified m_just=TextJustified::left;
+	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
 };
 
 

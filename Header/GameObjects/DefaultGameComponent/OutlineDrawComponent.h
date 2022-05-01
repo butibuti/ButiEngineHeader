@@ -18,16 +18,16 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(meshTag);
-			archive(shaderTag);
-			archive(modelTag);
+			archive(m_meshTag);
+			archive(m_shaderTag);
+			archive(m_modelTag);
 			archive(outlineMeshTag);
 			archive(outlineShaderTag);
 			archive(outlineModelTag);
-			archive(materialTag);
+			archive(m_materialTag);
 			archive(isActive);
-			archive(vlp_transform);
-			archive(vlp_drawInfo);
+			archive(m_vlp_transform);
+			archive(m_vlp_drawInfo);
 			archive(vlp_outlineDrawInfo);
 		}
 
@@ -55,16 +55,16 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(meshTag);
-			archive(shaderTag);
-			archive(modelTag);
+			archive(m_meshTag);
+			archive(m_shaderTag);
+			archive(m_modelTag);
 			archive(outlineMeshTag);
 			archive(outlineShaderTag);
 			archive(outlineModelTag);
-			archive(materialTag);
+			archive(m_materialTag);
 			archive(isActive);
-			archive(vlp_transform);
-			archive(vlp_drawInfo);
+			archive(m_vlp_transform);
+			archive(m_vlp_drawInfo);
 			archive(vlp_outlineDrawInfo);
 		}
 
