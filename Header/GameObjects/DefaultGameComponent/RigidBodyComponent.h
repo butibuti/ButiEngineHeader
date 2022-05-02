@@ -156,7 +156,7 @@ public:
 
 	void OnShowUI()override;
 
-	const RigidBodyParameter& GetRigidBodyParameter()const { return param; }
+	const RigidBodyParameter& GetRigidBodyParameter()const { return m_param; }
 
 	void SetIsKinematics(const bool arg_isKinematics);
 	void SetIsAdditionalDamping(const bool arg_isAdditionalDamping);
@@ -174,9 +174,9 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(param);
-		archive(vlp_shapeParam);
-		archive(isAffectedForGravity);
+		archive(m_param);
+		archive(m_vlp_shapeParam);
+		archive(m_isAffectedForGravity);
 	}
 
 
@@ -187,10 +187,10 @@ private:
 		ReleaseRigidBody();
 		CreateRigidBody();
 	}
-	Value_ptr<ButiBullet::RigidBody> vlp_rigidBody;
-	Value_ptr<ShapeParam> vlp_shapeParam;
-	RigidBodyParameter param;
-	bool isAffectedForGravity=true;
+	Value_ptr<ButiBullet::RigidBody> m_vlp_rigidBody;
+	Value_ptr<ShapeParam> m_vlp_shapeParam;
+	RigidBodyParameter m_param;
+	bool m_isAffectedForGravity=true;
 };
 
 }
