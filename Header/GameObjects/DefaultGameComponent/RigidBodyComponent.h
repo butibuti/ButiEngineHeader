@@ -170,6 +170,9 @@ public:
 	void TransformApply();
 	Value_ptr<ButiBullet::IRigidBody> GetRigidBody()const;
 
+	void Regist();
+	void UnRegist();
+
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
