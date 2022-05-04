@@ -24,7 +24,7 @@ public:
 	Value_weak_ptr<GameObject> AddObject(Value_ptr<GameObject> arg_gameObject);
 	Value_weak_ptr<GameObject>AddObjectFromCereal(std::string filePath, Value_ptr<Transform> arg_transform = nullptr);
 	Value_weak_ptr<GameObject>AddObjectFromCereal_Insert(std::string filePath, Value_ptr<Transform> arg_transform = nullptr);
-
+	Value_ptr<Transform> GetCerealTransform(std::string filePath);
 	std::string ReNameGameObject(const std::string& arg_ObjectName, const std::string& arg_befObjectName);
 
 	Value_weak_ptr<GameObject> GetGameObject(const std::string& arg_objectName);
