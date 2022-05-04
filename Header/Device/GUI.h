@@ -52,7 +52,8 @@ using ShaderTag = ID<ButiRendering::IResource_Shader>;
 using SoundTag = ID<IResource_Sound>;
 using TextureTag = ID<ButiRendering::IResource_Texture>;
 using ModelTag = ID<ButiRendering::IResource_Model>;
-
+class Transform;
+class BoneTransform;
 using MaterialTag = ID<ButiRendering::IResource_Material>;
 using ScriptTag = ID<IResource_Script>;
 using FontTag = ID<IResource_Font>;
@@ -964,6 +965,8 @@ bool RadioButton(const std::string& label, std::int32_t& v, std::int32_t v_butto
 void ProgressBar(float fraction, const Vector2& size_arg = Vector2(-1, 0), const std::string& overlay = NULL);
 void Bullet();                                                      
 
+bool Edit(Transform& arg_transform);
+bool Edit(BoneTransform& arg_transform);
 
 bool BeginCombo(const std::string& label, const std::string& preview_value, GuiComboFlags flags = 0);
 void EndCombo();
