@@ -12,19 +12,19 @@ namespace ButiEngine {
 		void Stop();
 		void Initialize()override;
 		void PreInitialize()override;
-		void SetCount(std::int32_t arg_nowCount);
+		void SetCount(std::int32_t arg_currentCount);
 		void ChangeCountFrame(std::int32_t arg_maxCount);
 		void Reset();
 		inline float GetPercent() const {
 			if (maxCountFrame == 0)return 0;
-			return (float)nowCountFrame / (float)maxCountFrame;
+			return (float)currentCountFrame / (float)maxCountFrame;
 		}
 		inline float GetRemainFrame()const {
-			return maxCountFrame - nowCountFrame;
+			return maxCountFrame - currentCountFrame;
 		}
 	protected:
 		float maxCountFrame;
-		float nowCountFrame;
+		float currentCountFrame;
 		bool isOn;
 	};
 
@@ -36,9 +36,9 @@ namespace ButiEngine {
 			if (!isOn) {
 				return false;
 			}
-			nowCountFrame++;
-			if (nowCountFrame >= maxCountFrame) {
-				nowCountFrame = 0;
+			currentCountFrame++;
+			if (currentCountFrame >= maxCountFrame) {
+				currentCountFrame = 0;
 				return true;
 			}
 			return false;
@@ -54,9 +54,9 @@ namespace ButiEngine {
 			if (!isOn) {
 				return false;
 			}
-			nowCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
-			if (nowCountFrame >= maxCountFrame) {
-				nowCountFrame = 0;
+			currentCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
+			if (currentCountFrame >= maxCountFrame) {
+				currentCountFrame = 0;
 				return true;
 			}
 			return false;
@@ -74,7 +74,7 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(nowCountFrame);
+			archive(currentCountFrame);
 			archive(maxCountFrame);
 			archive(isOn);
 		}
@@ -93,9 +93,9 @@ namespace ButiEngine {
 			if (!isOn) {
 				return false;
 			}
-			nowCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
-			if (nowCountFrame >= maxCountFrame) {
-				nowCountFrame = 0;
+			currentCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
+			if (currentCountFrame >= maxCountFrame) {
+				currentCountFrame = 0;
 				(*(vlp_instance.lock()).*bombFunc)();
 				return true;
 			}
@@ -105,9 +105,9 @@ namespace ButiEngine {
 			if (!isOn) {
 				return false;
 			}
-			nowCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
-			if (nowCountFrame >= maxCountFrame) {
-				nowCountFrame = maxCountFrame;
+			currentCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
+			if (currentCountFrame >= maxCountFrame) {
+				currentCountFrame = maxCountFrame;
 				return false;
 			}
 			return false;
