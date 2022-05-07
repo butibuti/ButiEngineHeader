@@ -47,12 +47,12 @@ public:
 		archive(map_gameObjects);
 	}
 	void CreateViewGameObjectVector(const std::string& arg_serchStr, const std::vector<ButiEngine::GameObjectTag>& arg_vec_serchTags);
-	std::vector<std::string> GetGameObjectList()const;
+	std::vector<std::string> GetGameObjectList();
 	void SetSelectedGameObject(Value_weak_ptr<GameObject> arg_obj) { selectedGameObject = arg_obj; }
 private:
 	void UnRegistGameObject(Value_ptr<GameObject> arg_gameObject);
 	void CreateViewGameObjectVector();
-	std::mutex mtx_addGameObject,mtx_update;
+	std::mutex mtx_addGameObject,mtx_update,mtx_viewObject;
 	std::vector<Value_ptr<GameObject>> vec_gameObjects;
 	Value_ptr<std::vector<Value_ptr<GameObject>>> vlp_vec_viewGameObjects;
 	std::vector<Value_ptr<GameObject>> vec_newGameObjects;
