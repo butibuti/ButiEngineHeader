@@ -25,6 +25,7 @@ class GameObject :public IObject
 	friend class GameComponent;
 public:
 	GameObject();
+	GameObject(const GameObject& arg_other);
 
 	GameObject(Value_ptr<Transform> arg_transform, const std::string& arg_objectName, const std::string& arg_tagName);
 	GameObject(Value_ptr<Transform> arg_transform);
@@ -45,7 +46,7 @@ public:
 
 	void SetIsRemove(const bool arg_isRemove);
 	bool GetIsRemove();
-
+	void CollisionUpdate();
 	virtual void OnUpdate();
 
 	void Hit(Value_ptr<GameObject> arg_vlp_other);
@@ -64,7 +65,7 @@ public:
 	template<class T, typename... Ts>
 	inline Value_ptr<T> AddGameComponent(Ts&&... params) {
 		auto addComponet = ObjectFactory::Create<T>(params...);
-		vec_newGameComponent.push_back(addComponet);
+		m_vec_newGameComponent.push_back(addComponet);
 		addComponet->Set(GetThis<GameObject>());
 		return addComponet;
 	}
@@ -72,7 +73,7 @@ public:
 	template<class T, typename... Ts>
 	inline Value_ptr<T> AddGameComponent_Insert(Ts&&... params) {
 		auto addComponet = ObjectFactory::Create<T>(params...);
-		vec_gameComponents.push_back(addComponet);
+		m_vec_gameComponents.push_back(addComponet);
 		addComponet->Set(GetThis<GameObject>());
 		return addComponet;
 	}
@@ -117,27 +118,27 @@ public:
 
 
 	const std::string& GetGameObjectName() const {
-		return objectName;
+		return m_objectName;
 	}
 
 
 	std::string SetObjectName(const std::string& arg_objectName);
 
 	GameObjectTag SetGameObjectTag(GameObjectTag& arg_tag) {
-		if (map_gameObjectTags.count(arg_tag)) {
+		if (m_map_gameObjectTags.count(arg_tag)) {
 			return arg_tag;
 		}
-		map_gameObjectTags.emplace(arg_tag, 0);
+		m_map_gameObjectTags.emplace(arg_tag, 0);
 		return arg_tag;
 	}
 	void RemoveGameObjectTag(const GameObjectTag& arg_tag) {
-		if (map_gameObjectTags.count(arg_tag)) {
-			map_gameObjectTags.erase(arg_tag);
+		if (m_map_gameObjectTags.count(arg_tag)) {
+			m_map_gameObjectTags.erase(arg_tag);
 		}
 	}
 
 	bool HasGameObjectTag(const GameObjectTag& arg_tag) const {
-		return (arg_tag.IsEmpty() && !map_gameObjectTags.size()) ? true : map_gameObjectTags.count(arg_tag);
+		return (arg_tag.IsEmpty() && !m_map_gameObjectTags.size()) ? true : m_map_gameObjectTags.count(arg_tag);
 	}
 	inline std::int32_t HasGameObjectTag(const std::string& arg_tagName)const {
 		return HasGameObjectTag(GameObjectTag(arg_tagName));
@@ -145,6 +146,9 @@ public:
 	void AddCollisionStayReaction(std::function< void(ButiBullet::ContactData&)>  arg_reactionFunc);
 	void AddCollisionEnterReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
 	void AddCollisionLeaveReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
+	void AddCollisionStayReaction(std::function< void(Value_weak_ptr<GameObject>&)>  arg_reactionFunc);
+	void AddCollisionEnterReaction(std::function< void(Value_weak_ptr<GameObject>&)> arg_reactionFunc);
+	void AddCollisionLeaveReaction(std::function< void(Value_weak_ptr<GameObject>&)> arg_reactionFunc);
 
 	Value_weak_ptr<GameObjectManager> GetGameObjectManager();
 	Value_weak_ptr<IApplication> GetApplication();
@@ -156,10 +160,10 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(transform);
-		archive(objectName);
-		archive(isActive);
-		archive(vec_gameComponents);
-		archive(map_gameObjectTags);
+		archive(m_objectName);
+		archive(m_isActive);
+		archive(m_vec_gameComponents);
+		archive(m_map_gameObjectTags);
 	}
 	void Init_RegistGameComponents();
 
@@ -175,21 +179,21 @@ protected:
 	Value_ptr<GameComponent> RegisterGameComponent(Value_ptr<GameComponent> arg_vlp_gameComponent);
 
 	void GameComponentUpdate();
-	void BehaviorHit();
 
-	bool isActive = true;
-	bool isRemove = false;
+	bool m_isActive = true;
+	bool m_isRemove = false;
 
-	std::vector< Value_ptr<GameComponent>>  vec_gameComponents;
-	std::vector<Value_ptr<GameComponent>> vec_newGameComponent;
+	std::vector< Value_ptr<GameComponent>>  m_vec_gameComponents;
+	std::vector<Value_ptr<GameComponent>> m_vec_newGameComponent;
 
-	std::string objectName;
+	std::string m_objectName;
 
-	Value_weak_ptr<GameObjectManager> vwp_gameObjManager;
-	std::unordered_map<GameObjectTag, std::uint32_t> map_gameObjectTags;
-	List<std::function< void(ButiBullet::ContactData&)> > list_collisionStayReaction;
-	List<std::function< void(ButiBullet::ContactData&)> > list_collisionEnterReaction;
-	List<std::function< void(ButiBullet::ContactData&)> > list_collisionLeaveReaction;
+	Value_weak_ptr<GameObjectManager> m_vwp_gameObjManager;
+	std::unordered_map<GameObjectTag, std::uint32_t> m_map_gameObjectTags;
+	List<std::function< void(ButiBullet::ContactData&)> > m_list_physicsCollisionStayReaction, m_list_physicsCollisionEnterReaction, m_list_physicsCollisionLeaveReaction;
+	List<std::function< void(Value_weak_ptr<GameObject>&)> > m_list_collisionStayReaction,m_list_collisionEnterReaction,m_list_collisionLeaveReaction;
+	List<Value_weak_ptr<GameObject>> m_list_vwp_currentCollisionObject, m_list_vwp_beforeCollisionObject, m_list_vwp_delayAddCurrentCollisionObject;
+	std::mutex mtx_collisionAdd;
 };
 
 
