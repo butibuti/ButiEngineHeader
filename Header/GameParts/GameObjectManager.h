@@ -52,6 +52,7 @@ public:
 private:
 	void UnRegistGameObject(Value_ptr<GameObject> arg_gameObject);
 	void CreateViewGameObjectVector();
+	void CreateViewGameObjectVector_lock();
 	std::mutex mtx_addGameObject,mtx_update,mtx_viewObject;
 	std::vector<Value_ptr<GameObject>> vec_gameObjects;
 	Value_ptr<std::vector<Value_ptr<GameObject>>> vlp_vec_viewGameObjects;
