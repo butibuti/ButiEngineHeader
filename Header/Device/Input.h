@@ -11,58 +11,50 @@ namespace ButiEngine {
 		Input();
 		~Input();
 		void Initialize(Value_weak_ptr<IApplication> arg_vwp_app);
-		bool CheckKey(const std::uint32_t index);
-		bool TriggerKey(const std::uint32_t index);
-		bool ReleaseKey(const std::uint32_t index);
-		bool CheckKey(const Keys index);
-		bool TriggerKey(const Keys index);
-		bool ReleaseKey(const Keys index);
+		bool CheckKey(const std::uint32_t arg_index);
+		bool TriggerKey(const std::uint32_t arg_index);
+		bool ReleaseKey(const std::uint32_t arg_index);
+		bool CheckKey(const Keys arg_index);
+		bool TriggerKey(const Keys arg_index);
+		bool ReleaseKey(const Keys arg_index);
 		bool CheckAnyKey();
 		bool TriggerAnyKey();
 		void PadUpdate();
 		void MouseUpdate();
 		bool GetAnyButton();
 		bool GetAnyButtonTrigger();
-		bool GetPadButton(const PadButtons button);
-		bool GetPadButtonTrigger(const PadButtons button);
-		bool GetPadButtonRelease(const PadButtons button);
-		bool GetMouseButton(const MouseButtons button);
-		bool GetMouseTrigger(const MouseButtons button);
-		bool GetMouseReleaseTrigger(const MouseButtons button);
+		bool GetPadButton(const PadButtons arg_button);
+		bool GetPadButtonTrigger(const PadButtons arg_button);
+		bool GetPadButtonRelease(const PadButtons arg_button);
+		bool GetMouseButton(const MouseButtons arg_button);
+		bool GetMouseTrigger(const MouseButtons arg_button);
+		bool GetMouseReleaseTrigger(const MouseButtons arg_button);
 		bool GetMouseWheel();
 		float GetMouseWheelMove();
 		void SetCursorHide(const bool arg_isCursorHide);
-
+		void Vibration_L(const float arg_power);
+		void Vibration_R(const float arg_power);
 		Vector2 GetLeftStick();
 		Vector2 GetRightStick();
 		float GetLeftTrigger();
 		float GetRightTrigger();
 		Vector2 GetMouseMove();
 		Vector2 GetMousePos();
-		void SetMouseCursor(const Vector2& position);
+		void SetMouseCursor(const Vector2& arg_position);
 	private:
-		HRESULT CreateInput(void);
-
-		HRESULT CreateKey(void);
-
-		HRESULT CreateMouse(void);
-
-		HRESULT SetKeyFormat(void);
-
-		HRESULT SetMouseFormat(void);
-
+		HRESULT CreateInput();
+		HRESULT CreateKey();
+		HRESULT CreateMouse();
+		HRESULT SetKeyFormat();
+		HRESULT SetMouseFormat();
 		HRESULT SetKeyCooperative(Value_weak_ptr<IApplication> arg_vwp_app);
-
 		HRESULT SetMouseCooperative(Value_weak_ptr<IApplication> arg_vwp_app);
 
 
 
-		HRESULT result;
-
-
-		std::unique_ptr<InputInstance> unq_instance;
-
-		Value_weak_ptr<IApplication> vwp_app;
+		HRESULT m_result;
+		std::unique_ptr<InputInstance> m_unq_instance;
+		Value_weak_ptr<IApplication> m_vwp_app;
 
 	};
 }
