@@ -334,11 +334,13 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(m_vlp_lookTarget);
+		archive(m_speed);
 		archive(isActive);
 	}
 	void OnShowUI();
 private:
 	Value_ptr<Transform> m_vlp_lookTarget;
+	float m_speed=0.01f;
 };
 class PostEffectParamUpdater :public GameComponent
 {
