@@ -207,12 +207,11 @@ public:
 	CollisionPrimitive_Sphere() {}
 	inline void Update()override {
 		position = vwp_transform.lock()->GetWorldPosition();
+		radius =originRadius* vwp_transform.lock()->GetWorldScale().x;
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
 	{
 		return other.lock()->IsHitSphere(this);
-
-
 	}
 	inline void GetMaxPointAndMinPoint(Vector3& arg_outputMax, Vector3& arg_outputMin) const {
 		arg_outputMax = position + Vector3(radius, radius, radius);
@@ -228,14 +227,14 @@ public:
 	bool IsHitRay(CollisionPrimitive_Ray* other)override;
 	Value_ptr<CollisionPrimitive> Clone()override {
 		auto ret = ObjectFactory::Create<CollisionPrimitive_Sphere>();
-		ret->radius = radius;
+		ret->originRadius = originRadius;
 		return ret;
 	}
 	void ShowUI() override {
 
 		if (GUI::TreeNode("Sphere")) {
 			GUI::BulletText("radius");
-			GUI::DragFloat("##radius", &radius, 0.01, 0, 500);
+			GUI::DragFloat("##radius", &originRadius, 0.01, 0, 500);
 			GUI::TreePop();
 		}
 
@@ -245,9 +244,10 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(vwp_transform);
-		archive(radius);
+		archive(originRadius);
 	}
 private:
+	float originRadius = 0.5f;
 };
 class CollisionPrimitive_Capsule :public CollisionPrimitive, public Geometry::Capsule
 {
