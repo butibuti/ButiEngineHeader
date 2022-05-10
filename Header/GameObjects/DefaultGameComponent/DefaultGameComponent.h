@@ -338,6 +338,10 @@ public:
 		archive(isActive);
 	}
 	void OnShowUI();
+	Value_ptr<Transform> GetLookTarget()const;
+	void SetLookTarget(Value_ptr<Transform> arg_vlp_target);
+	float GetSpeed()const;
+	void SetSpeed(const float arg_speed);
 private:
 	Value_ptr<Transform> m_vlp_lookTarget;
 	float m_speed=0.01f;
