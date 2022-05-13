@@ -341,20 +341,20 @@ namespace ButiEngine
 		/// シーンの設定
 		/// </summary>
 		/// <param name="arg_sceneName">シーン名</param>
-		/// <param name="vlp_scene">シーンのインスタンス</param>
-		virtual void SetScene(const std::string& arg_sceneName, Value_ptr<IScene> vlp_scene) = 0;
+		/// <param name="arg_vlp_scene">シーンのインスタンス</param>
+		virtual void SetScene(const std::string& arg_sceneName, Value_ptr<IScene> arg_vlp_scene) = 0;
 		/// <summary>
 		/// ゲーム開始時のジーン設定
 		/// </summary>
 		/// <param name="arg_sceneName">シーン名</param>
-		/// <param name="vlp_scene">シーンのインスタンス</param>
-		virtual void SetScene_Init(const std::string& arg_sceneName, Value_ptr<IScene> vlp_scene ) = 0;
+		/// <param name="arg_vlp_scene">シーンのインスタンス</param>
+		virtual void SetScene_Init(const std::string& arg_sceneName, Value_ptr<IScene> arg_vlp_scene) = 0;
 		/// <summary>
 		/// シーンのロード
 		/// </summary>
 		/// <param name="arg_sceneName">シーン名</param>
-		/// <param name="vlp_scene">シーンのインスタンス(nullなら名前から生成)</param>
-		virtual void LoadScene(const std::string& arg_sceneName, Value_ptr<SceneInformation> vlp_scene = nullptr) = 0;
+		/// <param name="arg_vlp_scene">シーンのインスタンス(nullなら名前から生成)</param>
+		virtual void LoadScene(const std::string& arg_sceneName, Value_ptr<SceneInformation> arg_vlp_scene = nullptr) = 0;
 		/// <summary>
 		/// シーンのロード(非同期)
 		/// </summary>
@@ -364,8 +364,8 @@ namespace ButiEngine
 		/// ゲーム開始時のシーンのロード
 		/// </summary>
 		/// <param name="arg_sceneName">シーン名</param>
-		/// <param name="vlp_scene">シーンのインスタンス(nullなら名前から生成)</param>
-		virtual void LoadScene_Init(const std::string& arg_sceneName, Value_ptr<SceneInformation> vlp_scene = nullptr) = 0;
+		/// <param name="arg_vlp_scene">シーンのインスタンス(nullなら名前から生成)</param>
+		virtual void LoadScene_Init(const std::string& arg_sceneName, Value_ptr<SceneInformation> arg_vlp_scene = nullptr) = 0;
 		/// <summary>
 		/// シーンの削除
 		/// </summary>
@@ -375,12 +375,7 @@ namespace ButiEngine
 		/// シーンの切り替え
 		/// </summary>
 		/// <param name="arg_sceneName">シーン名</param>
-		/// <param name="sceneChangeDalay">切り替えに掛るフレーム</param>
-		virtual void ChangeScene(const std::string& arg_sceneName, float sceneChangeDalay = 0) = 0;
-		/// <summary>
-		/// 新しいシーンへの更新
-		/// </summary>
-		virtual void RenewalScene() = 0;
+		virtual void ChangeScene(const std::string& arg_sceneName) = 0;
 		/// <summary>
 		/// シーンのリロード
 		/// </summary>
