@@ -54,7 +54,7 @@ namespace ButiEngine {
 			if (!isOn) {
 				return false;
 			}
-			currentCountFrame += 1; //Game::GetInstance()->GetGameTime()->GetSpeed();
+			currentCountFrame += GameDevice::WorldSpeed;
 			if (currentCountFrame >= maxCountFrame) {
 				currentCountFrame = 0;
 				return true;
