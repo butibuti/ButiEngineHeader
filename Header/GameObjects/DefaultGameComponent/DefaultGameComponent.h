@@ -284,6 +284,7 @@ struct Particle3D {
 	float life = 60;
 	Vector4 colorPase = Vector4();
 	float sizePase = 0;
+	Value_ptr<Transform> m_parentTransform = nullptr;
 };
 
 
@@ -298,6 +299,7 @@ public:
 		return "ImmediateParticleController";
 	}
 	void AddParticle(const Particle3D& arg_particle);
+	void AddParticle(const Particle3D& arg_particle,Value_ptr<Transform> arg_particleTransform);
 	Value_ptr<GameComponent> Clone()override;
 	void OnRemove()override;
 	List<Particle3D>& GetParticles();
