@@ -7,6 +7,7 @@ namespace ButiEngine {
 	public:
 		Timer(float arg_maxCountFrame);
 		virtual bool Update() = 0;
+		virtual bool Update_continue() = 0;
 		bool IsOn();
 		void Start();
 		void Stop();
@@ -43,6 +44,16 @@ namespace ButiEngine {
 			}
 			return false;
 		}
+		inline bool Update_continue() override {
+			if (!isOn) {
+				return false;
+			}
+			currentCountFrame++;
+			if (currentCountFrame >= maxCountFrame) {
+				return true;
+			}
+			return false;
+		}
 	};
 
 	class RelativeTimer :public Timer
@@ -57,6 +68,16 @@ namespace ButiEngine {
 			currentCountFrame += GameDevice::WorldSpeed;
 			if (currentCountFrame >= maxCountFrame) {
 				currentCountFrame = 0;
+				return true;
+			}
+			return false;
+		}
+		inline bool Update_continue() override {
+			if (!isOn) {
+				return false;
+			}
+			currentCountFrame += GameDevice::WorldSpeed;
+			if (currentCountFrame >= maxCountFrame) {
 				return true;
 			}
 			return false;
