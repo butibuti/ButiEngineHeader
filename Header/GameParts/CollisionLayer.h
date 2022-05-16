@@ -197,8 +197,6 @@ namespace Collision {
 		}
 		void PreInitialize()override{}
 		void Update() {
-
-
 			RegistOctree();
 		}
 		inline void RegistOctree() {
