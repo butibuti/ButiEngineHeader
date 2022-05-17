@@ -7,7 +7,7 @@ namespace ButiEngine {
 	{
 	public:
 		OutlineMeshDrawComponent();
-		std::string GetGameComponentName() {
+		std::string GetGameComponentName()const override {
 			return "OutlineMeshDrawComponent";
 		}
 
@@ -26,7 +26,9 @@ namespace ButiEngine {
 			archive(outlineModelTag);
 			archive(m_materialTag);
 			archive(isActive);
+			BeforeTransformSave();
 			archive(m_vlp_transform);
+			AfterTransformSave();
 			archive(m_vlp_drawInfo);
 			archive(vlp_outlineDrawInfo);
 		}
@@ -44,7 +46,7 @@ namespace ButiEngine {
 	{
 	public:
 		OutlineModelDrawComponent();
-		std::string GetGameComponentName() {
+		std::string GetGameComponentName() const override {
 			return "OutlineModelDrawComponent";
 		}
 
@@ -63,7 +65,9 @@ namespace ButiEngine {
 			archive(outlineModelTag);
 			archive(m_materialTag);
 			archive(isActive);
+			BeforeTransformSave();
 			archive(m_vlp_transform);
+			AfterTransformSave();
 			archive(m_vlp_drawInfo);
 			archive(vlp_outlineDrawInfo);
 		}
