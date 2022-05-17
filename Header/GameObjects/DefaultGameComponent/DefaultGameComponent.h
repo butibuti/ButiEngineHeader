@@ -491,12 +491,16 @@ public:
 		archive(m_modelTag);
 		archive(m_materialTag);
 		archive(isActive);
+		BeforeTransformSave();
 		archive(m_vlp_transform);
+		AfterTransformSave();
 		archive(m_vlp_drawInfo);
 	}
 protected:
 	void ShowDrawSettingsUI(Value_ptr< ButiRendering::DrawInformation >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
 	void ShowExCBufferUI(Value_ptr<ButiRendering::DrawInformation >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
+	void BeforeTransformSave();
+	void AfterTransformSave();
 	Value_ptr< ButiRendering::DrawObject > m_data;
 	virtual void CreateData();
 	MeshTag m_meshTag;
@@ -529,7 +533,9 @@ public:
 		archive(m_modelTag);
 		archive(m_materialTag);
 		archive(isActive);
+		BeforeTransformSave();
 		archive(m_vlp_transform);
+		AfterTransformSave();
 		archive(m_vlp_drawInfo);
 	}
 protected:
