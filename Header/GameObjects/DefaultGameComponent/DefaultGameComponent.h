@@ -26,7 +26,7 @@ public:
 	std::string GetGameComponentName()const override {
 		return "CameraMan";
 	}
-	void ShakeVartical(const float power);
+	void ShakeVertical(const float power);
 	void ShakeHorizontal(const float power);
 	template<class Archive>
 	void serialize(Archive& archive)
@@ -260,15 +260,19 @@ private:
 
 
 struct Particle2D {
-	Vector3 position;
+	Vector3 position = Vector3();
 	Vector4 color = Vector4(1, 1, 1, 1);
-	float size = 1.0f;
-	Vector3 velocity;
-	Vector3 force;
-	float accelation;
-	float life = 60;
-	Vector4 colorPase;
+	float size = 5.0f;
+	float angle = 0.0f;
+	float anglePase = 0.0f;
+	Vector3 velocity = Vector3();
+	Vector3 force = Vector3();
+	float accelation = 0;
+	float life = 60.0f,frame=0.0f;
 	float sizePase = 0;
+	Vector4 colorPase = Vector4();
+	std::int8_t currenthorizontal = 0,currentVertcal = 0;
+	Value_ptr<Transform> m_parentTransform = nullptr;
 };
 struct Particle3D {
 	Vector3 position = Vector3();
@@ -299,7 +303,7 @@ public:
 		return "ImmediateParticleController";
 	}
 	void AddParticle(const Particle3D& arg_particle);
-	void AddParticle(const Particle3D& arg_particle,Value_ptr<Transform> arg_particleTransform);
+	void AddParticle(const Particle3D& arg_particle, Value_ptr<Transform> arg_particleTransform);
 	Value_ptr<GameComponent> Clone()override;
 	void OnRemove()override;
 	List<Particle3D>& GetParticles();
@@ -318,6 +322,79 @@ private:
 	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
 	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
 	std::int32_t m_addParticleCount = 0;
+};
+class SpriteParticleController :public GameComponent
+{
+public:
+
+	void OnUpdate()override;
+	void OnSet()override;
+	void Start();
+	std::string GetGameComponentName()const override {
+		return "SpriteParticleController";
+	}
+	void AddParticle(const Particle2D& arg_particle);
+	void AddParticle(const Particle2D& arg_particle, Value_ptr<Transform> arg_particleTransform);
+	Value_ptr<GameComponent> Clone()override;
+	void OnRemove()override;
+	List<Particle2D>& GetParticles();
+	const List<Particle2D>& GetParticles()const;
+	void OnShowUI()override;
+	void CreateParticleBuffer();
+	void UpdateBuffer();
+	void SetSplitScaleDiv(const std::int32_t arg_horizontalSplitScale, const std::int32_t arg_verticalSplitScale) {
+		splitScale.x = 1.0f / arg_horizontalSplitScale;
+		splitScale.y = 1.0f / arg_verticalSplitScale;
+	}
+	void SetHorizontalSplitScale(const std::int32_t arg_horizontalSplitScale, const std::int32_t arg_verticalIndex) {
+		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
+			vec_splitCountAndRequiredFrame.resize(arg_verticalIndex + 1);
+		}
+
+		vec_splitCountAndRequiredFrame[arg_verticalIndex].first = arg_horizontalSplitScale;
+	}
+	std::int32_t GetHorizontalSplitScale(const std::int32_t arg_verticalIndex) const {
+		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
+			return -1;
+		}
+		return vec_splitCountAndRequiredFrame[arg_verticalIndex].first;
+	}
+	void SetHorizontalRequiredFrame(const std::int32_t arg_frame, const std::int32_t arg_verticalIndex) {
+		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
+			vec_splitCountAndRequiredFrame.resize(arg_verticalIndex + 1);
+		}
+
+		vec_splitCountAndRequiredFrame[arg_verticalIndex].second= arg_frame;
+	}
+	std::int32_t GetHorizontalRequiredFrame(const std::int32_t arg_verticalIndex) const {
+		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
+			return -1;
+		}
+		return vec_splitCountAndRequiredFrame[arg_verticalIndex].second;
+	}
+	std::int32_t GetVerticalSplitScale() const {
+		return vec_splitCountAndRequiredFrame.size();
+	}
+	Vector2 GetSplitScale()const {
+		return splitScale;
+	}
+	template<class Archive>
+	void serialize(Archive& archive)
+	{
+		archive(isActive);
+		archive(m_meshTag);
+		archive(vec_splitCountAndRequiredFrame);
+		archive(splitScale);
+	}
+private:
+	List<Particle2D> m_list_particleInfo;
+	MeshTag m_meshTag;
+	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
+	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
+	std::int32_t m_addParticleCount = 0;
+	std::vector<std::pair< std::int32_t,std::int32_t>> vec_splitCountAndRequiredFrame;
+	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> vlp_param;
+	Vector2 splitScale = Vector2(1, 1);
 };
 class LookAtComponent :public GameComponent
 {
@@ -621,7 +698,8 @@ BUTI_REGIST_GAMECOMPONENT(FPSViewBehavior,true);
 
 BUTI_REGIST_GAMECOMPONENT(IKComponent,true)
 
-BUTI_REGIST_GAMECOMPONENT(ImmediateParticleController,true)
+BUTI_REGIST_GAMECOMPONENT(ImmediateParticleController, true)
+BUTI_REGIST_GAMECOMPONENT(SpriteParticleController,true)
 BUTI_REGIST_GAMECOMPONENT(LookAtComponent,true)
 BUTI_REGIST_GAMECOMPONENT(PostEffectParamUpdater,true)
 BUTI_REGIST_GAMECOMPONENT(SplineCurveMover,true)
