@@ -272,7 +272,8 @@ struct Particle2D {
 	float sizePase = 0;
 	Vector4 colorPase = Vector4();
 	std::int8_t currenthorizontal = 0,currentVertcal = 0;
-	Value_ptr<Transform> m_parentTransform = nullptr;
+	Value_ptr<Transform> m_parentTransform = nullptr,m_targetTransform=nullptr;
+	std::int32_t controlIndex = 0;
 };
 struct Particle3D {
 	Vector3 position = Vector3();
@@ -288,7 +289,8 @@ struct Particle3D {
 	float life = 60;
 	Vector4 colorPase = Vector4();
 	float sizePase = 0;
-	Value_ptr<Transform> m_parentTransform = nullptr;
+	Value_ptr<Transform> m_parentTransform = nullptr,m_targetTransform=nullptr;
+	std::int32_t controlIndex = 0;
 };
 
 
@@ -310,6 +312,8 @@ public:
 	const List<Particle3D>& GetParticles()const;
 	void OnShowUI()override;
 	void CreateParticleBuffer();
+	void AddParticleControlFunction(const std::string& arg_funcName, std::function<void(Particle3D&)> arg_function);
+	std::int32_t  GetControlFunctionIndex(const std::string& arg_funcName)const;
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
@@ -321,6 +325,8 @@ private:
 	MeshTag m_meshTag;
 	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
 	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
+	std::map < std::string, std::int32_t>m_map_particleControlIndex;
+	std::vector < std::function<void(Particle3D&)>>m_vec_particleControlFunction;
 	std::int32_t m_addParticleCount = 0;
 };
 class SpriteParticleController :public GameComponent
@@ -342,6 +348,8 @@ public:
 	void OnShowUI()override;
 	void CreateParticleBuffer();
 	void UpdateBuffer();
+	void AddParticleControlFunction(const std::string& arg_funcName, std::function<void(Particle2D&)> arg_function);
+	std::int32_t  GetControlFunctionIndex(const std::string& arg_funcName)const;
 	void SetSplitScaleDiv(const std::int32_t arg_horizontalSplitScale, const std::int32_t arg_verticalSplitScale) {
 		splitScale.x = 1.0f / arg_horizontalSplitScale;
 		splitScale.y = 1.0f / arg_verticalSplitScale;
@@ -393,7 +401,9 @@ private:
 	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
 	std::int32_t m_addParticleCount = 0;
 	std::vector<std::pair< std::int32_t,std::int32_t>> vec_splitCountAndRequiredFrame;
-	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> vlp_param;
+	std::map < std::string, std::int32_t>m_map_particleControlIndex;
+	std::vector < std::function<void(Particle2D&)>>m_vec_particleControlFunction;
+	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> m_vlp_param;
 	Vector2 splitScale = Vector2(1, 1);
 };
 class LookAtComponent :public GameComponent
