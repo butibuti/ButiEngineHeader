@@ -186,6 +186,7 @@ namespace Collision {
 			vec_vlp_collisionObjs.erase(itr);
 
 			delete map_objIndex.at(arg_index);
+			map_objIndex.erase(arg_index);
 			auto numItr = vec_index.begin() + index;
 			numItr = vec_index.erase(numItr);
 
