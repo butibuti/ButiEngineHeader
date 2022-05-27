@@ -112,9 +112,8 @@ public:
 	inline List< Value_ptr<T>> GetGameComponents() const {
 		List< Value_ptr<T>> output;
 		for (auto checkComponent : m_vec_gameComponents) {
-			auto castedComponent = checkComponent->GetThis<T>();
-			if (castedComponent) {
-				output.Add(castedComponent);
+			if (checkComponent->IsThis<T>()) {
+				output.Add(checkComponent->GetThis<T>());
 			}
 		}
 		return output;
