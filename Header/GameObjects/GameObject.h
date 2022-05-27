@@ -108,6 +108,17 @@ public:
 	inline Value_ptr<T> GetGameComponent() const {
 		return GetGameComponent<T>(0);
 	}
+	template <typename T>
+	inline List< Value_ptr<T>> GetGameComponents() const {
+		List< Value_ptr<T>> output;
+		for (auto checkComponent : m_vec_gameComponents) {
+			auto castedComponent = checkComponent->GetThis<T>();
+			if (castedComponent) {
+				output.Add(castedComponent);
+			}
+		}
+		return output;
+	}
 
 
 	void RemoveGameComponent(const std::string& arg_key);
