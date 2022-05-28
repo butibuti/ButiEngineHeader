@@ -25,8 +25,8 @@ namespace ButiEngine {
 	private:
 		HWND handle;
 		UInt2 size;
-		std::wstring wName;
 		WNDCLASSW windowClass;
+		std::wstring wName;
 		bool isBefSelect=false, isCurrentSelect=false;
 		static LRESULT CALLBACK ProceedMessage(HWND window,	std::uint32_t message, WPARAM wParam, LPARAM lParam);
 	};
