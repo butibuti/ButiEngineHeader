@@ -14,7 +14,7 @@ public:
 	Application() {};
 	void Initialize()override {}
 	void PreInitialize()override {}
-	void CreateInstances(const ApplicationInitData& arg_data);
+	void CreateInstances(ApplicationInitData& arg_data);
 	std::unique_ptr<IWindow>& GetWindow()override;
 	Value_ptr<ISceneManager> GetSceneManager()override;
 	Value_ptr<ButiRendering::GraphicDevice> GetGraphicDevice()override;

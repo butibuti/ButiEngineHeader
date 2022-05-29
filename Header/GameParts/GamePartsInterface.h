@@ -163,7 +163,7 @@ namespace ButiEngine
 		/// <param name="isFullScreen">フルスクリーン表示</param>
 		/// <param name="width">幅</param>
 		/// <param name="height">高さ</param>
-		virtual void Initialize(const std::string arg_windowName, const WindowPopType arg_popType,const bool isFullScreen,const std::uint32_t width = 0,const std::uint32_t height = 0)=0;
+		virtual void Initialize(const std::string arg_windowName, const WindowPopType arg_popType,const bool isFullScreen, HINSTANCE& arg_hinstance ,const std::uint32_t width = 0,const std::uint32_t height = 0)=0;
 		/// <summary>
 		/// デストラクタ
 		/// </summary>
@@ -1057,6 +1057,7 @@ namespace ButiEngine
 			std::int32_t windowWidth ;
 			std::int32_t windowHeight;
 			bool isFullScreen;
+			HINSTANCE hInstance=nullptr;
 		};
 		struct FrameRateInformation {
 			float averageFPS;
