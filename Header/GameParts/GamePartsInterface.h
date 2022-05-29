@@ -236,7 +236,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="tag">SE‚Ìƒ^ƒO</param>
 		/// <param name="volume">‰¹—Ê</param>
-		virtual void PlaySE(const SoundTag tag,const float volume,const bool isIsolate) = 0;
+		virtual void PlaySE(const SoundTag tag,const float volume,const bool isIsolate=false) = 0;
 		/// <summary>
 		/// BGM‚ğÄ¶‚·‚é
 		/// </summary>
