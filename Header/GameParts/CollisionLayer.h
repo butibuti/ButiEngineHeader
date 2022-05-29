@@ -14,7 +14,7 @@ namespace Collision {
 	template<typename T>
 	struct CollisionObject :public IObject {
 
-		CollisionObject(Value_weak_ptr<CollisionPrimitive> arg_vwp_coliisionPrim, Value_weak_ptr<T> arg_vwp_obj) {
+		CollisionObject(Value_ptr<CollisionPrimitive> arg_vwp_coliisionPrim, Value_ptr<T> arg_vwp_obj) {
 			vwp_coliisionPrim = arg_vwp_coliisionPrim;
 			vwp_obj = arg_vwp_obj;
 		}
@@ -23,8 +23,8 @@ namespace Collision {
 		}
 		void Initialize()override {}
 		void PreInitialize()override {}
-		Value_weak_ptr<CollisionPrimitive> vwp_coliisionPrim;
-		Value_weak_ptr<T> vwp_obj;
+		Value_ptr<CollisionPrimitive> vwp_coliisionPrim;
+		Value_ptr<T> vwp_obj;
 	};
 
 	using CollisionObject_GameObject = CollisionObject<GameObject>;
@@ -203,7 +203,7 @@ namespace Collision {
 		inline void RegistOctree() {
 			Vector3 minPoint, maxPoint;
 			for (auto itr = vec_vlp_collisionObjs.begin(); itr != vec_vlp_collisionObjs.end(); itr++) {
-				(*itr)->vlp_collisionObject-> vwp_coliisionPrim.lock()->GetMaxPointAndMinPoint(maxPoint, minPoint);
+				(*itr)->vlp_collisionObject-> vwp_coliisionPrim->GetMaxPointAndMinPoint(maxPoint, minPoint);
 				auto cellNum = GetMortonSpace(minPoint, maxPoint);
 
 				if (cellNum > maxCellNum) {
@@ -236,7 +236,7 @@ namespace Collision {
 			CreateObjectList(cellNum, vec_collisionObjects);
 			auto endItr = vec_collisionObjects.end();
 			for (auto itr = vec_collisionObjects.begin(); itr != endItr; itr++) {
-				if ((*itr)->vwp_coliisionPrim.lock()->IsHit(arg_vlp_checkPrimitive)) {
+				if ((*itr)->vwp_coliisionPrim->IsHit(arg_vlp_checkPrimitive)) {
 					arg_vec_collisionObjects.push_back((*itr));
 				}
 			}
@@ -255,7 +255,7 @@ namespace Collision {
 			CreateObjectList(cellNum, vec_collisionObjects);
 			auto endItr = vec_collisionObjects.end();
 			for (auto itr = vec_collisionObjects.begin(); itr != endItr; itr++) {
-				if ((*itr)->vwp_coliisionPrim.lock()->IsHit(arg_vlp_checkPrimitive)) {
+				if ((*itr)->vwp_coliisionPrim->IsHit(arg_vlp_checkPrimitive)) {
 					assert(0 && "C³");
 					//arg_vec_collisionObjects.push_back((*itr)->vwp_obj.lock());
 				}

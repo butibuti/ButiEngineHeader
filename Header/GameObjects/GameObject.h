@@ -156,9 +156,9 @@ public:
 	void AddCollisionStayReaction(std::function< void(ButiBullet::ContactData&)>  arg_reactionFunc);
 	void AddCollisionEnterReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
 	void AddCollisionLeaveReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
-	void AddCollisionStayReaction(std::function< void(Value_weak_ptr<GameObject>&)>  arg_reactionFunc);
-	void AddCollisionEnterReaction(std::function< void(Value_weak_ptr<GameObject>&)> arg_reactionFunc);
-	void AddCollisionLeaveReaction(std::function< void(Value_weak_ptr<GameObject>&)> arg_reactionFunc);
+	void AddCollisionStayReaction(std::function< void(Value_ptr<GameObject>&)>  arg_reactionFunc);
+	void AddCollisionEnterReaction(std::function< void(Value_ptr<GameObject>&)> arg_reactionFunc);
+	void AddCollisionLeaveReaction(std::function< void(Value_ptr<GameObject>&)> arg_reactionFunc);
 
 	Value_weak_ptr<GameObjectManager> GetGameObjectManager();
 	Value_weak_ptr<IApplication> GetApplication();
@@ -201,8 +201,8 @@ protected:
 	Value_weak_ptr<GameObjectManager> m_vwp_gameObjManager;
 	std::unordered_map<GameObjectTag, std::uint32_t> m_map_gameObjectTags;
 	List<std::function< void(ButiBullet::ContactData&)> > m_list_physicsCollisionStayReaction, m_list_physicsCollisionEnterReaction, m_list_physicsCollisionLeaveReaction;
-	List<std::function< void(Value_weak_ptr<GameObject>&)> > m_list_collisionStayReaction,m_list_collisionEnterReaction,m_list_collisionLeaveReaction;
-	List<Value_weak_ptr<GameObject>> m_list_vwp_currentCollisionObject, m_list_vwp_beforeCollisionObject, m_list_vwp_delayAddCurrentCollisionObject;
+	List<std::function< void(Value_ptr<GameObject>&)> > m_list_collisionStayReaction,m_list_collisionEnterReaction,m_list_collisionLeaveReaction;
+	List<Value_ptr<GameObject>> m_list_vwp_currentCollisionObject, m_list_vwp_beforeCollisionObject, m_list_vwp_delayAddCurrentCollisionObject;
 	std::mutex mtx_collisionAdd;
 };
 
