@@ -236,7 +236,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="tag">SEのタグ</param>
 		/// <param name="volume">音量</param>
-		virtual void PlaySE(const SoundTag tag,const float volume) = 0;
+		virtual void PlaySE(const SoundTag tag,const float volume,const bool isIsolate) = 0;
 		/// <summary>
 		/// BGMを再生する
 		/// </summary>
@@ -257,6 +257,8 @@ namespace ButiEngine
 		/// <param name="index">SEの番号(0～64)</param>
 		/// <param name="volume">音量</param>
 		virtual void SetControllableSEVolume(const std::uint32_t index, const float volume) = 0;
+		virtual void SetMasterVolume(const float arg_masterVolume) = 0;
+		virtual float GetMasterVolume()const = 0;
 		/// <summary>
 		/// SEのループを抜ける
 		/// </summary>
