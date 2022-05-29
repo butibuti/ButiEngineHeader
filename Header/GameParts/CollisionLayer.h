@@ -40,7 +40,12 @@ namespace Collision {
 
 		}
 		~OctRegistObj() {
+			Release();
+		}
+		void Release() {
 			vlp_collisionObject = nullptr;
+			vlp_next = nullptr;
+			vlp_bef = nullptr;
 		}
 		OctCell<T>* p_cell=nullptr;		
 		Value_ptr<CollisionObject< T>> vlp_collisionObject;				
@@ -197,6 +202,12 @@ namespace Collision {
 		void Initialize()override {
 		}
 		void PreInitialize()override{}
+		void Release() {
+			for (auto& collisionObj : vec_vlp_collisionObjs) {
+				collisionObj->Release();
+			}
+			vec_vlp_collisionObjs.clear();
+		}
 		void Update() {
 			RegistOctree();
 		}

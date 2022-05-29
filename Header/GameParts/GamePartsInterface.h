@@ -138,7 +138,8 @@ namespace ButiEngine
 		/// </summary>
 		virtual void ShowGUI()= 0;
 		virtual void Start() = 0;
-		virtual void End()   = 0;
+		virtual void End() = 0;
+		virtual void Release()   = 0;
 	};
 
 	namespace Collision {
