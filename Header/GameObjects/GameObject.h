@@ -5,11 +5,6 @@
 namespace ButiEngine {
 class GameObject;
 }
-namespace ButiBullet {
-class PhysicsObject;
-class ContactPoint;
-struct ContactData;
-}
 
 namespace ButiEngine {
 using GameObjectTag = ID<GameObject>;
@@ -50,10 +45,6 @@ public:
 	virtual void OnUpdate();
 
 	void Hit(Value_ptr<GameObject> arg_vlp_other);
-
-	void HitStay(ButiBullet::ContactData& arg_contact);
-	void HitEnter(ButiBullet::ContactData& arg_contact);
-	void HitLeave(ButiBullet::ContactData& arg_contact);
 
 	virtual void Release();
 
@@ -153,9 +144,6 @@ public:
 	inline std::int32_t HasGameObjectTag(const std::string& arg_tagName)const {
 		return HasGameObjectTag(GameObjectTag(arg_tagName));
 	}
-	void AddCollisionStayReaction(std::function< void(ButiBullet::ContactData&)>  arg_reactionFunc);
-	void AddCollisionEnterReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
-	void AddCollisionLeaveReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
 	void AddCollisionStayReaction(std::function< void(Value_ptr<GameObject>&)>  arg_reactionFunc);
 	void AddCollisionEnterReaction(std::function< void(Value_ptr<GameObject>&)> arg_reactionFunc);
 	void AddCollisionLeaveReaction(std::function< void(Value_ptr<GameObject>&)> arg_reactionFunc);
@@ -200,7 +188,7 @@ protected:
 
 	Value_weak_ptr<GameObjectManager> m_vwp_gameObjManager;
 	std::unordered_map<GameObjectTag, std::uint32_t> m_map_gameObjectTags;
-	List<std::function< void(ButiBullet::ContactData&)> > m_list_physicsCollisionStayReaction, m_list_physicsCollisionEnterReaction, m_list_physicsCollisionLeaveReaction;
+	//List<std::function< void(ButiBullet::ContactData&)> > m_list_physicsCollisionStayReaction, m_list_physicsCollisionEnterReaction, m_list_physicsCollisionLeaveReaction;
 	List<std::function< void(Value_ptr<GameObject>&)> > m_list_collisionStayReaction,m_list_collisionEnterReaction,m_list_collisionLeaveReaction;
 	List<Value_ptr<GameObject>> m_list_vwp_currentCollisionObject, m_list_vwp_beforeCollisionObject, m_list_vwp_delayAddCurrentCollisionObject;
 	std::mutex mtx_collisionAdd;
