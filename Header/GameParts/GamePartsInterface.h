@@ -4,6 +4,7 @@
 #include"ButiUtil/ButiUtil/ObjectFactory.h"
 #include"ButiMemorySystem/ButiMemorySystem/ButiPtr.h"
 namespace ButiBullet {
+class RigidBody;
 class PhysicsWorld;
 class PhysicsManager;
 }
@@ -1038,7 +1039,11 @@ namespace ButiEngine
 		/// </summary>
 		virtual void Reload_async() = 0;
 
-		virtual void WaitLoading() = 0;
+		/// <summary>
+		/// 現在読み込み中かどうか
+		/// </summary>
+		/// <returns></returns>
+		virtual bool IsLoading() = 0;
 	};
 
 	/// <summary>
@@ -1273,6 +1278,11 @@ namespace ButiEngine
 		/// GameObjectManagerの取得
 		/// </summary>
 		virtual Value_ptr<GameObjectManager> GetGameObjectManager() = 0;
+		/// <summary>
+		/// 物理シュミレーション管理クラスへのアクセス
+		/// </summary>
+		/// <returns></returns>
+		virtual Value_ptr<ButiBullet::PhysicsManager> GetPhysicsManager()const = 0;
 	};
 
 
