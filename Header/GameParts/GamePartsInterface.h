@@ -54,7 +54,7 @@ namespace ButiEngine
 	class SceneInformation;
 	class GameObjectManager;
 	namespace ImageFileIO {
-	class TextureResourceData;
+	struct TextureResourceData;
 	}
 
 	/// <summary>
@@ -953,11 +953,6 @@ namespace ButiEngine
 		virtual void Release()=0;
 
 		/// <summary>
-		/// マテリアルの更新
-		/// </summary>
-		virtual void MaterialUpdate()=0;
-
-		/// <summary>
 		/// メッシュの取得
 		/// </summary>
 		/// <param name="arg_key">検索タグ</param>
@@ -1030,6 +1025,19 @@ namespace ButiEngine
 		virtual bool Exist(const MotionTag& arg_tag)const = 0;
 		virtual bool Exist(const FontTag& arg_tag)const = 0;
 
+		virtual List < Value_ptr <ButiRendering::IResource_Mesh >>GetMeshes()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_Model >>GetModels()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_Texture >>GetTextures()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_Material >>GetMaterials()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_Shader >>GetShaders()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_VertexShader >>GetVertexShaders()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_PixelShader >>GetPixelShaders()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_GeometryShader >>GetGeometryShaders()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_Motion >>GetMotions()const = 0;
+		virtual List < Value_ptr <IResource_Font >>GetFonts()const = 0;
+		virtual List < Value_ptr <IResource_Sound>>GetSounds()const = 0;
+		virtual List < Value_ptr <IResource_Script>>GetScripts()const = 0;
+
 		/// <summary>
 		/// 再読み込み
 		/// </summary>
@@ -1039,11 +1047,7 @@ namespace ButiEngine
 		/// </summary>
 		virtual void Reload_async() = 0;
 
-		/// <summary>
-		/// 現在読み込み中かどうか
-		/// </summary>
-		/// <returns></returns>
-		virtual bool IsLoading() = 0;
+		virtual void WaitLoading() = 0;
 	};
 
 	/// <summary>
@@ -1207,6 +1211,17 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_pathIndex">描画パスのインデックス</param>
 		virtual void RemoveRenderingPath(const std::uint32_t arg_pathIndex) = 0;
+		/// <summary>
+		/// 描画パスの取得
+		/// </summary>
+		/// <param name="arg_pathName">使用するキー</param>
+		virtual Value_ptr<ButiRendering::IRenderingPath> GetRenderingPath(const std::string& arg_pathName)const = 0;
+		/// <summary>
+		/// 描画パスの取得
+		/// </summary>
+		/// <param name="arg_pathIndex">描画パスのインデックス</param>
+		virtual Value_ptr<ButiRendering::IRenderingPath> GetRenderingPath(const std::uint32_t arg_pathIndex)const = 0;
+		virtual std::int32_t GetRenderingPathCount()const = 0;
 		/// <summary>
 		/// 描画管理インスタンスの取得
 		/// </summary>

@@ -1,7 +1,11 @@
+#ifndef SCENEINFORMATION_H
+#define SCENEINFORMATION_H
+
 #pragma once
-
+#include"Header/Scene/RenderingPathData.h"
 namespace ButiEngine {
-
+namespace ButiRendering {
+}
 	struct SceneInformation :public IObject
 	{
 	public:
@@ -36,15 +40,9 @@ namespace ButiEngine {
 		void serialize(Archive& archive)
 		{
 			archive(vec_renderingPathInfo);
-			archive(vec_shadowCameraIndex);
-			archive(vec_shadowTextures);
-			archive(vec_staticShadowTextures);
 			archive(layerCount);
 		}
-		std::vector<Value_ptr<ButiRendering::RenderingPathInfo>> vec_renderingPathInfo;
-		std::vector<std::vector<TextureTag>> vec_shadowTextures;
-		std::vector<std::vector<TextureTag>> vec_staticShadowTextures;
-		std::vector<std::int32_t> vec_shadowCameraIndex;
+		std::vector<Value_ptr<ButiRendering::RenderingPathData>> vec_renderingPathInfo;
 		std::int32_t layerCount = 1;
 	private:
 	};
@@ -56,3 +54,4 @@ namespace ButiEngine {
 
 }
 
+#endif // !SCENEINFORMATION_H

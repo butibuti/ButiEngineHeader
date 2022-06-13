@@ -7,7 +7,7 @@
 namespace ButiEngine {
 class ResourceFactory_Dx12 :public ResourceFactory {
 public:
-	ResourceFactory_Dx12(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice);
+	ResourceFactory_Dx12(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice, Value_weak_ptr<IResourceContainer> arg_vwp_resourceContainer);
 	Value_ptr<ButiRendering::IResource_Texture> CreateTextureFromFile(const std::string& filePath)override;
 	Value_ptr<ButiRendering::IResource_Texture> CreateTextureFromPixelData(Value_ptr<ImageFileIO::TextureResourceData> arg_data);
 	Value_ptr<ButiRendering::IResource_Texture> CreateTextureFromPixelData(void* arg_p_pixelSrc, const std::int32_t arg_width, const std::int32_t arg_height, const std::int32_t arg_pixelSize, const std::int32_t arg_format) override;

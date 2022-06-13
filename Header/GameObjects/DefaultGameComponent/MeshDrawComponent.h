@@ -4,7 +4,6 @@
 #include"ButiRendering_Dx12/Header/Rendering_Dx12/CBuffer_Dx12.h"
 
 
-BUTI_REGIST_CBUFFER(ButiEngine::ButiRendering::TestGSVariable);
 
 
 BUTI_REGIST_CBUFFER(ButiEngine::ButiRendering::ObjectInformation);

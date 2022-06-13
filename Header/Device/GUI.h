@@ -4,6 +4,7 @@
 
 #pragma once
 #include"../ButiMath/ButiMath.h"
+#include"GUIWindowReaction.h"
 #include<string>
 
 namespace ButiEngine {
@@ -1224,6 +1225,8 @@ bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,FontTag& arg_ref_tag);
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,TextureTag& arg_ref_tag);
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ScriptTag& arg_ref_tag);
+
+GUIWindowReaction DisplayTexture(const std::string& arg_windowName,Value_ptr<ButiRendering::IResource_Texture> arg_vlp_texture,GuiWindowFlags arg_winFlag);
 }
 }
 

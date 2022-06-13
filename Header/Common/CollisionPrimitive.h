@@ -74,7 +74,10 @@ public:
 	}
 
 	void ShowUI() override {
+#ifdef BUTIENGINEBUILD
 		GUI::BulletText("Point");
+#endif // BUTIENGINEBUILD
+
 	}
 
 	template<class Archive>
@@ -125,10 +128,12 @@ public:
 	}
 
 	void ShowUI() override {
+#ifdef BUTIENGINEBUILD
 		GUI::BulletText("Ray");
 		if (GUI::DragFloat3("##rayVelocity", &initVelocity.x, 0.01f, -500, 500)) {
 			initVelocity.Normalize();
 		}
+#endif
 	}
 
 	template<class Archive>
@@ -183,9 +188,12 @@ public:
 	}
 
 	void ShowUI() override {
+
+#ifdef BUTIENGINEBUILD
 		GUI::BulletText("Ray");
 		if (GUI::DragFloat3("##EndPoint", endPos, 0.01f, -500, 500)) {
 		}
+#endif
 	}
 
 	template<class Archive>
@@ -232,12 +240,13 @@ public:
 	}
 	void ShowUI() override {
 
+#ifdef BUTIENGINEBUILD
 		if (GUI::TreeNode("Sphere")) {
 			GUI::BulletText("radius");
 			GUI::DragFloat("##radius", &originRadius, 0.01, 0, 500);
 			GUI::TreePop();
 		}
-
+#endif
 	}
 
 	template<class Archive>
@@ -286,6 +295,7 @@ public:
 	}
 	void ShowUI() override {
 
+#ifdef BUTIENGINEBUILD
 		if (GUI::TreeNode("Capsule")) {
 			GUI::BulletText("radius");
 			GUI::DragFloat("##radius", initR, 0.01f, 0.0f, 500.0f);
@@ -294,7 +304,7 @@ public:
 			GUI::DragFloat("##length", length, 0.01f, 0.0f, 500.0f);
 			GUI::TreePop();
 		}
-
+#endif
 	}
 
 	template<class Archive>
@@ -367,10 +377,13 @@ public:
 	}
 
 	void ShowUI() override {
+
+#ifdef BUTIENGINEBUILD
 		GUI::BulletText("Polygon");
 		for (std::int32_t i = 0; i < 3; i++) {
 			GUI::DragFloat3(("point##" + std::to_string(i)).c_str(), &initPoints[i].x, 0.01f, -100, 100);
 		}
+#endif
 	}
 
 	template<class Archive>
@@ -418,7 +431,7 @@ public:
 		return ret;
 	}
 	void ShowUI() override {
-
+#ifdef BUTIENGINEBUILD
 		if (GUI::TreeNode("Surface")) {
 			GUI::BulletText("Normal");
 			if (GUI::DragFloat3("##normal", &normal.x, 0.01, 0, 500)) {
@@ -426,7 +439,7 @@ public:
 			}
 			GUI::TreePop();
 		}
-
+#endif
 	}
 
 	template<class Archive>
@@ -470,11 +483,13 @@ public:
 	bool IsHitSegment(CollisionPrimitive_Segment* other)override;
 	void ShowUI() override {
 
+#ifdef BUTIENGINEBUILD
 		if (GUI::TreeNode("Box_AABB")) {
 			GUI::BulletText("Length");
 			GUI::DragFloat3("##length", &initLengthes.x, 0.01f, 0.0f, 500.0f);
 			GUI::TreePop();
 		}
+#endif
 	}
 
 	Value_ptr<CollisionPrimitive> Clone()override {
@@ -531,11 +546,13 @@ public:
 
 	void ShowUI() override {
 
+#ifdef BUTIENGINEBUILD
 		if (GUI::TreeNode("Box_OBB")) {
 			GUI::BulletText("Length");
 			GUI::DragFloat3("##length", &initLengthes.x, 0.01f, 0.0f, 500.0f);
 			GUI::TreePop();
 		}
+#endif
 	}
 
 	Value_ptr<CollisionPrimitive> Clone()override {

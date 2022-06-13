@@ -26,7 +26,12 @@ public:
 	Value_ptr<ButiRendering::IResource_Model>CreateModel(const std::string& modelPath, const std::string& fileDirectory = "");
 	Value_ptr<ButiRendering::IResource_Motion>CreateMotion(const std::string& modelPath, const std::string& fileDirectory = "");
 protected:
+	ResourceFactory(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice, Value_weak_ptr<IResourceContainer> arg_vwp_resourceContainer) {
+		vwp_graphicDevice = arg_vwp_graphicDevice;
+		vwp_resourceContainer = arg_vwp_resourceContainer;
+	}
 	Value_weak_ptr<ButiRendering::GraphicDevice> vwp_graphicDevice;
+	Value_weak_ptr<IResourceContainer> vwp_resourceContainer;
 private:
 	void ReadIndex(std::vector<std::uint32_t>& indices, char arg_indexByteCount, BinaryReader& arg_reader);
 	template<typename T>

@@ -4,10 +4,33 @@ namespace ButiScript {
 class CompiledData;
 class Compiler;
 }
+
 namespace ButiFont {
 class IFontInformation;
 }
 namespace ButiEngine {
+
+namespace ButiRendering {
+class IResource_Mesh;
+class IResource_Motion;
+class IResource_VertexShader;
+class IResource_PixelShader;
+class IResource_GeometryShader;
+class IResource_Shader;
+class IResource_Texture;
+class IResource_Model;
+class IResource_Material;
+}
+
+using MeshTag = ID<ButiRendering::IResource_Mesh>;
+using MotionTag = ID<ButiRendering::IResource_Motion>;
+using VertexShaderTag = ID < ButiRendering::IResource_VertexShader >;
+using PixelShaderTag = ID<ButiRendering::IResource_PixelShader>;
+using GeometryShaderTag = ID<ButiRendering::IResource_GeometryShader>;
+using ShaderTag = ID<ButiRendering::IResource_Shader>;
+using TextureTag = ID<ButiRendering::IResource_Texture>;
+using ModelTag = ID<ButiRendering::IResource_Model>;
+using MaterialTag = ID<ButiRendering::IResource_Material>;
 
 class IResource_Script;
 class IResource_Sound;
