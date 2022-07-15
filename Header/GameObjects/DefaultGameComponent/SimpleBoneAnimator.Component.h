@@ -24,7 +24,7 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(isActive);
-		archive(tag);
+		archive(m_motionTag);
 		archive(isLoop);
 		archive(pase);
 	}
@@ -32,7 +32,7 @@ public:
 private:
 	Value_ptr<ButiRendering::ModelAnimation> vlp_animation;
 	Value_ptr<ButiRendering::IModelObject > vlp_modelData;
-	MotionTag tag;
+	MotionTag m_motionTag;
 	bool isLoop;
 	float pase;
 };

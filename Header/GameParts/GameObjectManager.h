@@ -63,7 +63,4 @@ private:
 	std::string eventRegistKey;
 };
 
-void OutputCereal(const Value_ptr<GameObjectManager>& v, const std::string& path);
-
-void InputCereal(Value_ptr<GameObjectManager>& v, const std::string& path);
 }

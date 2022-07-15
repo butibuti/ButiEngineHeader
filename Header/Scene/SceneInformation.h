@@ -47,10 +47,6 @@ namespace ButiRendering {
 	private:
 	};
 
-	void OutputCereal(const Value_ptr<SceneRenderingInformation>& v, std::string arg_path);
-
-	void InputCereal(Value_ptr<SceneRenderingInformation>& v,std::string arg_path);
-
 
 }
 

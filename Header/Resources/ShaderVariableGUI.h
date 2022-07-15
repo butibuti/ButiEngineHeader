@@ -4,19 +4,19 @@
 namespace ButiEngine {
 namespace ButiRendering {
 
-struct ShaderVariable;
-struct RenderingSceneInfo;
+struct Matrices;
+struct RendererState;
 struct ObjectInformation;
-struct GausVariable;
+struct GausParameter;
 struct MaterialValue;
 struct MaterialValue_Deferred;
 struct ParticleParameter;
 }
 
-bool ShowUI(ButiRendering::ShaderVariable& arg_v);
-bool ShowUI(ButiRendering::RenderingSceneInfo& arg_v);
+bool ShowUI(ButiRendering::Matrices& arg_v);
+bool ShowUI(ButiRendering::RendererState& arg_v);
 bool ShowUI(ButiRendering::ObjectInformation& arg_v);
-bool ShowUI(ButiRendering::GausVariable& arg_v);
+bool ShowUI(ButiRendering::GausParameter& arg_v);
 bool ShowUI(ButiRendering::MaterialValue& arg_v);
 bool ShowUI(ButiRendering::MaterialValue_Deferred& arg_v);
 bool ShowUI(ButiRendering::ParticleParameter& arg_v);

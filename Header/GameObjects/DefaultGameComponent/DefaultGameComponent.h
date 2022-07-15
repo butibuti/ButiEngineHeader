@@ -15,7 +15,7 @@ enum class TextJustified {
 	left,right,center
 };
 namespace ButiRendering {
-class Resource_RealTimeMesh;
+class Resource_DynamicMesh;
 class ModelAnimation;
 class IModelObject;
 }
@@ -254,7 +254,7 @@ protected:
 	void RegistIK();
 private:
 	Value_ptr<ButiRendering::IModelObject> m_vlp_modelData;
-	std::vector<Value_ptr<ButiRendering::Bone>> m_vec_endBones;
+	List<Value_ptr<ButiRendering::Bone>> m_list_endBones;
 	std::vector<Value_ptr<ButiRendering::IKData>> m_vec_ikData;
 };
 
@@ -324,7 +324,7 @@ private:
 	List<Particle3D> m_list_particleInfo;
 	MeshTag m_meshTag;
 	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
-	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
+	Value_ptr<ButiRendering::Resource_DynamicMesh> m_vlp_mesh;
 	std::map < std::string, std::int32_t>m_map_particleControlIndex;
 	std::vector < std::function<void(Particle3D&)>>m_vec_particleControlFunction;
 	std::int32_t m_addParticleCount = 0;
@@ -398,7 +398,7 @@ private:
 	List<Particle2D> m_list_particleInfo;
 	MeshTag m_meshTag;
 	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
-	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
+	Value_ptr<ButiRendering::Resource_DynamicMesh> m_vlp_mesh;
 	std::int32_t m_addParticleCount = 0;
 	std::vector<std::pair< std::int32_t,std::int32_t>> vec_splitCountAndRequiredFrame;
 	std::map < std::string, std::int32_t>m_map_particleControlIndex;
@@ -535,10 +535,10 @@ protected:
 class MeshDrawComponent :public GameComponent
 {
 public:
-	MeshDrawComponent(const MeshTag& arg_meshTag, const ShaderTag& arg_shaderTag, const MaterialTag& arg_materialTag, Value_ptr<ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent(const MeshTag& arg_meshTag, const ShaderTag& arg_shaderTag, const std::vector< MaterialTag>& arg_materialTag, Value_ptr< ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent(const ModelTag& arg_modelTag, const ShaderTag& arg_shaderTag, Value_ptr<ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag, const ShaderTag& arg_shaderTag, const std::vector< MaterialTag>& arg_materialTag, Value_ptr<ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent(const MeshTag& arg_meshTag,const MaterialTag& arg_materialTag,const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent(const MeshTag& arg_meshTag, const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent(const ModelTag& arg_modelTag, const std::int32_t arg_layer,Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag,const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent() {}
 	std::string GetGameComponentName()const override {
 		return "MeshDraw";
@@ -546,35 +546,31 @@ public:
 	void OnUpdate()override;
 	void OnSet()override;
 	void OnRemove() override;
-	void SetBlendMode(const ButiRendering::BlendMode& arg_blendMode);
 	void SetMaterialTag(MaterialTag  arg_materialTag, const std::int32_t arg_index);
 	void SetMeshTag(MeshTag  arg_meshTag);
 	void SetModelTag(ModelTag  arg_modelTag);
-	void SetShaderTag(ShaderTag  arg_shaderTag);
 	const MeshTag& GetMeshTag();
-	const ShaderTag& GetShaderTag();
 	const ModelTag& GetModelTag();
 	const std::vector<MaterialTag>& GetMaterialTag();
 	Value_ptr<GameComponent> Clone()override;
 	virtual void Regist();
 	void ReRegist();
 	virtual void UnRegist();
-	Value_ptr< ButiRendering::DrawInformation > GetDrawInformation();
+	Value_ptr< ButiRendering::ObjectDrawData > GetDrawInformation();
 	void OnShowUI()override;
 	Value_ptr<Transform> GetTransform();
 
 	template <class T>
-	Value_ptr<ButiRendering::CBuffer< T>> CreateCBuffer(const std::string& arg_cBufferName, const std::uint32_t arg_slot, Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice);
+	Value_ptr<ButiRendering::CBuffer< T>> CreateCBuffer(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice);
 	template <class T>
-	Value_ptr<ButiRendering::CBuffer<T>> GetCBuffer(const std::string& arg_cBufferName) {
-		return m_data->GetDrawData().GetCBuffer<T>(arg_cBufferName);
+	Value_ptr<ButiRendering::CBuffer<T>> GetCBuffer() {
+		return m_data->GetThis<ButiRendering::DrawObject>()-> GetDrawData().GetCBuffer<T>();
 	}
 
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
 		archive(m_meshTag);
-		archive(m_shaderTag);
 		archive(m_modelTag);
 		archive(m_materialTag);
 		archive(isActive);
@@ -584,28 +580,27 @@ public:
 		archive(m_vlp_drawInfo);
 	}
 protected:
-	void ShowDrawSettingsUI(Value_ptr< ButiRendering::DrawInformation >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
-	void ShowExCBufferUI(Value_ptr<ButiRendering::DrawInformation >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
+	void ShowDrawSettingsUI(Value_ptr< ButiRendering::ObjectDrawData >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
+	void ShowExCBufferUI(Value_ptr<ButiRendering::ObjectDrawData >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
 	void BeforeTransformSave();
 	void AfterTransformSave();
-	Value_ptr< ButiRendering::DrawObject > m_data;
+	Value_ptr< ButiRendering::IDrawObject > m_data;
 	virtual void CreateData();
 	MeshTag m_meshTag;
-	ShaderTag m_shaderTag;
 	ModelTag m_modelTag;
 	Value_ptr<Transform> m_vlp_transform;
-	Value_ptr< ButiRendering::DrawInformation >m_vlp_drawInfo = nullptr;
+	Value_ptr< ButiRendering::ObjectDrawData >m_vlp_drawInfo = nullptr;
 	std::vector<MaterialTag> m_materialTag;
-
+	std::int32_t m_layer = 0;
 	bool isCereal = true;
 };
 class MeshDrawComponent_Static :public MeshDrawComponent
 {
 public:
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ShaderTag& arg_shaderTag, const MaterialTag& arg_materialTag, Value_ptr< ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ShaderTag& arg_shaderTag, const std::vector< MaterialTag>& arg_materialTag, Value_ptr< ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const ModelTag& arg_modelTag, const ShaderTag& arg_shaderTag, Value_ptr<ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag, const ShaderTag& arg_shaderTag, const std::vector< MaterialTag>& arg_materialTag, Value_ptr< ButiRendering::DrawInformation >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const MaterialTag& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent_Static(const ModelTag& arg_modelTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag, const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent_Static() {}
 	std::string GetGameComponentName()const override {
 		return "MeshDraw_Static";
@@ -616,7 +611,6 @@ public:
 	void serialize(Archive& archive)
 	{
 		archive(m_meshTag);
-		archive(m_shaderTag);
 		archive(m_modelTag);
 		archive(m_materialTag);
 		archive(isActive);
@@ -647,7 +641,6 @@ public:
 	{
 		archive(m_fontTag);
 		archive(m_text);
-		archive(m_shaderTag);
 		archive(m_modelTag);
 		archive(m_materialTag);
 		archive(isActive);
@@ -679,7 +672,7 @@ protected:
 	std::string m_text;
 	std::int32_t m_textMeshSize = 256;
 	TextJustified m_just=TextJustified::left;
-	Value_ptr<ButiRendering::Resource_RealTimeMesh> m_vlp_mesh;
+	Value_ptr<ButiRendering::Resource_DynamicMesh> m_vlp_mesh;
 };
 
 

@@ -87,7 +87,7 @@ using GuiTabBarFlags=std::int32_t;
 using GuiTabItemFlags=std::int32_t;
 using GuiTreeNodeFlags=std::int32_t;
 using GuiWindowFlags=std::int32_t;
-
+using GUIMouseButton = std::int32_t;
 
 
 enum DrawCornerFlags_
@@ -625,13 +625,38 @@ enum GuiDockNodeFlags_
 	GuiDockNodeFlags_PassthruCentralNode = 1 << 5,   // Enable passthru dockspace: 1) DockSpace() will render a GuiCol_WindowBg background covering everything excepted the Central Node when empty. Meaning the host window should probably use SetNextWindowBgAlpha(0.0f) prior to Begin() when using this. 2) When Central Node is empty: let inputs pass-through + won't display a DockingEmptyBg background. See demo for details.
 	GuiDockNodeFlags_AutoHideTabBar = 1 << 6    // Tab bar will automatically hide when there is a single window in the dock node.
 };
-// Enumeration for PushStyleColor() / PopStyleColor()
+enum GUIMouseButton_
+{
+	GUIMouseButton_Left = 0,
+	GUIMouseButton_Right = 1,
+	GUIMouseButton_Middle = 2,
+	GUIMouseButton_COUNT = 5
+};
 
 static bool isReverse = true;
 
 
 enum  GUIState {
 	enable , active  , noActive 
+};
+
+// Data payload for Drag and Drop operations: AcceptDragDropPayload(), GetDragDropPayload()
+struct GUIPayload
+{
+	void* Data;
+	int             DataSize; 
+	std::uint32_t         SourceId;      
+	std::uint32_t         SourceParentId;
+	int             DataFrameCount;   
+	char            DataType[32 + 1]; 
+	bool            Preview;          
+	bool            Delivery;         
+
+	GUIPayload() { Clear(); }
+	void Clear() { SourceId = SourceParentId = 0; Data = NULL; DataSize = 0; memset(DataType, 0, sizeof(DataType)); DataFrameCount = -1; Preview = Delivery = false; }
+	bool IsDataType(const char* type) const { return DataFrameCount != -1 && strcmp(type, DataType) == 0; }
+	bool IsPreview() const { return Preview; }
+	bool IsDelivery() const { return Delivery; }
 };
 
 class IGUIAction {
@@ -957,7 +982,7 @@ bool Button(const std::string& label, const Vector2& size = Vector2(0, 0));
 bool SmallButton(const std::string& label);
 bool InvisibleButton(const std::string& str_id, const Vector2& size, GuiButtonFlags flags = 0);
 bool ArrowButton(const std::string& str_id, GuiDir dir);   
-
+bool ImageButton(void* user_texture_id, const Vector2& size, const Vector2& uv0 = Vector2(0, 0), const Vector2& uv1 = Vector2(1, 1),const std::int32_t frame_padding = -1, const Vector4& bg_col = Vector4(0, 0, 0, 0), const Vector4& tint_col = Vector4(1, 1, 1, 1));
 bool Checkbox(const std::string& label, bool* v);
 bool Checkbox(const std::string& label, bool& v);
 bool CheckboxFlags(const std::string& label,  std::uint32_t& flags, std::uint32_t flags_value);
@@ -1043,7 +1068,7 @@ bool BeginPopupContextVoid(const std::string& str_id = NULL, GuiPopupFlags popup
 
 bool IsPopupOpen(const std::string& str_id, GuiPopupFlags flags = 0);
 
-void Columns(std::int32_t count = 1, const std::string& id = NULL, bool border = true);
+void Columns(std::int32_t count = 1, const std::string& id = "", bool border = true);
 void NextColumn();
 std::int32_t  GetColumnIndex();
 float GetColumnWidth(std::int32_t column_index = -1);
@@ -1173,18 +1198,6 @@ void EditorGUIUpdate();
 void Draw();
 void Release();
 void SetDraggingObject(const ButiEngine::Value_ptr<IObject>& arg_vlp_draggingObject);
-void SetResourceTag(const MeshTag& arg_tag);
-void SetResourceTag(const SoundTag& arg_tag);
-void SetResourceTag(const MotionTag& arg_tag);
-void SetResourceTag(const MaterialTag& arg_tag);
-void SetResourceTag(const ModelTag& arg_tag);
-void SetResourceTag(const ShaderTag& arg_tag);
-void SetResourceTag(const VertexShaderTag& arg_tag);
-void SetResourceTag(const PixelShaderTag& arg_tag);
-void SetResourceTag(const GeometryShaderTag& arg_tag);
-void SetResourceTag(const TextureTag& arg_tag);
-void SetResourceTag(const ScriptTag& arg_tag);
-void SetResourceTag(const FontTag& arg_tag);
 void SetDraggingCamera(Value_ptr<ButiRendering::ICamera>arg_vlp_camera);
 #ifdef _EDITORBUILD
 void OccurGUIAction(IGUIAction* arg_p_act);
@@ -1199,19 +1212,16 @@ void UnRegistEditorGUIObject(Value_ptr<IObject>arg_obj);
 Value_ptr<IObject> GetDraggingObject();
 Value_ptr<ButiRendering::ICamera> GetDraggingCamera();
 
-const MeshTag& GetMeshTag();
-const SoundTag& GetSoundTag();
-const MotionTag& GetMotionTag();
-const MaterialTag& GetMaterialTag();
-const ModelTag& GetModelTag();
-const ShaderTag& GetShaderTag();
-const VertexShaderTag& GetVertexShaderTag();
-const PixelShaderTag& GetPixelShaderTag();
-const GeometryShaderTag& GetGeometryShaderTag();
-const FontTag& GetFontTag();
-const TextureTag& GetTextureTag();
-const ScriptTag& GetScriptTag();
 GuiIO& GetGUIIO();
+
+bool BeginDragDropSource(GuiDragDropFlags flags = 0); 
+bool SetDragDropPayload(const char* type, const void* data, size_t sz, GuiCond cond = 0); 
+void EndDragDropSource();
+bool BeginDragDropTarget();
+const GUIPayload* AcceptDragDropPayload(const char* type,GuiDragDropFlags flags = 0);
+void EndDragDropTarget();
+const GUIPayload* GetDragDropPayload();
+const GUIPayload* GetAcceptDragDropPayload(const std::string& arg_type,GuiDragDropFlags arg_flag=GuiDragDropFlags_None);
 
 bool DragDropTag(const std::string& arg_label, const std::string& arg_currentName, MeshTag& arg_ref_tag);
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,SoundTag& arg_ref_tag);
@@ -1225,6 +1235,10 @@ bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,FontTag& arg_ref_tag);
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,TextureTag& arg_ref_tag);
 bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ScriptTag& arg_ref_tag);
+
+bool IsMouseClicked(GUIMouseButton arg_button);
+bool IsMouseDoubleClicked(GUIMouseButton arg_button);
+bool IsMouseDown(GUIMouseButton arg_button);
 
 GUIWindowReaction DisplayTexture(const std::string& arg_windowName,Value_ptr<ButiRendering::IResource_Texture> arg_vlp_texture,GuiWindowFlags arg_winFlag);
 }

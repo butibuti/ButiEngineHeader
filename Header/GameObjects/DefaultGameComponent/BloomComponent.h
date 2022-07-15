@@ -2,7 +2,7 @@
 #include"MeshDrawComponent.h"
 namespace ButiEngine {
 namespace ButiRendering {
-struct GausVariable;
+struct GausParameter;
 }
 class BloomComponent :public GameComponent {
 public:
@@ -26,7 +26,7 @@ public:
 	void AcquisitionGausParam();
 private:
 	void UpdateBuffer();
-	Value_ptr<ButiRendering::CBuffer<ButiRendering::GausVariable>> m_vlp_param;
+	Value_ptr<ButiRendering::CBuffer<ButiRendering::GausParameter>> m_vlp_param;
 	float m_deviation = 0.0f;
 	Vector2 m_direction = Vector2(1, 0);
 	Vector2 m_scale = Vector2(480, 270);

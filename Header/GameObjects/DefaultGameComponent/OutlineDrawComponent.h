@@ -19,27 +19,26 @@ namespace ButiEngine {
 		void serialize(Archive& archive)
 		{
 			archive(m_meshTag);
-			archive(m_shaderTag);
 			archive(m_modelTag);
-			archive(outlineMeshTag);
-			archive(outlineShaderTag);
-			archive(outlineModelTag);
+			archive(m_outlineMeshTag);
+			archive(m_outlineModelTag);
 			archive(m_materialTag);
+			archive(m_outlineMaterialTag);
 			archive(isActive);
 			BeforeTransformSave();
 			archive(m_vlp_transform);
 			AfterTransformSave();
 			archive(m_vlp_drawInfo);
-			archive(vlp_outlineDrawInfo);
+			archive(m_vlp_outlineDrawInfo);
 		}
 
 		void CreateData()override;
 	protected:
-		MeshTag outlineMeshTag;
-		ModelTag outlineModelTag;
-		ShaderTag outlineShaderTag;
+		MeshTag m_outlineMeshTag;
+		ModelTag m_outlineModelTag;
+		std::vector<MaterialTag>m_outlineMaterialTag;
 
-		Value_ptr<ButiRendering::DrawInformation >vlp_outlineDrawInfo = nullptr;
+		Value_ptr<ButiRendering::ObjectDrawData >m_vlp_outlineDrawInfo = nullptr;
 
 	}; 
 	class OutlineModelDrawComponent :public ModelDrawComponent
@@ -58,27 +57,26 @@ namespace ButiEngine {
 		void serialize(Archive& archive)
 		{
 			archive(m_meshTag);
-			archive(m_shaderTag);
 			archive(m_modelTag);
-			archive(outlineMeshTag);
-			archive(outlineShaderTag);
-			archive(outlineModelTag);
+			archive(m_outlineMeshTag);
+			archive(m_outlineModelTag);
+			archive(m_outlineMaterialTag);
 			archive(m_materialTag);
 			archive(isActive);
 			BeforeTransformSave();
 			archive(m_vlp_transform);
 			AfterTransformSave();
 			archive(m_vlp_drawInfo);
-			archive(vlp_outlineDrawInfo);
+			archive(m_vlp_outlineDrawInfo);
 		}
 
 		void CreateData()override;
 	protected:
-		MeshTag outlineMeshTag;
-		ModelTag outlineModelTag;
-		ShaderTag outlineShaderTag;
+		MeshTag m_outlineMeshTag;
+		ModelTag m_outlineModelTag;
+		std::vector<MaterialTag>m_outlineMaterialTag;
 
-		Value_ptr<ButiRendering::DrawInformation >vlp_outlineDrawInfo = nullptr;
+		Value_ptr<ButiRendering::ObjectDrawData >m_vlp_outlineDrawInfo = nullptr;
 
 	};
 }

@@ -19,7 +19,6 @@ namespace ButiEngine {
 		void serialize(Archive& archive)
 		{
 			archive(m_meshTag);
-			archive(m_shaderTag);
 			archive(m_modelTag);
 			archive(m_materialTag);
 			archive(isActive);

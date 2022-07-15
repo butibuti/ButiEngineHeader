@@ -20,6 +20,7 @@ struct ForwardCameraRenderingPathData :public RenderingPathData {
 	std::vector<TextureTag> m_vec_shadowTextures;
 	std::vector<TextureTag> m_vec_staticShadowTextures;
 	TextureTag m_depthStencil;
+	bool m_isPlayActive=true, m_isEditActive=false;
 	Value_ptr<IRenderingPath> CreateRenderingPath(Value_ptr<IRenderer> arg_vlp_renderer, Value_ptr<GraphicDevice> arg_vlp_graphicDevice, Value_ptr<IScene> arg_vlp_scene)override;
 	template<class Archive>
 	void serialize(Archive& archive)
@@ -31,6 +32,8 @@ struct ForwardCameraRenderingPathData :public RenderingPathData {
 		archive(m_vec_shadowTextures);
 		archive(m_vec_staticShadowTextures);
 		archive(m_depthStencil);
+		archive(m_isPlayActive);
+		archive(m_isEditActive);
 	}
 };
 struct DeferredCameraRenderingPathData :public RenderingPathData {
@@ -39,6 +42,7 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 	std::string m_forwardCameraPathName;
 	std::vector<TextureTag> m_vec_rendertarget;
 	TextureTag m_depthStencil;
+	bool m_isPlayActive = true, m_isEditActive = false;
 	Value_ptr<IRenderingPath> CreateRenderingPath(Value_ptr<IRenderer> arg_vlp_renderer, Value_ptr<GraphicDevice> arg_vlp_graphicDevice, Value_ptr<IScene> arg_vlp_scene)override;
 	template<class Archive>
 	void serialize(Archive& archive)
@@ -53,7 +57,7 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 };
 Value_ptr<RenderingPathData> CreateRenderingPathData(Value_ptr<IRenderingPath> arg_vlp_renderingPath);
 
-bool CameraEditGUI(Value_ptr<ICamera> arg_camera, Value_ptr<IResourceContainer> arg_container);
+bool CameraEditGUI(Value_ptr<IRenderingPath> arg_renderingPath, Value_ptr<IResourceContainer> arg_container);
 
 
 

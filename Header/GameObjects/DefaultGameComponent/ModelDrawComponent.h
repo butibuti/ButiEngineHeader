@@ -9,7 +9,7 @@ class IModelObject;
 	class ModelDrawComponent :public MeshDrawComponent
 	{
 	public:
-		ModelDrawComponent(const ModelTag& arg_modelTag, const ShaderTag& arg_shaderTag, Value_ptr< ButiRendering::DrawInformation >arg_vlp_drawInfo,  Value_ptr<Transform> arg_vlp_transform = nullptr);
+		ModelDrawComponent(const ModelTag& arg_modelTag,  Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo,  Value_ptr<Transform> arg_vlp_transform = nullptr);
 		ModelDrawComponent() {}
 		std::string GetGameComponentName()const override {
 			return "ModelDraw";
@@ -26,7 +26,6 @@ class IModelObject;
 		void serialize(Archive& archive)
 		{
 			archive(m_meshTag);
-			archive(m_shaderTag);
 			archive(m_modelTag);
 			archive(m_materialTag);
 			archive(isActive);
