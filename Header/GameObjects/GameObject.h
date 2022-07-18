@@ -205,9 +205,4 @@ protected:
 	List<Value_ptr<GameObject>> m_list_vwp_currentCollisionObject, m_list_vwp_beforeCollisionObject, m_list_vwp_delayAddCurrentCollisionObject;
 	std::mutex mtx_collisionAdd;
 };
-
-
-void OutputCereal(const Value_ptr<GameObject>& v);
-
-void InputCereal(Value_ptr<GameObject>& v, const std::string& path);
 }

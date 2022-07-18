@@ -18,10 +18,6 @@ namespace ButiEngine {
 	private:
 		IDManager<GameObject> idManager;
 	};
-
-	void OutputCereal(const Value_ptr<GameObjectTagManager>& v, const std::string& arg_filePath);
-
-	void InputCereal(Value_ptr<GameObjectTagManager>& v,const std::string& arg_filePath );
 }
 
 

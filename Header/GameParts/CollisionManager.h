@@ -33,9 +33,4 @@ struct ColiisionLayerLoadData {
 Value_ptr<ICollisionManager> CreateCollisionManager(const std::int32_t arg_layerCount);
 
 }
-
-
-void OutputCereal(const Collision:: ColiisionLayerLoadData& v,  const std::string& path);
-
-void InputCereal(Collision::ColiisionLayerLoadData& v, const std::string& path);
 }
