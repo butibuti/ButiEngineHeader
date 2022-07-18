@@ -14,7 +14,7 @@ public:
 	Application() {};
 	void Initialize()override {}
 	void PreInitialize()override {}
-	void CreateInstances(ApplicationInitData& arg_data);
+	void CreateInstances(GameAssetData::ApplicationInitData& arg_data);
 	std::unique_ptr<IWindow>& GetWindow()override;
 	Value_ptr<ISceneManager> GetSceneManager()override;
 	Value_ptr<ButiRendering::GraphicDevice> GetGraphicDevice()override;
@@ -28,7 +28,7 @@ public:
 	void PreLoadResources()override;
 	void Exit()override;
 	std::int64_t GetBefFrame()const override;
-	const ApplicationInitData* GetAppInitData()const override;
+	const GameAssetData::ApplicationInitData* GetAppInitData()const override;
 private:
 	Value_ptr<ButiRendering::GraphicDevice>vlp_graphicDevice;
 	std::unique_ptr<IWindow> unq_window;
@@ -40,7 +40,7 @@ private:
 	std::int64_t befFrameTime=0;
 	std::int32_t frameTimesBuffIndex=0;
 	float frameTimesBuff[60];
-	ApplicationInitData appInitData;
+	GameAssetData::ApplicationInitData appInitData;
 	FrameRateInformation frameInfo;
 #ifdef _EDITORBUILD
 

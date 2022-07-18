@@ -4,6 +4,7 @@
 #include"ButiUtil/ButiUtil/ObjectFactory.h"
 #include"ButiMemorySystem/ButiMemorySystem/ButiPtr.h"
 #include"ButiEngineHeader/Header/Common/GlobalSettings.h"
+#include"GameAssetData.h"
 namespace ButiBullet {
 class RigidBody;
 class PhysicsWorld;
@@ -16,9 +17,6 @@ namespace ButiEngine
 		class CollisionPrimitive;
 	}
 
-	enum class WindowPopType {
-		normal = SW_SHOWNORMAL, max = SW_SHOWMAXIMIZED
-	};
 	namespace ButiRendering {
 	class IDrawObject;
 	template<typename T>
@@ -437,99 +435,6 @@ namespace ButiEngine
 #endif
 
 	};
-
-
-	struct ShaderAssetData {
-		std::string shaderName;
-		VertexShaderTag vertexShaderTag;
-		PixelShaderTag pixelShaderTag;
-		GeometryShaderTag geometryShaderTag;
-		template<class Archive>
-		void serialize(Archive& archive)
-		{
-			archive(shaderName);
-			archive(vertexShaderTag);
-			archive(pixelShaderTag);
-			archive(geometryShaderTag);
-		}
-	};
-	struct MaterialAssetData {
-		MaterialAssetData() {}
-		std::string m_materialName;
-		std::string m_filePath = "none";
-		ButiRendering::MaterialValue m_value;
-		std::vector<TextureTag> m_vec_textures;
-		ShaderTag m_shader;
-		bool m_isList=false;
-		ButiRendering::DrawSettings m_drawSettings;
-		template<class Archive>
-		void serialize(Archive& archive)
-		{
-			archive(m_materialName);
-			archive(m_value);
-			archive(m_vec_textures);
-			archive(m_shader);
-			archive(m_filePath);
-			archive(m_isList);
-			archive(m_drawSettings);
-		}
-	};
-	struct RenderTargetAssetData {
-		std::string m_materialName;
-		std::string m_filePath = "none";
-		std::int32_t m_width, m_height,m_format;
-		Vector4 m_color;
-		template<class Archive>
-		void serialize(Archive& archive)
-		{
-			archive(m_materialName);
-			archive(m_filePath);
-			archive(m_width);
-			archive(m_height);
-			archive(m_format);
-			archive(m_color);
-		}
-	};
-	struct DepthStencilAssetData {
-		std::string m_materialName;
-		std::string m_filePath = "none";
-		std::int32_t m_width, m_height;
-		template<class Archive>
-		void serialize(Archive& archive)
-		{
-			archive(m_materialName);
-			archive(m_filePath);
-			archive(m_width);
-			archive(m_height);
-		}
-	};
-	struct AssetLoadData
-	{
-		//backupdata
-		std::vector<std::string> vec_filePathAndDirectory_tex, vec_filePathAndDirectory_ps, vec_filePathAndDirectory_vs, vec_filePathAndDirectory_gs
-			, vec_filePathAndDirectory_cs, vec_filePathAndDirectory_shader, vec_filePathAndDirectory_font, vec_filePathAndDirectory_sound, vec_filePathAndDirectory_model
-			, vec_filePathAndDirectory_motion, vec_filePathAndDirectory_script, vec_filePathAndDirectory_gameObject, vec_filePathAndDirectory_material;
-		template<class Archive>
-		void serialize(Archive& archive)
-		{
-			archive(vec_filePathAndDirectory_tex);
-			archive(vec_filePathAndDirectory_ps);
-			archive(vec_filePathAndDirectory_vs);
-			archive(vec_filePathAndDirectory_gs);
-			archive(vec_filePathAndDirectory_cs);
-			archive(vec_filePathAndDirectory_font);
-			archive(vec_filePathAndDirectory_sound);
-			archive(vec_filePathAndDirectory_model);
-			archive(vec_filePathAndDirectory_motion);
-			archive(vec_filePathAndDirectory_script);
-			archive(vec_filePathAndDirectory_gameObject);
-			archive(vec_filePathAndDirectory_material);
-			archive(vec_filePathAndDirectory_shader);
-		}
-	};
-
-	void InputCereal(AssetLoadData& v, const std::string& arg_fileName);
-	void OutputCereal(const AssetLoadData& v, const std::string& arg_fileName);
 	/// <summary>
 	/// リソース管理インターフェース
 	/// </summary>
@@ -568,7 +473,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_resourceMaterial">マテリアル情報</param>
 		/// <returns>読み込んだマテリアルのタグ</returns>
-		virtual MaterialTag LoadMaterial(const MaterialAssetData& arg_resourceMaterial) =0;
+		virtual MaterialTag LoadMaterial(const GameAssetData::MaterialAssetData& arg_resourceMaterial) =0;
 		/// <summary>
 		/// マテリアルをファイルから読み込み
 		/// </summary>
@@ -580,7 +485,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_vec_filePathAndDirectory">読み込み情報のvector</param>
 		/// <returns>読み込んだマテリアルのタグのvector</returns>
-		virtual std::vector < MaterialTag> LoadMaterial(const std::vector<MaterialAssetData>& arg_vec_loadInfo) = 0;
+		virtual std::vector < MaterialTag> LoadMaterial(const std::vector<GameAssetData::MaterialAssetData>& arg_vec_loadInfo) = 0;
 		/// <summary>
 		/// マテリアルの一括読み込み
 		/// </summary>
@@ -590,9 +495,23 @@ namespace ButiEngine
 		/// <summary>
 		/// テクスチャ読み込み
 		/// </summary>
-		/// <param name="arg_fileName">テクスチャの名前</param>
+		/// <param name="arg_filePath">テクスチャのパス</param>
 		/// <returns></returns>
 		virtual TextureTag LoadTexture(const std::string& arg_filePath) = 0;
+		/// <summary>
+		/// テクスチャ読み込み
+		/// </summary>
+		/// <param name="arg_filePath">テクスチャのパス</param>
+		/// <param name="arg_assetData">レンダーターゲットテクスチャの情報</param>
+		/// <returns></returns>
+		virtual TextureTag LoadTexture(const std::string& arg_filePath,const GameAssetData::RenderTargetAssetData& arg_assetData) = 0;
+		/// <summary>
+		/// テクスチャ読み込み
+		/// </summary>
+		/// <param name="arg_filePath">テクスチャのパス</param>
+		/// <param name="arg_assetData">深度テクスチャの情報</param>
+		/// <returns></returns>
+		virtual TextureTag LoadTexture(const std::string& arg_filePath,const GameAssetData::DepthStencilAssetData& arg_assetData) = 0;
 		/// <summary>
 		/// テクスチャ作成
 		/// </summary>
@@ -679,7 +598,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_shaderInfos">シェーダの情報</param>
 		/// <returns>生成したシェーダのタグ</returns>
-		virtual ShaderTag LoadShader(const  ShaderAssetData& arg_shaderInfos) = 0;
+		virtual ShaderTag LoadShader(const  GameAssetData::ShaderAssetData& arg_shaderInfos) = 0;
 		/// <summary>
 		/// シェーダの生成
 		/// </summary>
@@ -697,7 +616,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_vec_shaderInfos">シェーダ情報のvector</param>
 		/// <returns>生成したシェーダのvector</returns>
-		virtual std::vector < ShaderTag> LoadShader(const std::vector<ShaderAssetData>& arg_vec_shaderInfos) = 0;
+		virtual std::vector < ShaderTag> LoadShader(const std::vector<GameAssetData::ShaderAssetData>& arg_vec_shaderInfos) = 0;
 		/// <summary>
 		/// 音声の読み込み
 		/// </summary>
@@ -975,16 +894,6 @@ namespace ButiEngine
 	class IApplication :public IObject
 	{
 	public:
-		//アプリケーション初期化用構造体
-		struct ApplicationInitData {
-			std::string appWindowName;
-			std::string initSceneName ;
-			WindowPopType popType ;
-			std::int32_t windowWidth ;
-			std::int32_t windowHeight;
-			bool isFullScreen;
-			HINSTANCE hInstance=nullptr;
-		};
 		struct FrameRateInformation {
 			float averageFPS;
 			float currentFPS;
@@ -1052,7 +961,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <returns>前回のフレームの所要時間(ミリ秒)</returns>
 		virtual std::int64_t GetBefFrame()const = 0;
-		virtual const ApplicationInitData* GetAppInitData()const=0;
+		virtual const GameAssetData::ApplicationInitData* GetAppInitData()const=0;
 
 #ifdef _EDITORBUILD
 		virtual const FrameRateInformation& GetFrameInformation()const=0;
@@ -1216,8 +1125,6 @@ namespace ButiEngine
 	};
 
 
-	void OutputCereal(const AssetLoadData& v, const std::string& arg_fileName);
-	void InputCereal(AssetLoadData& v, const std::string& arg_fileName);
 }
 
 
