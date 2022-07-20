@@ -9,6 +9,7 @@ public:
 	void CreateTexture();
 	void EditTexture();
 	void SetEditTexture(TextureTag arg_tag);
+	void DisplayCurrentEditTexture();
 private:
 	class Impl;
 	Impl* m_p_impl;

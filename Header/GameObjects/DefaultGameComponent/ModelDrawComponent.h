@@ -30,7 +30,8 @@ class IModelObject;
 			archive(m_materialTag);
 			archive(isActive);
 			archive(m_vlp_transform);
-			archive(m_vlp_drawInfo);
+			archive(m_vlp_drawInfo); 
+			archive(m_layer);
 		}
 
 

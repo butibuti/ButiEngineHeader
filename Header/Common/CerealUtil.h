@@ -65,7 +65,7 @@ void OutputCereal(const T& v, const std::string& arg_fileName)
 		cereal::JSONOutputArchive jsonOutArchive(stream);
 		jsonOutArchive(v);
 	}
-	_mkdir(StringHelper::GetDirectory(arg_fileName).c_str());
+	_mkdir((GlobalSettings::GetResourceDirectory()+StringHelper::GetDirectory(arg_fileName)).c_str());
 	std::ofstream outputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	outputFile << stream.str();
 	outputFile.close();

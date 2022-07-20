@@ -928,6 +928,7 @@ bool DragFloatRange2(const std::string& label, float& v_current_min, float& v_cu
 bool DragInt(const std::string& label, std::int32_t& v, float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", GuiSliderFlags flags = 0);
 bool DragInt(const std::string& label, std::int32_t* v, float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", GuiSliderFlags flags = 0);
 bool DragInt2(const std::string& label, std::int32_t v[2], float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", GuiSliderFlags flags = 0);
+bool DragInt2(const std::string& label, Int2& v, float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", GuiSliderFlags flags = 0);
 bool DragInt3(const std::string& label, std::int32_t v[3], float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", GuiSliderFlags flags = 0);
 bool DragInt4(const std::string& label, std::int32_t v[4], float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", GuiSliderFlags flags = 0);
 bool DragIntRange2(const std::string& label, std::int32_t& v_current_min, std::int32_t& v_current_max, float v_speed = 1.0f, std::int32_t v_min = 0, std::int32_t v_max = 0, const std::string& format = "%d", const std::string& format_max = NULL, GuiSliderFlags flags = 0);

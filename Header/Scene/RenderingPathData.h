@@ -11,7 +11,7 @@ void RendererGUI(Value_ptr<IRenderer> arg_vlp_renderer, Value_ptr<IScene> arg_vl
 
 struct RenderingPathData :public IObject {
 	virtual Value_ptr<IRenderingPath> CreateRenderingPath(Value_ptr<IRenderer> arg_vlp_renderer, Value_ptr<GraphicDevice> arg_vlp_graphicDevice, Value_ptr<IScene> arg_vlp_scene) = 0;
-	std::int32_t m_order = 0;
+	std::int32_t m_layer=0;
 };
 struct ForwardCameraRenderingPathData :public RenderingPathData {
 	Value_ptr<Transform> m_vlp_cameraTransform;
@@ -27,7 +27,7 @@ struct ForwardCameraRenderingPathData :public RenderingPathData {
 	{
 		archive(m_vlp_cameraTransform);
 		archive(m_vlp_cameraProp);
-		archive(m_order);
+		archive(m_layer);
 		archive(m_vec_rendertarget);
 		archive(m_vec_shadowTextures);
 		archive(m_vec_staticShadowTextures);
@@ -50,7 +50,7 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 		archive(m_vlp_cameraTransform);
 		archive(m_vlp_cameraProp);
 		archive(m_forwardCameraPathName);
-		archive(m_order);
+		archive(m_layer);
 		archive(m_vec_rendertarget);
 		archive(m_depthStencil);
 	}

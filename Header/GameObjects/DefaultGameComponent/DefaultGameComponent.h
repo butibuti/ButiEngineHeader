@@ -578,6 +578,7 @@ public:
 		archive(m_vlp_transform);
 		AfterTransformSave();
 		archive(m_vlp_drawInfo);
+		archive(m_layer);
 	}
 protected:
 	void ShowDrawSettingsUI(Value_ptr< ButiRendering::ObjectDrawData >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
@@ -618,6 +619,7 @@ public:
 		archive(m_vlp_transform);
 		AfterTransformSave();
 		archive(m_vlp_drawInfo);
+		archive(m_layer);
 	}
 protected:
 };
@@ -650,6 +652,7 @@ public:
 		archive(m_map_color);
 		archive(m_textMeshSize);
 		archive(m_just);
+		archive(m_layer);
 	}
 	void SetText(const std::string& arg_text);
 	void SetText(const std::string& arg_text,const Vector4& arg_color);

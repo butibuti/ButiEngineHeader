@@ -30,6 +30,7 @@ namespace ButiEngine {
 			AfterTransformSave();
 			archive(m_vlp_drawInfo);
 			archive(m_vlp_outlineDrawInfo);
+			archive(m_layer);
 		}
 
 		void CreateData()override;
