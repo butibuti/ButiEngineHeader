@@ -7,7 +7,7 @@
 #include"ButiMemorySystem/ButiMemorySystem/ButiPtr.h"
 #include "../Library/ButiUtil/ButiUtil/Easing.h"
 #include"../Library/ButiUtil/ButiUtil/Helper/StringHelper.h"
-#include"../Library/ButiUtil/ButiUtil/BinaryReader.h"
+#include"../Library/ButiUtil/ButiUtil/BinaryObject.h"
 
 #include"../Library/ButiUtil/ButiUtil/Util.h"
 #include"../Library/ButiUtil/ButiUtil/ID.h"

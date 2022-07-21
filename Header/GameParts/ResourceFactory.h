@@ -10,8 +10,20 @@ public:
 	virtual Value_ptr<ButiRendering::IResource_Texture> CreateEmptyTexture(const std::uint32_t width, const std::uint32_t height) = 0;
 	virtual Value_ptr<ButiRendering::Resource_DynamicMesh> CreateDynamicMesh(const std::string& arg_meshName, const List< ButiEngine::Value_ptr< ButiRendering::MeshPrimitiveBase>>& arg_list_vlp_inputMeshData) = 0;
 
-	Value_ptr<ButiRendering::IResource_Model>CreateModel(const std::string& modelPath, const std::string& fileDirectory = "");
-	Value_ptr<ButiRendering::IResource_Motion>CreateMotion(const std::string& modelPath, const std::string& fileDirectory = "");
+	Value_ptr<ButiRendering::IResource_Model>CreateModel(Value_ptr<IBinaryReader> arg_reader, const std::string& arg_modelPath);
+	Value_ptr<ButiRendering::IResource_Model>CreateModel(const std::string& arg_modelPath) {
+		auto reader = make_value<BinaryReader_File>(GlobalSettings::GetResourceDirectory() + arg_modelPath);
+		auto output = CreateModel(reader,arg_modelPath);
+		reader->ReadEnd();
+		return output;
+	}
+	Value_ptr<ButiRendering::IResource_Motion>CreateMotion(Value_ptr<IBinaryReader> arg_reader);
+	Value_ptr<ButiRendering::IResource_Motion>CreateMotion(const std::string& arg_modelPath) {
+		auto reader = make_value<BinaryReader_File>(GlobalSettings::GetResourceDirectory() + arg_modelPath);
+		auto output = CreateMotion(reader);
+		reader->ReadEnd();
+		return output;
+	}
 protected:
 	ResourceFactory(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice, Value_weak_ptr<IResourceContainer> arg_vwp_resourceContainer) {
 		vwp_graphicDevice = arg_vwp_graphicDevice;
@@ -20,17 +32,17 @@ protected:
 	Value_weak_ptr<ButiRendering::GraphicDevice> vwp_graphicDevice;
 	Value_weak_ptr<IResourceContainer> vwp_resourceContainer;
 private:
-	void ReadIndex(std::vector<std::uint32_t>& indices, char arg_indexByteCount, BinaryReader& arg_reader);
+	void ReadIndex(std::vector<std::uint32_t>& indices, char arg_indexByteCount, Value_ptr<IBinaryReader> arg_reader);
 	template<typename T>
-	void ReadPosition(T& out, BinaryReader& arg_reader) {
-		out.position = arg_reader.ReadVariable<Vector3>();
+	void ReadPosition(T& out, Value_ptr<IBinaryReader>& arg_reader) {
+		out.position = arg_reader->ReadVariable<Vector3>();
 	}
 	template<typename T>
-	void inline ReadVertex(std::vector< T>& out, const std::int32_t arg_vertexCount, BinaryReader& arg_reader, ButiRendering::BoxSurface& arg_ref_output_boxSurface) {
+	void inline ReadVertex(std::vector< T>& out, const std::int32_t arg_vertexCount,Value_ptr<IBinaryReader> arg_reader, ButiRendering::BoxSurface& arg_ref_output_boxSurface) {
 		float up = 0, down = 0, left = 0, right = 0, front = 0, back = 0;
 		out.reserve(arg_vertexCount);
 		for (std::uint32_t i = 0; i < arg_vertexCount; i++) {
-			auto vertex = arg_reader.ReadVariable<T>();
+			auto vertex = arg_reader->ReadVariable<T>();
 			if (up < vertex.position.y) {
 				up = vertex.position.y;
 			}
@@ -60,29 +72,29 @@ private:
 		arg_ref_output_boxSurface.front = front;
 	}
 	template<typename T>
-	void ReadNormal(T& out, BinaryReader& arg_reader) {
-		out.SetNormal(arg_reader.ReadVariable<Vector3>());
+	void ReadNormal(T& out, Value_ptr<IBinaryReader> arg_reader) {
+		out.SetNormal(arg_reader->ReadVariable<Vector3>());
 
 	}
 	template<typename T>
-	void ReadUV(T& out, BinaryReader& arg_reader) {
-		out.SetUV(arg_reader.ReadVariable<Vector2>());
+	void ReadUV(T& out, Value_ptr<IBinaryReader> arg_reader) {
+		out.SetUV(arg_reader->ReadVariable<Vector2>());
 	}
 	template<typename T, std::int32_t uvExCount>
-	void ReadExUV(T& out,  BinaryReader& arg_reader) {
+	void ReadExUV(T& out, Value_ptr<IBinaryReader> arg_reader) {
 		if constexpr (uvExCount > 0) {
 
-			out.SetUV_ex1(arg_reader.ReadVariable<Vector2>());
+			out.SetUV_ex1(arg_reader->ReadVariable<Vector2>());
 		}
 		if constexpr (uvExCount > 1) {
 
-			out.SetUV_ex2(arg_reader.ReadVariable<Vector2>());
+			out.SetUV_ex2(arg_reader->ReadVariable<Vector2>());
 		}
 		if constexpr (uvExCount > 2) {
-			out.SetUV_ex3(arg_reader.ReadVariable<Vector2>());
+			out.SetUV_ex3(arg_reader->ReadVariable<Vector2>());
 		}
 		if constexpr (uvExCount > 3) {
-			out.SetUV_ex4(arg_reader.ReadVariable<Vector2>());
+			out.SetUV_ex4(arg_reader->ReadVariable<Vector2>());
 		}
 	}
 };
