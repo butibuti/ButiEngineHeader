@@ -593,7 +593,7 @@ protected:
 	Value_ptr< ButiRendering::ObjectDrawData >m_vlp_drawInfo = nullptr;
 	std::vector<MaterialTag> m_materialTag;
 	std::int32_t m_layer = 0;
-	bool isCereal = true;
+	bool isCereal = true, m_isRegisted = false;
 };
 class MeshDrawComponent_Static :public MeshDrawComponent
 {
