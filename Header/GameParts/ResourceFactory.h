@@ -14,14 +14,12 @@ public:
 	Value_ptr<ButiRendering::IResource_Model>CreateModel(const std::string& arg_modelPath) {
 		auto reader = make_value<BinaryReader_File>(GlobalSettings::GetResourceDirectory() + arg_modelPath);
 		auto output = CreateModel(reader,arg_modelPath);
-		reader->ReadEnd();
 		return output;
 	}
 	Value_ptr<ButiRendering::IResource_Motion>CreateMotion(Value_ptr<IBinaryReader> arg_reader);
 	Value_ptr<ButiRendering::IResource_Motion>CreateMotion(const std::string& arg_modelPath) {
 		auto reader = make_value<BinaryReader_File>(GlobalSettings::GetResourceDirectory() + arg_modelPath);
 		auto output = CreateMotion(reader);
-		reader->ReadEnd();
 		return output;
 	}
 protected:

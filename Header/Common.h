@@ -6,6 +6,7 @@
 #include"Device/GUI.h"
 #include"ButiMemorySystem/ButiMemorySystem/ButiPtr.h"
 #include "../Library/ButiUtil/ButiUtil/Easing.h"
+#include"ButiEngineHeader/Header/Resources/ResourceSystem.h"
 #include"../Library/ButiUtil/ButiUtil/Helper/StringHelper.h"
 #include"../Library/ButiUtil/ButiUtil/BinaryObject.h"
 

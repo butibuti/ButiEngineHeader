@@ -47,12 +47,30 @@ void InputCereal(T& v, const std::string& arg_fileName)
 	stream << inputFile.rdbuf();
 	cereal::JSONInputArchive jsonInputArchive(stream);
 	jsonInputArchive(v);
+	stream.clear();
+
+	std::ofstream outputBinCerealFile(GlobalSettings::GetResourceDirectory() + arg_fileName + ".cerealBin", std::ios::out | std::ios::binary);
+	{
+		cereal::PortableBinaryOutputArchive binOutArchive(outputBinCerealFile);
+		binOutArchive(v);
+	}
+	outputBinCerealFile.close();
+#else
+
+#ifdef RESOURCE_SYSTEM_H
+	std::stringstream stream;
+	stream << std::string(ResourceSystem::GetResourcePtr(arg_fileName), ResourceSystem::GetResourceSize(arg_fileName));
+	cereal::PortableBinaryInputArchive binInputArchive(stream);
+	binInputArchive(v);
 #else
 	std::stringstream stream;
 	std::ifstream inputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	stream << inputFile.rdbuf();
-	cereal::JSONInputArchive jsonInputArchive(stream);
-	jsonInputArchive(v);
+	cereal::PortableBinaryInputArchive binInputArchive(stream);
+	binInputArchive(v);
+	stream.clear();
+
+#endif
 #endif // EDITORBUILD	
 }
 
@@ -60,32 +78,57 @@ template<typename T>
 void OutputCereal(const T& v, const std::string& arg_fileName)
 {
 #ifdef _EDITORBUILD
+	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
 	std::stringstream stream;
 	{
 		cereal::JSONOutputArchive jsonOutArchive(stream);
 		jsonOutArchive(v);
 	}
-	_mkdir((GlobalSettings::GetResourceDirectory()+StringHelper::GetDirectory(arg_fileName)).c_str());
 	std::ofstream outputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	outputFile << stream.str();
 	outputFile.close();
 	stream.clear();
+	std::ofstream outputBinCerealFile(GlobalSettings::GetResourceDirectory() + arg_fileName + ".cerealBin", std::ios::out | std::ios::binary);
+	{
+		cereal::PortableBinaryOutputArchive binOutArchive(outputBinCerealFile);
+		binOutArchive(v);
+	}
+	outputBinCerealFile.close();
+	{
+		std::ifstream inputFile(GlobalSettings::GetResourceDirectory() + arg_fileName + ".cerealBin", std::ios::in | std::ios::binary);
+		cereal::PortableBinaryInputArchive jsonInputArchive(inputFile);
+		T test;
+		jsonInputArchive(test);
+		inputFile.close();
+	}
 #else
+#ifdef RESOURCE_SYSTEM_H
+#else
+
+	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
 	std::stringstream stream;
 	{
-		cereal::JSONOutputArchive jsonOutArchive(stream);
-		jsonOutArchive(v);
+		cereal::PortableBinaryOutputArchive binOutArchive(stream);
+		binOutArchive(v);
 	}
-	std::ofstream outputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
-	outputFile << stream.str();
-	outputFile.close();
+	std::ofstream outputCerealFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
+	outputCerealFile << stream.str();
+	outputCerealFile.close();
 	stream.clear();
+
+#endif // RESOURCE_SYSTEM_H
 #endif
 }
 template<typename T>
 static inline Value_ptr<T> CreateFromCereal(const std::string& arg_filePath) {
 	Value_ptr<T> output = Value_ptr<T>();
-	if (Util::ExistFile(GlobalSettings::GetResourceDirectory()+arg_filePath))
+	if (
+#ifdef RESOURCE_SYSTEM_H
+		ResourceSystem::ExistResource(arg_filePath)
+#else
+		Util::ExistFile(arg_filePath)
+#endif
+		)
 		InputCereal(output, arg_filePath);
 	else {
 		output = make_value<T>();

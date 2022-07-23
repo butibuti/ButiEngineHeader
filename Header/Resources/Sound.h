@@ -15,7 +15,6 @@ public:
 		}
 		auto reader = make_value<BinaryReader_File>(arg_filePath);
 		auto output = CreateFromBinary(reader);
-		reader->ReadEnd();
 		return output;
 	}
 private:
