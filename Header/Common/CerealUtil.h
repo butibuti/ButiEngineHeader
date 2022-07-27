@@ -48,13 +48,6 @@ void InputCereal(T& v, const std::string& arg_fileName)
 	cereal::JSONInputArchive jsonInputArchive(stream);
 	jsonInputArchive(v);
 	stream.clear();
-
-	std::ofstream outputBinCerealFile(GlobalSettings::GetResourceDirectory() + arg_fileName + ".cerealBin", std::ios::out | std::ios::binary);
-	{
-		cereal::PortableBinaryOutputArchive binOutArchive(outputBinCerealFile);
-		binOutArchive(v);
-	}
-	outputBinCerealFile.close();
 #else
 
 #ifdef RESOURCE_SYSTEM_H
