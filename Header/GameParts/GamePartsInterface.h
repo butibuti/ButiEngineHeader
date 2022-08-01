@@ -465,8 +465,7 @@ namespace ButiEngine
 		/// <summary>
 		/// メッシュ読み込み
 		/// </summary>
-		virtual MeshTag LoadMesh(const std::string& filePath, const Value_ptr< ButiRendering::MeshPrimitiveBase>& arg_vlp_inputMeshData) = 0;
-		virtual MeshTag LoadMesh(const std::string& filePath, const List< Value_ptr< ButiRendering::MeshPrimitiveBase>>& arg_list_vlp_inputMeshData) = 0;
+		virtual MeshTag LoadMesh(Value_ptr< ButiRendering::IResource_Mesh> arg_vlp_mesh) = 0;
 
 		/// <summary>
 		/// 値を直接指定してマテリアル生成
