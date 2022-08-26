@@ -15,6 +15,7 @@ Value_ptr<IBinaryReader> GetResourceBinary(const std::string& arg_resourceName);
 const char* GetResourcePtr(const std::string& arg_resourceName);
 std::uint64_t GetResourceSize(const std::string& arg_resourceName);
 void GetAssetLoadData(GameAssetData::AssetLoadData& arg_ref_loadData);
+void GetScriptLoadData(GameAssetData::AssetLoadData& arg_ref_loadData);
 void End();
 }
 }

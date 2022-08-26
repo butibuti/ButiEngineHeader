@@ -108,7 +108,7 @@ struct AssetLoadData
 	//backupdata
 	std::vector<std::string> vec_filePathAndDirectory_tex, vec_filePathAndDirectory_ps, vec_filePathAndDirectory_vs, vec_filePathAndDirectory_gs
 		, vec_filePathAndDirectory_cs, vec_filePathAndDirectory_shader, vec_filePathAndDirectory_font, vec_filePathAndDirectory_sound, vec_filePathAndDirectory_model
-		, vec_filePathAndDirectory_motion, vec_filePathAndDirectory_script, vec_filePathAndDirectory_gameObject, vec_filePathAndDirectory_material;
+		, vec_filePathAndDirectory_motion, vec_filePathAndDirectory_script, vec_filePathAndDirectory_gameObject, vec_filePathAndDirectory_material,vec_scriptSource;
 	
 };
 }

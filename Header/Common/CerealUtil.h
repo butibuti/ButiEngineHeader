@@ -87,13 +87,6 @@ void OutputCereal(const T& v, const std::string& arg_fileName)
 		binOutArchive(v);
 	}
 	outputBinCerealFile.close();
-	{
-		std::ifstream inputFile(GlobalSettings::GetResourceDirectory() + arg_fileName + ".cerealBin", std::ios::in | std::ios::binary);
-		cereal::PortableBinaryInputArchive jsonInputArchive(inputFile);
-		T test;
-		jsonInputArchive(test);
-		inputFile.close();
-	}
 #else
 #ifdef RESOURCE_SYSTEM_H
 #else

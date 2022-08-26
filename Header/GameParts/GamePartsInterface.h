@@ -29,6 +29,7 @@ namespace ButiEngine
 	class MaterialEditor;
 	class ShaderEditor;
 	class TextureEditor;
+	class ScriptCompiler;
 	namespace ImageFileIO {
 	struct TextureResourceData;
 	}
@@ -885,6 +886,7 @@ namespace ButiEngine
 		virtual Value_ptr<MaterialEditor> GetMaterialEditor()const = 0;
 		virtual Value_ptr<ShaderEditor> GetShaderEditor()const = 0;
 		virtual Value_ptr<TextureEditor> GetTextureEditor()const = 0;
+		virtual Value_ptr<ScriptCompiler> GetScriptCompiler()const = 0;
 	};
 
 	/// <summary>

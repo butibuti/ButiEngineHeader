@@ -69,6 +69,9 @@ public:
 	/// </summary>
 	/// <returns>0•ÏX‚È‚µ/1•ÏX‚ ‚è</returns>
 	virtual std::int32_t SourceEditCheck() = 0;
+	virtual void SetLastEditSec(std::int64_t arg_sec) = 0;
+	virtual std::int64_t GetLastEditSec()const = 0;
+	virtual const std::string& GetScriptSourcePath()const = 0;
 };
 class IResource_Font:public IObject {
 public:

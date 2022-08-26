@@ -36,20 +36,20 @@ public:
 	virtual void GetMaxPointAndMinPoint(Vector3& arg_outputMax, Vector3& arg_outputMin) const = 0;
 	virtual Value_ptr<CollisionPrimitive> Clone() = 0;
 	virtual void ShowUI() = 0;
-	Value_weak_ptr<Transform> vwp_transform;
+	Value_ptr<Transform> vlp_transform;
 };
 class CollisionPrimitive_Point :public CollisionPrimitive
 {
 public:
-	inline CollisionPrimitive_Point(Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Point(Value_ptr<Transform> arg_vlp_transform)
 	{
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 	}
 	CollisionPrimitive_Point() {}
 	inline void Update()override {
 	}
 	inline Vector3 GetPosition() {
-		return vwp_transform.lock()->GetWorldPosition();
+		return vlp_transform->GetWorldPosition();
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
 	{
@@ -58,7 +58,7 @@ public:
 
 	}
 	inline void GetMaxPointAndMinPoint(Vector3& arg_outputMax, Vector3& arg_outputMin) const override {
-		auto point = vwp_transform.lock()->GetWorldPosition();
+		auto point = vlp_transform->GetWorldPosition();
 		arg_outputMax = point;
 		arg_outputMin = point;
 	}
@@ -83,7 +83,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 	}
 
 private:
@@ -91,9 +91,9 @@ private:
 class CollisionPrimitive_Ray :public CollisionPrimitive, public Line
 {
 public:
-	inline CollisionPrimitive_Ray(Value_weak_ptr<Transform> arg_weak_transform, const Vector3& arg_velocity)
+	inline CollisionPrimitive_Ray(Value_ptr<Transform> arg_vlp_transform, const Vector3& arg_velocity)
 	{
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 		initVelocity = arg_velocity;
 	}
 	CollisionPrimitive_Ray() {}
@@ -105,9 +105,9 @@ public:
 	bool IsHitBox_AABB(CollisionPrimitive_Box_AABB* other)override;
 	bool IsHitBox_OBB(CollisionPrimitive_Box_OBB* other)override;
 	inline void Update()override {
-		point = vwp_transform.lock()->GetWorldPosition();
+		point = vlp_transform->GetWorldPosition();
 		velocity = initVelocity;
-		vwp_transform.lock()->GetRotatedVector(velocity);
+		vlp_transform->GetRotatedVector(velocity);
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
 	{
@@ -123,7 +123,7 @@ public:
 	Value_ptr<CollisionPrimitive> Clone()override {
 		auto ret = ObjectFactory::Create< CollisionPrimitive_Ray>();
 		ret->initVelocity = initVelocity;
-		ret->vwp_transform = vwp_transform;
+		ret->vlp_transform = vlp_transform;
 		return ret;
 	}
 
@@ -139,7 +139,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(initVelocity);
 	}
 
@@ -149,10 +149,10 @@ private:
 class CollisionPrimitive_Segment :public CollisionPrimitive, public Segment
 {
 public:
-	inline CollisionPrimitive_Segment(Value_weak_ptr<Transform> arg_weak_transform, const Vector3& arg_endPoint)
+	inline CollisionPrimitive_Segment(Value_ptr<Transform> arg_vlp_transform, const Vector3& arg_endPoint)
 	{
-		vwp_transform = arg_weak_transform;
-		point = vwp_transform.lock()->GetWorldPosition();
+		vlp_transform = arg_vlp_transform;
+		point = vlp_transform->GetWorldPosition();
 		endPos = arg_endPoint;
 		velocity = ((Vector3)(endPos - point)).GetNormalize();
 	}
@@ -160,7 +160,7 @@ public:
 	{
 	}
 	inline void Update()override {
-		point = vwp_transform.lock()->GetWorldPosition();
+		point = vlp_transform->GetWorldPosition();
 		velocity = ((Vector3)(endPos - point)).GetNormalize();
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
@@ -183,7 +183,7 @@ public:
 	Value_ptr<CollisionPrimitive> Clone()override {
 		auto ret = ObjectFactory::Create< CollisionPrimitive_Segment>();
 		ret->endPos = endPos;
-		ret->vwp_transform = vwp_transform;
+		ret->vlp_transform = vlp_transform;
 		return ret;
 	}
 
@@ -199,7 +199,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(endPos);
 	}
 
@@ -208,14 +208,14 @@ private:
 class CollisionPrimitive_Sphere :public CollisionPrimitive, public Geometry::Sphere
 {
 public:
-	inline CollisionPrimitive_Sphere(const float arg_radius, Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Sphere(const float arg_radius, Value_ptr<Transform> arg_vlp_transform)
 		:Geometry::Sphere(arg_radius) {
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 	}
 	CollisionPrimitive_Sphere() {}
 	inline void Update()override {
-		position = vwp_transform.lock()->GetWorldPosition();
-		radius =originRadius* vwp_transform.lock()->GetWorldScale().x;
+		position = vlp_transform->GetWorldPosition();
+		radius =originRadius* vlp_transform->GetWorldScale().x;
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
 	{
@@ -252,7 +252,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(originRadius);
 	}
 private:
@@ -261,18 +261,18 @@ private:
 class CollisionPrimitive_Capsule :public CollisionPrimitive, public Geometry::Capsule
 {
 public:
-	inline CollisionPrimitive_Capsule(const float arg_radius, const Segment& arg_segment, Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Capsule(const float arg_radius, const Segment& arg_segment, Value_ptr<Transform> arg_vlp_transform)
 		:Geometry::Capsule(arg_segment, arg_radius) {
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 		length = arg_segment.velocity.y;
 	}
 	CollisionPrimitive_Capsule() :Geometry::Capsule(Segment(), 0) {}
 	inline void Update()override {
-		auto pos = vwp_transform.lock()->GetWorldPosition();
-		auto rotation = vwp_transform.lock()->GetWorldRotation();
+		auto pos = vlp_transform->GetWorldPosition();
+		auto rotation = vlp_transform->GetWorldRotation();
 		s.endPos = pos + (Vector3Const::YAxis * length * 0.5) * rotation;
 		s.point = pos - (Vector3Const::YAxis * length * 0.5) * rotation;
-		r = initR * vwp_transform.lock()->GetWorldScale().x;
+		r = initR * vlp_transform->GetWorldScale().x;
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
 	{
@@ -310,7 +310,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(initR);
 		archive(length);
 	}
@@ -323,9 +323,9 @@ private:
 class CollisionPrimitive_Polygon :public CollisionPrimitive
 {
 public:
-	inline CollisionPrimitive_Polygon(const Vector3& arg_vertex1, const Vector3& arg_vertex2, const Vector3& arg_vertex3, Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Polygon(const Vector3& arg_vertex1, const Vector3& arg_vertex2, const Vector3& arg_vertex3, Value_ptr<Transform> arg_vlp_transform)
 	{
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 		points.push_back(arg_vertex1);
 		points.push_back(arg_vertex2);
 		points.push_back(arg_vertex3);
@@ -339,11 +339,11 @@ public:
 	}
 	inline void Update()override {
 		for (std::int32_t i = 0; i < 3; i++) {
-			points[i] = initPoints[i] + vwp_transform.lock()->GetWorldPosition();
+			points[i] = initPoints[i] + vlp_transform->GetWorldPosition();
 		}
 	}
 	inline Vector3 GetPosition() {
-		return vwp_transform.lock()->GetWorldPosition();
+		return vlp_transform->GetWorldPosition();
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override
 	{
@@ -352,7 +352,7 @@ public:
 
 	}
 	inline void GetMaxPointAndMinPoint(Vector3& arg_outputMax, Vector3& arg_outputMin) const override {
-		auto point = vwp_transform.lock()->GetWorldPosition();
+		auto point = vlp_transform->GetWorldPosition();
 
 		float maxX = max(points[2].x, max(points[0].x, points[1].x));
 		float maxY = max(points[2].y, max(points[0].y, points[1].y));
@@ -389,7 +389,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(initPoints);
 	}
 
@@ -400,9 +400,9 @@ private:
 class CollisionPrimitive_Surface :public CollisionPrimitive
 {
 public:
-	inline CollisionPrimitive_Surface(const Vector3& arg_normal, Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Surface(const Vector3& arg_normal, Value_ptr<Transform> arg_vlp_transform)
 	{
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 		normal = arg_normal;
 	}
 	CollisionPrimitive_Surface() {}
@@ -445,7 +445,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(normal);
 
 	}
@@ -455,15 +455,15 @@ private:
 
 class CollisionPrimitive_Box_AABB : public CollisionPrimitive, public Geometry::Box_AABB {
 public:
-	inline CollisionPrimitive_Box_AABB(const Vector3& arg_length, Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Box_AABB(const Vector3& arg_length, Value_ptr<Transform> arg_vlp_transform)
 		:Geometry::Box_AABB(arg_length) {
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 		initLengthes = arg_length / 2;
 	}
 	CollisionPrimitive_Box_AABB() {}
 	inline void Update()override {
-		position = vwp_transform.lock()->GetWorldPosition();
-		halfLengthes = initLengthes * vwp_transform.lock()->GetWorldScale();
+		position = vlp_transform->GetWorldPosition();
+		halfLengthes = initLengthes * vlp_transform->GetWorldScale();
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override {
 		return other.lock()->IsHitBox_AABB(this);
@@ -501,7 +501,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(initLengthes);
 		archive(halfLengthes);
 	}
@@ -510,19 +510,19 @@ private:
 };
 class CollisionPrimitive_Box_OBB : public CollisionPrimitive, public Geometry::Box_OBB_Static {
 public:
-	inline CollisionPrimitive_Box_OBB(const Vector3& arg_length, Value_weak_ptr<Transform> arg_weak_transform)
+	inline CollisionPrimitive_Box_OBB(const Vector3& arg_length, Value_ptr<Transform> arg_vlp_transform)
 		:Geometry::Box_OBB_Static(arg_length) {
-		vwp_transform = arg_weak_transform;
+		vlp_transform = arg_vlp_transform;
 		initLengthes = arg_length * 0.5f;
 	}
 	CollisionPrimitive_Box_OBB() {}
 	inline void Update()override {
-		position = vwp_transform.lock()->GetWorldPosition();
+		position = vlp_transform->GetWorldPosition();
 
-		directs[0] = vwp_transform.lock()->GetRight();
-		directs[1] = vwp_transform.lock()->GetUp();
-		directs[2] = vwp_transform.lock()->GetFront();
-		halfLengthes = initLengthes * vwp_transform.lock()->GetWorldScale();
+		directs[0] = vlp_transform->GetRight();
+		directs[1] = vlp_transform->GetUp();
+		directs[2] = vlp_transform->GetFront();
+		halfLengthes = initLengthes * vlp_transform->GetWorldScale();
 	}
 	inline bool IsHit(Value_weak_ptr< CollisionPrimitive> other)override {
 		return other.lock()->IsHitBox_OBB(this);
@@ -564,7 +564,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vwp_transform);
+		archive(vlp_transform);
 		archive(initLengthes);
 		archive(halfLengthes);
 	}

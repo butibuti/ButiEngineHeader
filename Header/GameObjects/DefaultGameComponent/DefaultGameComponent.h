@@ -559,14 +559,16 @@ public:
 	Value_ptr< ButiRendering::ObjectDrawData > GetDrawInformation();
 	void OnShowUI()override;
 	Value_ptr<Transform> GetTransform();
-
+	void SetColor(const Vector4& arg_color);
+	Vector4 GetColor()const;
+	void SetExInfo(const Vector4& arg_info);
+	Vector4 GetExInfo()const;
 	template <class T>
 	Value_ptr<ButiRendering::CBuffer< T>> CreateCBuffer(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice);
 	template <class T>
-	Value_ptr<ButiRendering::CBuffer<T>> GetCBuffer() {
+	Value_ptr<ButiRendering::CBuffer<T>> GetCBuffer()const {
 		return m_data->GetThis<ButiRendering::DrawObject>()-> GetDrawData().GetCBuffer<T>();
 	}
-
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
