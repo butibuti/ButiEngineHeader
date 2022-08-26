@@ -60,7 +60,7 @@ namespace ButiEngine {
 	{
 	public:
 		RelativeTimer() :Timer(0) {}
-		RelativeTimer(float arg_maxCountFrame) :Timer(arg_maxCountFrame) {}
+		RelativeTimer(const float arg_maxCountFrame) :Timer(arg_maxCountFrame) {}
 		inline bool Update()override {
 			if (!isOn) {
 				return false;
