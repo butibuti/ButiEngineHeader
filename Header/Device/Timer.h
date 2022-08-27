@@ -32,6 +32,7 @@ namespace ButiEngine {
 	class AbsoluteTimer :public Timer
 	{
 	public:
+		AbsoluteTimer() :Timer(0) {}
 		AbsoluteTimer(float arg_maxCountFrame) :Timer(arg_maxCountFrame) {}
 		inline bool Update() override {
 			if (!isOn) {
