@@ -34,7 +34,11 @@ namespace ComponentRegister{ namespace T {\
 
 #define BUTI_REGIST_BUTISCRIPTTYPE(T)\
 	CEREAL_REGISTER_TYPE(ButiEngine::ValuePtrRestoreObject < T >);\
-	CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::IValuePtrRestoreObject, ButiEngine::ValuePtrRestoreObject< T >);\
+	CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::IValuePtrRestoreObject, ButiEngine::ValuePtrRestoreObject< T >);
+
+#define BUTI_REGIST_BUTISCRIPTTYPE_HASMEMBER(T)\
+	CEREAL_REGISTER_TYPE(ButiEngine::ValuePtrRestoreObject <ButiScript::Type_hasMember< T> >);\
+	CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::IValuePtrRestoreObject,ButiEngine::ValuePtrRestoreObject <ButiScript::Type_hasMember< T> >);
 
 namespace ButiEngine{
 
