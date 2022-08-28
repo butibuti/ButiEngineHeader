@@ -10,7 +10,15 @@ namespace ButiEngine {
 /// <param name="arg_filePath">入力ファイルパス</param>
 /// <param name="arg_compiler">コンパイラ(nullptrでデフォルトを使用)</param>
 /// <returns>読み込んだプログラムデータ</returns>
-Value_ptr<IResource_Script> CreateButiScriptResource(const std::string& arg_filePath ,ButiScript::Compiler* arg_compiler=nullptr);
+Value_ptr<IResource_Script> CreateButiScriptResource(const std::string& arg_filePath, ButiScript::Compiler* arg_compiler = nullptr);
+/// <summary>
+/// コンパイル済みデータの読み込み
+/// </summary>
+/// <param name="arg_fileData">データの場所</param>
+/// <param name="arg_size">サイズ</param>
+/// <param name="arg_compiler">コンパイラ(nullptrでデフォルトを使用)</param>
+/// <returns>読み込んだプログラムデータ</returns>
+Value_ptr<IResource_Script> CreateButiScriptResource(const std::string& arg_filePath, const char* arg_fileData,const std::int32_t arg_size ,ButiScript::Compiler* arg_compiler = nullptr);
 /// <summary>
 /// プログラムのコンパイル
 /// </summary>
