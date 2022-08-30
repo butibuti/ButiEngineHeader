@@ -843,7 +843,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_key">検索タグ</param>
 		/// <returns>フォントのリソース</returns>
-		virtual Value_weak_ptr<IResource_Font>GetFont(const FontTag& arg_key) = 0;
+		virtual Value_weak_ptr<ButiRendering::IResource_Font>GetFont(const FontTag& arg_key) = 0;
 
 		virtual bool Exist(const TextureTag& arg_tag)const = 0;
 		virtual bool Exist(const MeshTag& arg_tag)const = 0;
@@ -867,7 +867,7 @@ namespace ButiEngine
 		virtual List < Value_ptr <ButiRendering::IResource_PixelShader >>GetPixelShaders()const = 0;
 		virtual List < Value_ptr <ButiRendering::IResource_GeometryShader >>GetGeometryShaders()const = 0;
 		virtual List < Value_ptr <ButiRendering::IResource_Motion >>GetMotions()const = 0;
-		virtual List < Value_ptr <IResource_Font >>GetFonts()const = 0;
+		virtual List < Value_ptr <ButiRendering::IResource_Font >>GetFonts()const = 0;
 		virtual List < Value_ptr <IResource_Sound>>GetSounds()const = 0;
 		virtual List < Value_ptr <IResource_Script>>GetScripts()const = 0;
 

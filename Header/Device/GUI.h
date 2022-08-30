@@ -34,13 +34,13 @@ class IResource_GeometryShader;
 class IResource_Shader;
 class IResource_Motion;
 class IResource_Material;
+class IResource_Font;
 
 class ICamera;
 class GraphicDevice;
 }
 
 class IResource_Script;
-class IResource_Font;
 class IResource_Sound;
 
 using MeshTag = ID<ButiRendering::IResource_Mesh>;
@@ -57,7 +57,7 @@ class Transform;
 class BoneTransform;
 using MaterialTag = ID<ButiRendering::IResource_Material>;
 using ScriptTag = ID<IResource_Script>;
-using FontTag = ID<IResource_Font>;
+using FontTag = ID<ButiRendering::IResource_Font>;
 class IObject;
 class IWindow;
 namespace GUI
