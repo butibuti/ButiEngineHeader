@@ -1,6 +1,7 @@
 #ifndef GAMEASSETSTRUCT_H
 #define GAMEASSETSTRUCT_H
-#include"cereal/cereal.hpp"
+
+#include "../../ButiCereal/include/cereal/cereal.hpp"
 namespace ButiEngine {
 enum class WindowPopType {
 	normal = SW_SHOWNORMAL, max = SW_SHOWMAXIMIZED

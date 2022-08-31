@@ -53,6 +53,8 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 		archive(m_layer);
 		archive(m_vec_rendertarget);
 		archive(m_depthStencil);
+		archive(m_isPlayActive);
+		archive(m_isEditActive);
 	}
 };
 Value_ptr<RenderingPathData> CreateRenderingPathData(Value_ptr<IRenderingPath> arg_vlp_renderingPath);
