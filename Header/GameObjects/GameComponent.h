@@ -37,6 +37,10 @@ public:
 	Value_weak_ptr<GameObject> AddObject(Value_ptr<Transform> arg_transform, std::string arg_objectName = "GameObject");
 	Value_weak_ptr<GameObject> AddObject(Value_ptr<GameObject> arg_gameObject);
 	Value_weak_ptr<GameObject>AddObjectFromCereal(std::string filePath, Value_ptr<Transform> arg_transform = nullptr);
+
+	Value_ptr<ButiSound::ISoundObject> PlaySE(const std::string& arg_seTagName, const float arg_volume);
+	Value_ptr<ButiSound::ISoundObject> PlayBGM(const std::string& arg_seTagName, const float arg_volume);
+
 	bool IsRemove() {
 		return isRemove;
 	}

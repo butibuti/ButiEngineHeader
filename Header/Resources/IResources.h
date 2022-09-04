@@ -4,7 +4,9 @@ namespace ButiScript {
 class CompiledData;
 class Compiler;
 }
-
+namespace ButiSound {
+class IResource_Sound;
+}
 namespace ButiEngine {
 
 namespace ButiRendering {
@@ -30,21 +32,13 @@ using ModelTag = ID<ButiRendering::IResource_Model>;
 using MaterialTag = ID<ButiRendering::IResource_Material>;
 
 class IResource_Script;
-class IResource_Sound;
-
 using ScriptTag = ID<IResource_Script>;
-using SoundTag = ID<IResource_Sound>;
+using SoundTag = ID<ButiSound::IResource_Sound>;
 
 struct WaveDatas;
 namespace ImageFileIO {
 class IFontInformation;
 }
-
-class IResource_Sound :public IObject {
-public:
-	virtual Value_ptr<WaveDatas> GetWavDatas() = 0;
-};
-
 
 class IResource_Script :public IObject {
 public:

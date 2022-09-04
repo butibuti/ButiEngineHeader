@@ -7,8 +7,11 @@
 #include"GUIWindowReaction.h"
 #include<string>
 
+namespace ButiSound {
+class IResource_Sound;
+}
 namespace ButiEngine {
-
+class Timer;
 template <typename T>
 class ID;
 #ifndef BUTIPTR_FORWARD_H
@@ -41,7 +44,6 @@ class GraphicDevice;
 }
 
 class IResource_Script;
-class IResource_Sound;
 
 using MeshTag = ID<ButiRendering::IResource_Mesh>;
 using MotionTag = ID<ButiRendering::IResource_Motion>;
@@ -50,7 +52,7 @@ using VertexShaderTag = ID<ButiRendering::IResource_VertexShader>;
 using PixelShaderTag = ID<ButiRendering::IResource_PixelShader>;
 using GeometryShaderTag = ID<ButiRendering::IResource_GeometryShader>;
 using ShaderTag = ID<ButiRendering::IResource_Shader>;
-using SoundTag = ID<IResource_Sound>;
+using SoundTag = ID<ButiSound::IResource_Sound>;
 using TextureTag = ID<ButiRendering::IResource_Texture>;
 using ModelTag = ID<ButiRendering::IResource_Model>;
 class Transform;
@@ -994,6 +996,7 @@ void Bullet();
 
 bool Edit(Transform& arg_transform);
 bool Edit(BoneTransform& arg_transform);
+bool Edit(Timer& arg_timer);
 
 bool BeginCombo(const std::string& label, const std::string& preview_value, GuiComboFlags flags = 0);
 void EndCombo();

@@ -16,7 +16,7 @@
 #include"ButiMath/Transform.h"
 
 #include"Device/GameDevice.h"
-#include"Device/Timer.h"
+#include"ButiUtil/ButiUtil/Timer.h"
 
 #include"ButiRendering_Dx12/Header/GraphicDevice.h"
 #include"ButiRendering_Dx12/Header/ShaderVariable.h"

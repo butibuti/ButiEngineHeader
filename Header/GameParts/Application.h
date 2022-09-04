@@ -12,15 +12,13 @@ class Application :public IApplication
 {
 public:
 	Application() {};
-	void Initialize()override {}
-	void PreInitialize()override {}
 	void CreateInstances(GameAssetData::ApplicationInitData& arg_data);
 	std::unique_ptr<IWindow>& GetWindow()override;
 	Value_ptr<ISceneManager> GetSceneManager()override;
 	Value_ptr<ButiRendering::GraphicDevice> GetGraphicDevice()override;
 	Value_ptr<IResourceContainer> GetResourceContainer()override;
 	Value_ptr<GameObjectTagManager> GetGameObjectTagManager()override;
-	Value_ptr<ISoundManager> GetSoundManager()override;
+	Value_ptr<ButiSound::ISoundManager> GetSoundManager()override;
 	bool Update()override;
 	std::int32_t Run()override;
 	void InitLoadResources()override;
@@ -34,7 +32,7 @@ private:
 	std::unique_ptr<IWindow> unq_window;
 	Value_ptr< ISceneManager> vlp_sceneManager;
 	Value_ptr<IResourceContainer>vlp_resourceContainer;
-	Value_ptr<ISoundManager>vlp_soundManager;
+	Value_ptr<ButiSound::ISoundManager>vlp_soundManager;
 	Value_ptr<GameObjectTagManager> vlp_gameObjTagManager;
 	std::timespec currentTs;
 	std::int64_t befFrameTime=0;

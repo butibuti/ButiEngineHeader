@@ -10,7 +10,9 @@ class RigidBody;
 class PhysicsWorld;
 class PhysicsManager;
 }
-
+namespace ButiSound {
+class ISoundManager;
+}
 namespace ButiEngine 
 {
 	namespace Collision {
@@ -199,115 +201,6 @@ namespace ButiEngine
 	private:
 
 	};
-
-	/// <summary>
-	/// SE、BGM管理インターフェース
-	/// </summary>
-	class ISoundManager :public IObject {
-
-	public:
-		void PreInitialize()override {}
-
-		virtual void Update() = 0;
-		/// <summary>
-		/// SEを再生する
-		/// </summary>
-		/// <param name="tag">SEのタグ</param>
-		/// <param name="volume">音量</param>
-		virtual void PlaySE(const SoundTag tag,const float volume,const bool isIsolate=false) = 0;
-		/// <summary>
-		/// BGMを再生する
-		/// </summary>
-		/// <param name="tag">BGMのタグ</param>
-		/// <param name="volume">音量</param>
-		virtual void PlayBGM(const SoundTag tag, const  float volume) = 0;
-		/// <summary>
-		/// 後から音量を換えられるSEを再生する
-		/// </summary>
-		/// <param name="tag">SEのタグ</param>
-		/// <param name="index">SEの番号(0～64)</param>
-		/// <param name="volume">音量</param>
-		/// <param name="isLoop">ループするかどうか</param>
-		virtual void PlayControllableSE(const SoundTag tag, const std::uint32_t index, const float volume,const bool isLoop)=0;
-		/// <summary>
-		/// SEの音量を変更する
-		/// </summary>
-		/// <param name="index">SEの番号(0～64)</param>
-		/// <param name="volume">音量</param>
-		virtual void SetControllableSEVolume(const std::uint32_t index, const float volume) = 0;
-		virtual void SetMasterVolume(const float arg_masterVolume) = 0;
-		virtual float GetMasterVolume()const = 0;
-		/// <summary>
-		/// SEのループを抜ける
-		/// </summary>
-		/// <param name="index">SEの番号(0～64)</param>
-		virtual void ExitControllableSELoop(const std::uint32_t index) = 0;
-		/// <summary>
-		/// SEを終了させる
-		/// </summary>
-		/// <param name="index">SEの番号(0～64)</param>
-		virtual void DestroyControllableSE(const std::uint32_t index) = 0;
-		/// <summary>
-		/// SEを開始する
-		/// </summary>
-		/// <param name="index">SEの番号(0～64)</param>
-		virtual void StartontrollableSE(const std::uint32_t index) = 0;
-		/// <summary>
-		/// SEを停止する
-		/// </summary>
-		/// <param name="index"></param>
-		virtual void StopControllableSE(const std::uint32_t index) = 0;
-		/// <summary>
-		/// 全てのSEを停止する
-		/// </summary>
-		virtual void StopSE() = 0;
-		/// <summary>
-		/// BGMを停止する
-		/// </summary>
-		virtual void StopBGM() = 0;
-		/// <summary>
-		/// SEを開始する
-		/// </summary>
-		virtual void RestartSE() = 0;
-		/// <summary>
-		/// BGMを開始する
-		/// </summary>
-		virtual void RestartBGM() = 0;
-		/// <summary>
-		/// SEを終了させる
-		/// </summary>
-		virtual void DestroySE() = 0;
-		/// <summary>
-		/// BGMを終了させる
-		/// </summary>
-		virtual void DestroyBGM() = 0;
-		/// <summary>
-		/// BGMの音量を設定する
-		/// </summary>
-		/// <param name="volume"></param>
-		virtual void SetBGMVolume(const float volume) = 0;
-		/// <summary>
-		/// 解放処理
-		/// </summary>
-		virtual void Release() = 0;
-		/// <summary>
-		/// 現在再生しているBGMの取得
-		/// </summary>
-		/// <returns>現在再生しているBGM</returns>
-		virtual SoundTag GetCurrentPlayBGM()const = 0;
-		/// <summary>
-		/// BGMの音量の取得
-		/// </summary>
-		/// <returns>音量</returns>
-		virtual float GetBGMVolume()const = 0;
-		/// <summary>
-		/// SEの音量の取得
-		/// </summary>
-		/// <param name="index">SEの番号(0～64)</param>
-		/// <returns>音量<returns>
-		virtual float GetControllableSEVolume(const std::int32_t index)const = 0;
-	};
-
 	/// <summary>
 	/// シーン管理インターフェース
 	/// </summary>
@@ -808,7 +701,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_key">検索タグ</param>
 		/// <returns>音声のリソース</returns>
-		virtual Value_weak_ptr<IResource_Sound> GetSound(const SoundTag& arg_key)=0;
+		virtual Value_weak_ptr<ButiSound::IResource_Sound> GetSound(const SoundTag& arg_key)=0;
 		/// <summary>
 		/// マテリアルの取得
 		/// </summary>
@@ -868,7 +761,7 @@ namespace ButiEngine
 		virtual List < Value_ptr <ButiRendering::IResource_GeometryShader >>GetGeometryShaders()const = 0;
 		virtual List < Value_ptr <ButiRendering::IResource_Motion >>GetMotions()const = 0;
 		virtual List < Value_ptr <ButiRendering::IResource_Font >>GetFonts()const = 0;
-		virtual List < Value_ptr <IResource_Sound>>GetSounds()const = 0;
+		virtual List < Value_ptr <ButiSound::IResource_Sound>>GetSounds()const = 0;
 		virtual List < Value_ptr <IResource_Script>>GetScripts()const = 0;
 
 		/// <summary>
@@ -930,7 +823,7 @@ namespace ButiEngine
 		/// 音声管理インスタンスの取得
 		/// </summary>
 		/// <returns>音声管理インスタンス</returns>
-		virtual Value_ptr<ISoundManager> GetSoundManager() = 0;
+		virtual Value_ptr<ButiSound::ISoundManager> GetSoundManager() = 0;
 		/// <summary>
 		/// 更新処理
 		/// </summary>
