@@ -134,6 +134,7 @@ public:
 
 	std::string SetObjectName(const std::string& arg_objectName);
 
+	List<GameObjectTag> GetGameObjectTags()const;
 	GameObjectTag SetGameObjectTag(GameObjectTag& arg_tag) {
 		if (m_map_gameObjectTags.count(arg_tag)) {
 			return arg_tag;
