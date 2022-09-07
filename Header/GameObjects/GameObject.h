@@ -139,7 +139,7 @@ public:
 		if (m_map_gameObjectTags.count(arg_tag)) {
 			return arg_tag;
 		}
-		m_map_gameObjectTags.emplace(arg_tag, 0);
+		m_map_gameObjectTags.emplace(arg_tag, m_map_gameObjectTags.size());
 		return arg_tag;
 	}
 	void RemoveGameObjectTag(const GameObjectTag& arg_tag) {
