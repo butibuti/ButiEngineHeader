@@ -15,7 +15,14 @@ class ScriptCompiler {
 public:
 	ScriptCompiler(Value_weak_ptr<IResourceContainer> arg_vwp_container):m_vwp_container(arg_vwp_container){
 		if (ResourceSystem::ExistResource("Application/ScriptEditHistory.rsh")) {
-			InputCereal(m_editSecData, "Application/ScriptEditHistory.rsh");
+			try
+			{
+				InputCereal(m_editSecData, "Application/ScriptEditHistory.rsh");
+			}
+			catch (const std::exception&)
+			{
+
+			}
 		}
 	}
 	void Compile(const std::string& arg_compilePath);

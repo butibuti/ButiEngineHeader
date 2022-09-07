@@ -43,7 +43,7 @@ public:
 private:
 	void CreateTriggerBody();
 	void ReleaseTriggerBody();
-	void RecreateRigidBody() {
+	void RecreateTriggerBody() {
 		ReleaseTriggerBody();
 		CreateTriggerBody();
 	}
