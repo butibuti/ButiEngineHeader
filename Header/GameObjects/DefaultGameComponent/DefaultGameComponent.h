@@ -564,6 +564,12 @@ public:
 	Vector4 GetColor()const;
 	void SetExInfo(const Vector4& arg_info);
 	Vector4 GetExInfo()const;
+	void SetTiling(const Vector2& arg_tiling);
+	Vector2 GetTiling()const;
+	void SetOffset(const Vector2& arg_offset);
+	Vector2 GetOffset()const;
+	void SetLightDir(const Vector4& arg_dir);
+	Vector4 GetLitDir()const;
 	template <class T>
 	Value_ptr<ButiRendering::CBuffer< T>> CreateCBuffer(Value_weak_ptr<ButiRendering::GraphicDevice> arg_vwp_graphicDevice);
 	template <class T>

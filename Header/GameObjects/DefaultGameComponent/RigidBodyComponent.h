@@ -172,7 +172,7 @@ public:
 
 	void Regist();
 	void UnRegist();
-
+	void ReRegist();
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
@@ -193,7 +193,7 @@ private:
 	Value_ptr<ButiBullet::RigidBody> m_vlp_rigidBody;
 	Value_ptr<ShapeParam> m_vlp_shapeParam;
 	RigidBodyParameter m_param;
-	bool m_isAffectedForGravity=true;
+	bool m_isAffectedForGravity=true,m_isRegisted=false;
 };
 
 }
