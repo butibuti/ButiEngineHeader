@@ -6,7 +6,7 @@
 #include"../ButiMath/ButiMath.h"
 #include"GUIWindowReaction.h"
 #include<string>
-
+#include<map>
 namespace ButiSound {
 class IResource_Sound;
 }

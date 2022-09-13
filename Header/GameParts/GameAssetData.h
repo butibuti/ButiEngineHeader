@@ -14,6 +14,7 @@ struct ApplicationInitData {
 	WindowPopType popType = WindowPopType::normal;
 	std::int32_t windowWidth = 1920, windowHeight = 1080;
 	bool isFullScreen;
+	Vector4 backGroundColor = Vector4(0, 0, 0, 1);
 	HINSTANCE hInstance = nullptr;
 	template<class Archive>
 	void serialize(Archive& archive) {
@@ -21,6 +22,7 @@ struct ApplicationInitData {
 		archive(CEREAL_NVP(popType));
 		archive(CEREAL_NVP(windowWidth), CEREAL_NVP(windowHeight));
 		archive(CEREAL_NVP(isFullScreen));
+		archive(CEREAL_NVP(backGroundColor));
 	}
 };
 
