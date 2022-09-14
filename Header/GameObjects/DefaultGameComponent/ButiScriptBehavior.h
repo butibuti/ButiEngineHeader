@@ -9,7 +9,8 @@ namespace ButiEngine{
 class ButiScriptBehavior :public GameComponent
 {
 public:
-	ButiScriptBehavior(){}
+	ButiScriptBehavior() {}
+	ButiScriptBehavior(ScriptTag arg_tag):scriptTag(arg_tag){}
 	ButiScriptBehavior(const ButiScriptBehavior& arg_other);
 	void OnUpdate()override;
 	void OnSet()override;

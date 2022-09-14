@@ -884,6 +884,10 @@ namespace ButiEngine
 		/// </summary>
 		virtual void RegistGameObjects() = 0;
 		/// <summary>
+		/// •`‰æ‘O
+		/// </summary>
+		virtual void BefDraw() = 0;
+		/// <summary>
 		/// •`‰æ
 		/// </summary>
 		virtual void Draw() = 0;
