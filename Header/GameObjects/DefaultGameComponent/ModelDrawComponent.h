@@ -25,13 +25,13 @@ class IModelObject;
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(m_meshTag);
-			archive(m_modelTag);
-			archive(m_materialTag);
-			archive(isActive);
-			archive(m_vlp_transform);
-			archive(m_vlp_drawInfo); 
-			archive(m_layer);
+			ARCHIVE_BUTI(m_meshTag);
+			ARCHIVE_BUTI(m_modelTag);
+			ARCHIVE_BUTI(m_materialTag);
+			ARCHIVE_BUTI(isActive);
+			ARCHIVE_BUTI(m_vlp_transform);
+			ARCHIVE_BUTI(m_vlp_drawInfo); 
+			ARCHIVE_BUTI(m_layer);
 		}
 
 

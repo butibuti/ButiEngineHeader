@@ -16,11 +16,11 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_deviation);
-		archive(m_direction);
-		archive(m_scale);
-		archive(m_meshDrawIndex);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_deviation);
+		ARCHIVE_BUTI(m_direction);
+		ARCHIVE_BUTI(m_scale);
+		ARCHIVE_BUTI(m_meshDrawIndex);
 	}
 	Value_ptr<GameComponent> Clone()override;
 	void AcquisitionGausParam();

@@ -13,7 +13,7 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(idManager);
+			ARCHIVE_BUTI(idManager);
 		}
 	private:
 		IDManager<GameObject> idManager;

@@ -18,19 +18,19 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(m_meshTag);
-			archive(m_modelTag);
-			archive(m_outlineMeshTag);
-			archive(m_outlineModelTag);
-			archive(m_materialTag);
-			archive(m_outlineMaterialTag);
-			archive(isActive);
+			ARCHIVE_BUTI(m_meshTag);
+			ARCHIVE_BUTI(m_modelTag);
+			ARCHIVE_BUTI(m_outlineMeshTag);
+			ARCHIVE_BUTI(m_outlineModelTag);
+			ARCHIVE_BUTI(m_materialTag);
+			ARCHIVE_BUTI(m_outlineMaterialTag);
+			ARCHIVE_BUTI(isActive);
 			BeforeTransformSave();
-			archive(m_vlp_transform);
+			ARCHIVE_BUTI(m_vlp_transform);
 			AfterTransformSave();
-			archive(m_vlp_drawInfo);
-			archive(m_vlp_outlineDrawInfo);
-			archive(m_layer);
+			ARCHIVE_BUTI(m_vlp_drawInfo);
+			ARCHIVE_BUTI(m_vlp_outlineDrawInfo);
+			ARCHIVE_BUTI(m_layer);
 		}
 
 		void CreateData()override;
@@ -57,18 +57,18 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(m_meshTag);
-			archive(m_modelTag);
-			archive(m_outlineMeshTag);
-			archive(m_outlineModelTag);
-			archive(m_outlineMaterialTag);
-			archive(m_materialTag);
-			archive(isActive);
+			ARCHIVE_BUTI(m_meshTag);
+			ARCHIVE_BUTI(m_modelTag);
+			ARCHIVE_BUTI(m_outlineMeshTag);
+			ARCHIVE_BUTI(m_outlineModelTag);
+			ARCHIVE_BUTI(m_outlineMaterialTag);
+			ARCHIVE_BUTI(m_materialTag);
+			ARCHIVE_BUTI(isActive);
 			BeforeTransformSave();
-			archive(m_vlp_transform);
+			ARCHIVE_BUTI(m_vlp_transform);
 			AfterTransformSave();
-			archive(m_vlp_drawInfo);
-			archive(m_vlp_outlineDrawInfo);
+			ARCHIVE_BUTI(m_vlp_drawInfo);
+			ARCHIVE_BUTI(m_vlp_outlineDrawInfo);
 		}
 
 		void CreateData()override;

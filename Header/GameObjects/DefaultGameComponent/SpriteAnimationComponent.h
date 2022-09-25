@@ -25,10 +25,10 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(horizontalNum);
-		archive(verticalNum);
-		archive(splitScale);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(horizontalNum);
+		ARCHIVE_BUTI(verticalNum);
+		ARCHIVE_BUTI(splitScale);
 	}
 	Value_ptr<GameComponent> Clone()override;
 private:

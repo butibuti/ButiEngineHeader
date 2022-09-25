@@ -43,8 +43,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vec_gameObjects);
-		archive(map_gameObjects);
+		ARCHIVE_BUTI(vec_gameObjects);
+		ARCHIVE_BUTI(map_gameObjects);
 	}
 	void CreateViewGameObjectVector(const std::string& arg_serchStr, const std::vector<ButiEngine::GameObjectTag>& arg_vec_serchTags);
 	std::vector<std::string> GetGameObjectList();

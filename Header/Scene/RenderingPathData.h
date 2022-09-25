@@ -25,15 +25,15 @@ struct ForwardCameraRenderingPathData :public RenderingPathData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_vlp_cameraTransform);
-		archive(m_vlp_cameraProp);
-		archive(m_layer);
-		archive(m_vec_rendertarget);
-		archive(m_vec_shadowTextures);
-		archive(m_vec_staticShadowTextures);
-		archive(m_depthStencil);
-		archive(m_isPlayActive);
-		archive(m_isEditActive);
+		ARCHIVE_BUTI(m_vlp_cameraTransform);
+		ARCHIVE_BUTI(m_vlp_cameraProp);
+		ARCHIVE_BUTI(m_layer);
+		ARCHIVE_BUTI(m_vec_rendertarget);
+		ARCHIVE_BUTI(m_vec_shadowTextures);
+		ARCHIVE_BUTI(m_vec_staticShadowTextures);
+		ARCHIVE_BUTI(m_depthStencil);
+		ARCHIVE_BUTI(m_isPlayActive);
+		ARCHIVE_BUTI(m_isEditActive);
 	}
 };
 struct DeferredCameraRenderingPathData :public RenderingPathData {
@@ -47,14 +47,14 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_vlp_cameraTransform);
-		archive(m_vlp_cameraProp);
-		archive(m_forwardCameraPathName);
-		archive(m_layer);
-		archive(m_vec_rendertarget);
-		archive(m_depthStencil);
-		archive(m_isPlayActive);
-		archive(m_isEditActive);
+		ARCHIVE_BUTI(m_vlp_cameraTransform);
+		ARCHIVE_BUTI(m_vlp_cameraProp);
+		ARCHIVE_BUTI(m_forwardCameraPathName);
+		ARCHIVE_BUTI(m_layer);
+		ARCHIVE_BUTI(m_vec_rendertarget);
+		ARCHIVE_BUTI(m_depthStencil);
+		ARCHIVE_BUTI(m_isPlayActive);
+		ARCHIVE_BUTI(m_isEditActive);
 	}
 };
 Value_ptr<RenderingPathData> CreateRenderingPathData(Value_ptr<IRenderingPath> arg_vlp_renderingPath);

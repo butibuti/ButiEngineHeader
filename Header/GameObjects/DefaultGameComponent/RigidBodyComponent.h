@@ -22,17 +22,17 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(groupMask);
-			archive(group);
-			archive(isKinematics);
-			archive(isAdditionalDamping);
-			archive(mass);
-			archive(friction);
-			archive(restitution);
-			archive(linearDamping);
-			archive(angularDamping);
-			archive(flg_linearLimits);
-			archive(flg_angularLimits);
+			ARCHIVE_BUTI(groupMask);
+			ARCHIVE_BUTI(group);
+			ARCHIVE_BUTI(isKinematics);
+			ARCHIVE_BUTI(isAdditionalDamping);
+			ARCHIVE_BUTI(mass);
+			ARCHIVE_BUTI(friction);
+			ARCHIVE_BUTI(restitution);
+			ARCHIVE_BUTI(linearDamping);
+			ARCHIVE_BUTI(angularDamping);
+			ARCHIVE_BUTI(flg_linearLimits);
+			ARCHIVE_BUTI(flg_angularLimits);
 		}
 	};
 	class ShapeParam {
@@ -49,7 +49,7 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(radius);
+			ARCHIVE_BUTI(radius);
 		}
 	private:
 		float radius=0.5f;
@@ -62,7 +62,7 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(size);
+			ARCHIVE_BUTI(size);
 		}
 	private:
 		Vector3 size=Vector3(1.0f,1.0f,1.0f);
@@ -76,7 +76,7 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(upAxis);
+			ARCHIVE_BUTI(upAxis);
 		}
 	private:
 		Vector3 upAxis = Vector3(0, 1, 0);
@@ -89,7 +89,7 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(size);
+			ARCHIVE_BUTI(size);
 		}
 	private:
 		Vector3 size= Vector3(1, 1, 1);
@@ -102,8 +102,8 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(height);
-			archive(radius);
+			ARCHIVE_BUTI(height);
+			ARCHIVE_BUTI(radius);
 		}
 	private:
 		float height=1.0f;
@@ -117,8 +117,8 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(radius);
-			archive(height);
+			ARCHIVE_BUTI(radius);
+			ARCHIVE_BUTI(height);
 		}
 	private:
 		float radius=0.5f;
@@ -133,7 +133,7 @@ public:
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(meshTag);
+			ARCHIVE_BUTI(meshTag);
 		}
 	private:
 		MeshTag meshTag;
@@ -176,10 +176,10 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_param);
-		archive(m_vlp_shapeParam);
-		archive(m_isAffectedForGravity);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_param);
+		ARCHIVE_BUTI(m_vlp_shapeParam);
+		ARCHIVE_BUTI(m_isAffectedForGravity);
 	}
 
 

@@ -38,11 +38,11 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(scriptTag);
-		archive(updateEntryPoint);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(scriptTag);
+		ARCHIVE_BUTI(updateEntryPoint);
 		GlobalValueSave();
-		archive(vec_pair_saveObject_typeIndex);
+		ARCHIVE_BUTI(vec_pair_saveObject_typeIndex);
 	}
 	void VirtualMachineInitialize(const ScriptTag arg_scriptTag);
 	void VirtualMachineHotReload();

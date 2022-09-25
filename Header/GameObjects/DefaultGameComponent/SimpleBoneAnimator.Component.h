@@ -23,10 +23,10 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_motionTag);
-		archive(isLoop);
-		archive(pase);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_motionTag);
+		ARCHIVE_BUTI(isLoop);
+		ARCHIVE_BUTI(pase);
 	}
 	Value_ptr<GameComponent> Clone()override;
 private:

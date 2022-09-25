@@ -39,8 +39,8 @@ namespace ButiRendering {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(vec_renderingPathInfo);
-			archive(layerCount);
+			ARCHIVE_BUTI(vec_renderingPathInfo);
+			ARCHIVE_BUTI(layerCount);
 		}
 		std::vector<Value_ptr<ButiRendering::RenderingPathData>> vec_renderingPathInfo;
 		std::int32_t layerCount = 1;

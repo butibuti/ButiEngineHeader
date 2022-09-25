@@ -31,8 +31,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_cameraName);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_cameraName);
 	}
 	Value_ptr<GameComponent> Clone()override {
 		return ObjectFactory::Create<CameraMan>();
@@ -71,9 +71,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_vlp_collisionPrim);
-		archive(m_layerNum);
-		archive(isActive);
+		ARCHIVE_BUTI(m_vlp_collisionPrim);
+		ARCHIVE_BUTI(m_layerNum);
+		ARCHIVE_BUTI(isActive);
 	}
 private:
 	std::uint32_t m_layerNum = 0;
@@ -102,13 +102,13 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_speed);
-		archive(m_t);
-		archive(m_vlp_targetTransform);
-		archive(m_vlp_initTransform);
-		archive(m_easeType);
-		archive(m_isReverse);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_speed);
+		ARCHIVE_BUTI(m_t);
+		ARCHIVE_BUTI(m_vlp_targetTransform);
+		ARCHIVE_BUTI(m_vlp_initTransform);
+		ARCHIVE_BUTI(m_easeType);
+		ARCHIVE_BUTI(m_isReverse);
 	}
 	void OnShowUI()override;
 	virtual void PositionSet();
@@ -139,13 +139,13 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_speed);
-		archive(m_t);
-		archive(m_vlp_targetTransform);
-		archive(m_vlp_initTransform);
-		archive(m_easeType);
-		archive(m_isReverse);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_speed);
+		ARCHIVE_BUTI(m_t);
+		ARCHIVE_BUTI(m_vlp_targetTransform);
+		ARCHIVE_BUTI(m_vlp_initTransform);
+		ARCHIVE_BUTI(m_easeType);
+		ARCHIVE_BUTI(m_isReverse);
 	}
 protected:
 	Vector2 m_size;
@@ -163,16 +163,16 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_speed);
-		archive(m_t);
-		archive(m_vlp_targetTransform);
-		archive(m_vlp_initTransform);
-		archive(m_easeType);
-		archive(m_xEaseType);
-		archive(m_yEaseType);
-		archive(m_zEaseType);
-		archive(m_isReverse);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_speed);
+		ARCHIVE_BUTI(m_t);
+		ARCHIVE_BUTI(m_vlp_targetTransform);
+		ARCHIVE_BUTI(m_vlp_initTransform);
+		ARCHIVE_BUTI(m_easeType);
+		ARCHIVE_BUTI(m_xEaseType);
+		ARCHIVE_BUTI(m_yEaseType);
+		ARCHIVE_BUTI(m_zEaseType);
+		ARCHIVE_BUTI(m_isReverse);
 	}
 	void OnShowUI()override;
 	void PositionSet()override;
@@ -195,7 +195,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
+		ARCHIVE_BUTI(isActive);
 	}
 private:
 	bool m_isCenter = true;
@@ -217,9 +217,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_vlp_target);
-		archive(m_speed);
-		archive(isActive);
+		ARCHIVE_BUTI(m_vlp_target);
+		ARCHIVE_BUTI(m_speed);
+		ARCHIVE_BUTI(isActive);
 	}
 
 private:
@@ -245,8 +245,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_vec_ikData);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_vec_ikData);
 	}
 
 
@@ -317,8 +317,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_meshTag);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_meshTag);
 	}
 private:
 	List<Particle3D> m_list_particleInfo;
@@ -389,10 +389,10 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_meshTag);
-		archive(vec_splitCountAndRequiredFrame);
-		archive(splitScale);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_meshTag);
+		ARCHIVE_BUTI(vec_splitCountAndRequiredFrame);
+		ARCHIVE_BUTI(splitScale);
 	}
 private:
 	List<Particle2D> m_list_particleInfo;
@@ -422,9 +422,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_vlp_lookTarget);
-		archive(m_speed);
-		archive(isActive);
+		ARCHIVE_BUTI(m_vlp_lookTarget);
+		ARCHIVE_BUTI(m_speed);
+		ARCHIVE_BUTI(isActive);
 	}
 	void OnShowUI();
 	Value_ptr<Transform> GetLookTarget()const;
@@ -451,8 +451,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_pase);
-		archive(isActive);
+		ARCHIVE_BUTI(m_pase);
+		ARCHIVE_BUTI(isActive);
 	}
 private:
 	Vector4 m_pase;
@@ -469,10 +469,10 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_speed);
-		archive(m_t);
-		archive(m_splineCurve);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_speed);
+		ARCHIVE_BUTI(m_t);
+		ARCHIVE_BUTI(m_splineCurve);
 	}
 	void OnShowUI()override;
 	void PositionSet();
@@ -498,9 +498,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_count);
-		archive(m_vlp_timer);
-		archive(isActive);
+		ARCHIVE_BUTI(m_count);
+		ARCHIVE_BUTI(m_vlp_timer);
+		ARCHIVE_BUTI(isActive);
 	}
 private:
 	Value_ptr<RelativeTimer> m_vlp_timer;
@@ -516,9 +516,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_relativePos);
-		archive(m_relativeScale);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_relativePos);
+		ARCHIVE_BUTI(m_relativeScale);
 	}
 	void OnShowUI()override;
 	void OnUpdate()override {}
@@ -579,15 +579,15 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_meshTag);
-		archive(m_modelTag);
-		archive(m_materialTag);
-		archive(isActive);
+		ARCHIVE_BUTI(m_meshTag);
+		ARCHIVE_BUTI(m_modelTag);
+		ARCHIVE_BUTI(m_materialTag);
+		ARCHIVE_BUTI(isActive);
 		BeforeTransformSave();
-		archive(m_vlp_transform);
+		ARCHIVE_BUTI(m_vlp_transform);
 		AfterTransformSave();
-		archive(m_vlp_drawInfo);
-		archive(m_layer);
+		ARCHIVE_BUTI(m_vlp_drawInfo);
+		ARCHIVE_BUTI(m_layer);
 	}
 protected:
 	void ShowDrawSettingsUI(Value_ptr< ButiRendering::ObjectDrawData >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
@@ -620,15 +620,15 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_meshTag);
-		archive(m_modelTag);
-		archive(m_materialTag);
-		archive(isActive);
+		ARCHIVE_BUTI(m_meshTag);
+		ARCHIVE_BUTI(m_modelTag);
+		ARCHIVE_BUTI(m_materialTag);
+		ARCHIVE_BUTI(isActive);
 		BeforeTransformSave();
-		archive(m_vlp_transform);
+		ARCHIVE_BUTI(m_vlp_transform);
 		AfterTransformSave();
-		archive(m_vlp_drawInfo);
-		archive(m_layer);
+		ARCHIVE_BUTI(m_vlp_drawInfo);
+		ARCHIVE_BUTI(m_layer);
 	}
 protected:
 };
@@ -650,18 +650,18 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_fontTag);
-		archive(m_text);
-		archive(m_modelTag);
-		archive(m_materialTag);
-		archive(isActive);
-		archive(m_vlp_transform);
-		archive(m_vlp_drawInfo);
-		archive(m_map_size);
-		archive(m_map_color);
-		archive(m_textMeshSize);
-		archive(m_just);
-		archive(m_layer);
+		ARCHIVE_BUTI(m_fontTag);
+		ARCHIVE_BUTI(m_text);
+		ARCHIVE_BUTI(m_modelTag);
+		ARCHIVE_BUTI(m_materialTag);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_vlp_transform);
+		ARCHIVE_BUTI(m_vlp_drawInfo);
+		ARCHIVE_BUTI(m_map_size);
+		ARCHIVE_BUTI(m_map_color);
+		ARCHIVE_BUTI(m_textMeshSize);
+		ARCHIVE_BUTI(m_just);
+		ARCHIVE_BUTI(m_layer);
 	}
 	void SetText(const std::string& arg_text);
 	void SetText(const std::string& arg_text,const Vector4& arg_color);

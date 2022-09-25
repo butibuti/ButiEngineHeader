@@ -152,7 +152,7 @@ namespace ButiEngine
 		/// ウィンドウハンドルの取得
 		/// </summary>
 		/// <returns>ウィンドウハンドル</returns>
-		virtual HWND GetHandle()=0;
+		virtual const HWND& GetHandle()=0;
 		/// <summary>
 		/// サイズの取得
 		/// </summary>

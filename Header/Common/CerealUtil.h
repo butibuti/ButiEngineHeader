@@ -40,31 +40,46 @@ namespace ComponentRegister{ namespace T {\
 	CEREAL_REGISTER_TYPE(ButiEngine::ValuePtrRestoreObject <ButiScript::Type_hasMember< T> >);\
 	CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::IValuePtrRestoreObject,ButiEngine::ValuePtrRestoreObject <ButiScript::Type_hasMember< T> >);
 
+
+
+#define ARCHIVE_BUTI(v)\
+	archive(CEREAL_NVP(v));
+
+#define ARCHIVE2_BUTI(v,v2)\
+	archive(CEREAL_NVP(v),CEREAL_NVP(v2));
+
+#define ARCHIVE3_BUTI(v,v2,v3)\
+	archive(CEREAL_NVP(v),CEREAL_NVP(v2),CEREAL_NVP(v3));
+
+#define ARCHIVE4_BUTI(v,v2,v3,v4)\
+	archive(CEREAL_NVP(v),CEREAL_NVP(v2),CEREAL_NVP(v3),CEREAL_NVP(v4));
+
 namespace ButiEngine{
 
 template<typename T>
 void InputCereal(T& v, const std::string& arg_fileName)
 {
 #ifdef _EDITORBUILD
+	if (!Util::ExistFile(GlobalSettings::GetResourceDirectory() + arg_fileName)) { return; }
 	std::stringstream stream;
 	std::ifstream inputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	stream << inputFile.rdbuf();
-	cereal::JSONInputArchive jsonInputArchive(stream);
-	jsonInputArchive(v);
+	cereal::JSONInputArchive jsonInputARCHIVE_BUTI(stream);
+	jsonInputARCHIVE_BUTI(v);
 	stream.clear();
 #else
 
 #ifdef RESOURCE_SYSTEM_H
 	std::stringstream stream;
 	stream << std::string(ResourceSystem::GetResourcePtr(arg_fileName), ResourceSystem::GetResourceSize(arg_fileName));
-	cereal::PortableBinaryInputArchive binInputArchive(stream);
-	binInputArchive(v);
+	cereal::PortableBinaryInputArchive binInputARCHIVE_BUTI(stream);
+	binInputARCHIVE_BUTI(v);
 #else
 	std::stringstream stream;
 	std::ifstream inputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	stream << inputFile.rdbuf();
-	cereal::PortableBinaryInputArchive binInputArchive(stream);
-	binInputArchive(v);
+	cereal::PortableBinaryInputArchive binInputARCHIVE_BUTI(stream);
+	binInputARCHIVE_BUTI(v);
 	stream.clear();
 
 #endif
@@ -78,8 +93,8 @@ void OutputCereal(const T& v, const std::string& arg_fileName)
 	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
 	std::stringstream stream;
 	{
-		cereal::JSONOutputArchive jsonOutArchive(stream);
-		jsonOutArchive(v);
+		cereal::JSONOutputArchive jsonOutARCHIVE_BUTI(stream);
+		jsonOutARCHIVE_BUTI(v);
 	}
 	std::ofstream outputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	outputFile << stream.str();
@@ -87,8 +102,8 @@ void OutputCereal(const T& v, const std::string& arg_fileName)
 	stream.clear();
 	std::ofstream outputBinCerealFile(GlobalSettings::GetResourceDirectory() + arg_fileName + ".cerealBin", std::ios::out | std::ios::binary);
 	{
-		cereal::PortableBinaryOutputArchive binOutArchive(outputBinCerealFile);
-		binOutArchive(v);
+		cereal::PortableBinaryOutputArchive binOutARCHIVE_BUTI(outputBinCerealFile);
+		binOutARCHIVE_BUTI(v);
 	}
 	outputBinCerealFile.close();
 #else
@@ -98,8 +113,8 @@ void OutputCereal(const T& v, const std::string& arg_fileName)
 	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
 	std::stringstream stream;
 	{
-		cereal::PortableBinaryOutputArchive binOutArchive(stream);
-		binOutArchive(v);
+		cereal::PortableBinaryOutputArchive binOutARCHIVE_BUTI(stream);
+		binOutARCHIVE_BUTI(v);
 	}
 	std::ofstream outputCerealFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	outputCerealFile << stream.str();

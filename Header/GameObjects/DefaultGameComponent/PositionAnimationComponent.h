@@ -23,13 +23,13 @@ namespace ButiEngine {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(isActive);
-			archive(speed);
-			archive(t);
-			archive(targetPosition);
-			archive(initPosition);
-			archive(easeType);
-			archive(isReverse);
+			ARCHIVE_BUTI(isActive);
+			ARCHIVE_BUTI(speed);
+			ARCHIVE_BUTI(t);
+			ARCHIVE_BUTI(targetPosition);
+			ARCHIVE_BUTI(initPosition);
+			ARCHIVE_BUTI(easeType);
+			ARCHIVE_BUTI(isReverse);
 		}
 		void OnShowUI()override;
 		virtual void PositionSet();

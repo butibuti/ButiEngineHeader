@@ -18,11 +18,13 @@ struct ApplicationInitData {
 	HINSTANCE hInstance = nullptr;
 	template<class Archive>
 	void serialize(Archive& archive) {
-		archive(CEREAL_NVP(appWindowName), CEREAL_NVP(initSceneName));
-		archive(CEREAL_NVP(popType));
-		archive(CEREAL_NVP(windowWidth), CEREAL_NVP(windowHeight));
-		archive(CEREAL_NVP(isFullScreen));
-		archive(CEREAL_NVP(backGroundColor));
+		ARCHIVE_BUTI(appWindowName);
+		ARCHIVE_BUTI(initSceneName);
+		ARCHIVE_BUTI(popType);
+		ARCHIVE_BUTI(windowWidth);
+		ARCHIVE_BUTI(windowHeight);
+		ARCHIVE_BUTI(isFullScreen);
+		ARCHIVE_BUTI(backGroundColor);
 	}
 };
 
@@ -34,10 +36,10 @@ struct ShaderAssetData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(shaderName);
-		archive(vertexShaderTag);
-		archive(pixelShaderTag);
-		archive(geometryShaderTag);
+		ARCHIVE_BUTI(shaderName);
+		ARCHIVE_BUTI(vertexShaderTag);
+		ARCHIVE_BUTI(pixelShaderTag);
+		ARCHIVE_BUTI(geometryShaderTag);
 	}
 };
 struct MaterialAssetData {
@@ -52,13 +54,13 @@ struct MaterialAssetData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_materialName);
-		archive(m_value);
-		archive(m_vec_textures);
-		archive(m_shader);
-		archive(m_filePath);
-		archive(m_isList);
-		archive(m_drawSettings);
+		ARCHIVE_BUTI(m_materialName);
+		ARCHIVE_BUTI(m_value);
+		ARCHIVE_BUTI(m_vec_textures);
+		ARCHIVE_BUTI(m_shader);
+		ARCHIVE_BUTI(m_filePath);
+		ARCHIVE_BUTI(m_isList);
+		ARCHIVE_BUTI(m_drawSettings);
 	}
 };
 struct RenderTargetAssetData {
@@ -69,12 +71,12 @@ struct RenderTargetAssetData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_renderTargetName);
-		archive(m_filePath);
-		archive(m_width);
-		archive(m_height);
-		archive(m_format);
-		archive(m_color);
+		ARCHIVE_BUTI(m_renderTargetName);
+		ARCHIVE_BUTI(m_filePath);
+		ARCHIVE_BUTI(m_width);
+		ARCHIVE_BUTI(m_height);
+		ARCHIVE_BUTI(m_format);
+		ARCHIVE_BUTI(m_color);
 	}
 };
 struct DepthStencilAssetData {
@@ -84,10 +86,10 @@ struct DepthStencilAssetData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_depthStencilName);
-		archive(m_filePath);
-		archive(m_width);
-		archive(m_height);
+		ARCHIVE_BUTI(m_depthStencilName);
+		ARCHIVE_BUTI(m_filePath);
+		ARCHIVE_BUTI(m_width);
+		ARCHIVE_BUTI(m_height);
 	}
 };
 struct RawDataTextureAssetData {
@@ -98,12 +100,12 @@ struct RawDataTextureAssetData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(m_rawDataTextureName);
-		archive(m_filePath);
-		archive(m_width);
-		archive(m_height);
-		archive(m_format);
-		archive(m_color);
+		ARCHIVE_BUTI(m_rawDataTextureName);
+		ARCHIVE_BUTI(m_filePath);
+		ARCHIVE_BUTI(m_width);
+		ARCHIVE_BUTI(m_height);
+		ARCHIVE_BUTI(m_format);
+		ARCHIVE_BUTI(m_color);
 	}
 };
 struct AssetLoadData

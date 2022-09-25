@@ -4,6 +4,29 @@
 #include<memory>
 
 #include"ButiMath/Geometry.h"
+
+#ifndef CEREAL_NVP
+#define CEREAL_NVP(T) ::cereal::make_nvp(#T, T)
+#endif // !CEREAL_NVP
+
+#ifndef ARCHIVE_BUTI
+#define ARCHIVE_BUTI(v)\
+	archive(CEREAL_NVP(v));
+#endif // !ARCHIVE_BUTI
+
+#ifndef ARCHIVE2_BUTI
+#define ARCHIVE2_BUTI(v,v2)\
+	archive(CEREAL_NVP(v),CEREAL_NVP(v2));
+#endif // !ARCHIVE2_BUTI
+#ifndef ARCHIVE3_BUTI
+#define ARCHIVE3_BUTI(v,v2,v3)\
+	archive(CEREAL_NVP(v),CEREAL_NVP(v2),CEREAL_NVP(v3));
+#endif // !ARCHIVE3_BUTI
+#ifndef ARCHIVE4_BUTI
+#define ARCHIVE4_BUTI(v,v2,v3,v4)\
+	archive(CEREAL_NVP(v),CEREAL_NVP(v2),CEREAL_NVP(v3),CEREAL_NVP(v4));
+#endif // !ARCHIVE4_BUTI
+
 namespace ButiEngine {
 namespace Collision {
 class CollisionPrimitive_Point;
@@ -83,7 +106,7 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
+		ARCHIVE_BUTI(vlp_transform);
 	}
 
 private:
@@ -139,8 +162,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(initVelocity);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(initVelocity);
 	}
 
 private:
@@ -199,8 +222,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(endPos);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(endPos);
 	}
 
 private:
@@ -252,8 +275,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(originRadius);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(originRadius);
 	}
 private:
 	float originRadius = 0.5f;
@@ -310,9 +333,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(initR);
-		archive(length);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(initR);
+		ARCHIVE_BUTI(length);
 	}
 private:
 	float length;
@@ -389,8 +412,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(initPoints);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(initPoints);
 	}
 
 	std::vector<Vector3 >initPoints;
@@ -445,8 +468,8 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(normal);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(normal);
 
 	}
 	Vector3 normal;
@@ -501,9 +524,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(initLengthes);
-		archive(halfLengthes);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(initLengthes);
+		ARCHIVE_BUTI(halfLengthes);
 	}
 private:
 	Vector3 initLengthes;
@@ -564,9 +587,9 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vlp_transform);
-		archive(initLengthes);
-		archive(halfLengthes);
+		ARCHIVE_BUTI(vlp_transform);
+		ARCHIVE_BUTI(initLengthes);
+		ARCHIVE_BUTI(halfLengthes);
 	}
 	Vector3 initLengthes;
 private:

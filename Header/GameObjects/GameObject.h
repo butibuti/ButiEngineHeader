@@ -170,11 +170,11 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(transform);
-		archive(m_objectName);
-		archive(m_isActive);
-		archive(m_vec_gameComponents);
-		archive(m_map_gameObjectTags);
+		ARCHIVE_BUTI(transform);
+		ARCHIVE_BUTI(m_objectName);
+		ARCHIVE_BUTI(m_isActive);
+		ARCHIVE_BUTI(m_vec_gameComponents);
+		ARCHIVE_BUTI(m_map_gameObjectTags);
 	}
 	void Init_RegistGameComponents();
 

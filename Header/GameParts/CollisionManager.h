@@ -9,11 +9,11 @@ struct CollisionLayerInfo {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(size);
-		archive(offset);
-		archive(level);
-		archive(isCheckSame);
-		archive(vec_checkOtherLayerIndex);
+		ARCHIVE_BUTI(size);
+		ARCHIVE_BUTI(offset);
+		ARCHIVE_BUTI(level);
+		ARCHIVE_BUTI(isCheckSame);
+		ARCHIVE_BUTI(vec_checkOtherLayerIndex);
 	}
 	Vector3 size;
 	Vector3 offset;
@@ -25,7 +25,7 @@ struct ColiisionLayerLoadData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(vec_collisionLayerInfo);
+		ARCHIVE_BUTI(vec_collisionLayerInfo);
 	}
 	std::vector<CollisionLayerInfo> vec_collisionLayerInfo;
 };

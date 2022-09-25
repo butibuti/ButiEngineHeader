@@ -35,10 +35,10 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(isActive);
-		archive(m_param);
-		archive(m_vlp_shapeParam);
-		archive(m_isAffectedForGravity);
+		ARCHIVE_BUTI(isActive);
+		ARCHIVE_BUTI(m_param);
+		ARCHIVE_BUTI(m_vlp_shapeParam);
+		ARCHIVE_BUTI(m_isAffectedForGravity);
 	}
 private:
 	void CreateTriggerBody();
