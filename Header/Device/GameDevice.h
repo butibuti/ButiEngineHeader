@@ -18,6 +18,8 @@ public:
 	static bool GetIsEnd();
 	static void SetReturnCode(const std::int32_t arg_returnCode);
 	static std::int32_t GetReturnCode();
+	static bool IsExceptionThrow();
+	static void SetIsExceptionThrow(const bool arg_isExThrow);
 private:
 	GameDevice();
 };

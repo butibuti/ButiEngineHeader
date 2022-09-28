@@ -12,6 +12,7 @@
 #include "../../ButiCereal/include/cereal/types/map.hpp"
 #include "../../ButiCereal/include/cereal/types/tuple.hpp"
 #include "../../ButiCereal/include/cereal/types/vector.hpp"
+#include "../../ButiCereal/include/cereal/types/ButiContaier.hpp"
 #include "../../ButiCereal/include/cereal/types/array.hpp"
 #include"GlobalSettings.h"
 #define BUTI_REGIST_CBUFFER(T)\

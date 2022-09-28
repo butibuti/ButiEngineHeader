@@ -47,7 +47,6 @@ public:
 	void SetIsRemove(const bool arg_isRemove);
 	bool GetIsRemove();
 	void CollisionUpdate();
-	virtual void OnUpdate();
 
 	void Hit(Value_ptr<GameObject> arg_vlp_other);
 
@@ -65,7 +64,7 @@ public:
 	template<class T, typename... Ts>
 	inline Value_ptr<T> AddGameComponent(Ts&&... params) {
 		auto addComponet = ObjectFactory::Create<T>(params...);
-		m_vec_newGameComponent.push_back(addComponet);
+		m_list_vec_newGameComponent.push_back(addComponet);
 		addComponet->Set(GetThis<GameObject>());
 		return addComponet;
 	}
@@ -73,7 +72,7 @@ public:
 	template<class T, typename... Ts>
 	inline Value_ptr<T> AddGameComponent_Insert(Ts&&... params) {
 		auto addComponet = ObjectFactory::Create<T>(params...);
-		m_vec_gameComponents.push_back(addComponet);
+		m_list_gameComponents.push_back(addComponet);
 		addComponet->Set(GetThis<GameObject>());
 		return addComponet;
 	}
@@ -111,7 +110,7 @@ public:
 	template <typename T>
 	inline List< Value_ptr<T>> GetGameComponents() const {
 		List< Value_ptr<T>> output;
-		for (auto checkComponent : m_vec_gameComponents) {
+		for (auto checkComponent : m_list_gameComponents) {
 			if (checkComponent->IsThis<T>()) {
 				output.Add(checkComponent->GetThis<T>());
 			}
@@ -173,7 +172,7 @@ public:
 		ARCHIVE_BUTI(transform);
 		ARCHIVE_BUTI(m_objectName);
 		ARCHIVE_BUTI(m_isActive);
-		ARCHIVE_BUTI(m_vec_gameComponents);
+		ARCHIVE_BUTI(m_list_gameComponents);
 		ARCHIVE_BUTI(m_map_gameObjectTags);
 	}
 	void Init_RegistGameComponents();
@@ -194,8 +193,8 @@ protected:
 	bool m_isActive = true;
 	bool m_isRemove = false;
 
-	std::vector< Value_ptr<GameComponent>>  m_vec_gameComponents;
-	std::vector<Value_ptr<GameComponent>> m_vec_newGameComponent;
+	List< Value_ptr<GameComponent>>  m_list_gameComponents;
+	List<Value_ptr<GameComponent>> m_list_vec_newGameComponent;
 
 	std::string m_objectName;
 

@@ -25,17 +25,16 @@ public:
 	Value_weak_ptr<GameObject>AddObjectFromCereal(std::string filePath, Value_ptr<Transform> arg_transform = nullptr);
 	Value_weak_ptr<GameObject>AddObjectFromCereal_Insert(std::string filePath, Value_ptr<Transform> arg_transform = nullptr);
 	Value_ptr<Transform> GetCerealTransform(std::string filePath);
-	std::string ReNameGameObject(const std::string& arg_ObjectName, const std::string& arg_befObjectName);
 
 	Value_weak_ptr<GameObject> GetGameObject(const std::string& arg_objectName);
 	Value_weak_ptr<GameObject> GetGameObject(const GameObjectTag& arg_objectTag);
-	std::vector<Value_ptr<GameObject>> GetGameObjects(const GameObjectTag& arg_objectTag);
+	List<Value_ptr<GameObject>> GetGameObjects(const GameObjectTag& arg_objectTag);
 
 	void Start();
 	void End();
 
 	Value_weak_ptr<IScene> GetScene() {
-		return vwp_scene;
+		return m_vwp_scene;
 	}
 
 	Value_weak_ptr<IApplication> GetApplication();
@@ -43,24 +42,21 @@ public:
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		ARCHIVE_BUTI(vec_gameObjects);
-		ARCHIVE_BUTI(map_gameObjects);
+		ARCHIVE_BUTI(m_list_gameObjects);
 	}
 	void CreateViewGameObjectVector(const std::string& arg_serchStr, const std::vector<ButiEngine::GameObjectTag>& arg_vec_serchTags);
-	std::vector<std::string> GetGameObjectList();
-	void SetSelectedGameObject(Value_weak_ptr<GameObject> arg_obj) { selectedGameObject = arg_obj; }
+	List<std::string> GetGameObjectList();
+	void SetSelectedGameObject(Value_weak_ptr<GameObject> arg_obj) { m_selectedGameObject = arg_obj; }
+	std::string GetUniqueName(const std::string& arg_name);
 private:
-	void UnRegistGameObject(Value_ptr<GameObject> arg_gameObject);
 	void CreateViewGameObjectVector();
 	void CreateViewGameObjectVector_lock();
-	std::mutex mtx_addGameObject,mtx_update,mtx_viewObject;
-	std::vector<Value_ptr<GameObject>> vec_gameObjects;
-	Value_ptr<std::vector<Value_ptr<GameObject>>> vlp_vec_viewGameObjects;
-	std::vector<Value_ptr<GameObject>> vec_newGameObjects;
-	std::unordered_map<std::string, Value_weak_ptr<GameObject>> map_gameObjects;
-	Value_weak_ptr<IScene> vwp_scene;
-	Value_weak_ptr<GameObject> selectedGameObject;
-	std::string eventRegistKey;
+	std::mutex m_mtx_addGameObject,m_mtx_update,m_mtx_viewObject,m_mtx_uniqueName;
+	List<Value_ptr<GameObject>> m_list_gameObjects,m_list_newGameObjects;
+	Value_ptr<List<Value_ptr<GameObject>>> m_vlp_list_viewGameObjects;
+	Value_weak_ptr<IScene> m_vwp_scene;
+	Value_weak_ptr<GameObject> m_selectedGameObject;
+	std::string m_eventRegistKey;
 };
 
 }
