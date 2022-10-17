@@ -42,7 +42,7 @@ public:
 		ARCHIVE_BUTI(scriptTag);
 		ARCHIVE_BUTI(updateEntryPoint);
 		GlobalValueSave();
-		ARCHIVE_BUTI(vec_pair_saveObject_typeIndex);
+		ARCHIVE_BUTI(list_pair_saveObject_typeIndex);
 	}
 	void VirtualMachineInitialize(const ScriptTag arg_scriptTag);
 	void VirtualMachineHotReload();
@@ -51,7 +51,7 @@ public:
 	}
 private:
 
-	std::vector<std::pair< Value_ptr<IValuePtrRestoreObject>,std::int32_t>> vec_pair_saveObject_typeIndex;
+	List<std::pair< Value_ptr<IValuePtrRestoreObject>,std::int32_t>> list_pair_saveObject_typeIndex;
 	Value_ptr<ButiScript::VirtualMachine> vlp_VM;
 	std::mutex mtx_vm;
 	ScriptTag scriptTag;

@@ -4,6 +4,7 @@
 
 #pragma once
 #include"../ButiMath/ButiMath.h"
+#include"ButiMemorySystem/ButiMemorySystem/ButiList.h"
 #include"GUIWindowReaction.h"
 #include<string>
 #include<map>
@@ -1000,7 +1001,7 @@ bool Edit(Timer& arg_timer);
 
 bool BeginCombo(const std::string& label, const std::string& preview_value, GuiComboFlags flags = 0);
 void EndCombo();
-bool Combo(const std::string& label, std::int32_t& current_item, const std::vector< std::string>& items, std::int32_t items_count, std::int32_t popup_max_height_in_items = -1);
+bool Combo(const std::string& label, std::int32_t& current_item, const List< std::string>& items, std::int32_t items_count, std::int32_t popup_max_height_in_items = -1);
 bool Combo(const std::string& label, std::int32_t& current_item, const std::string& items_separated_by_zeros, std::int32_t popup_max_height_in_items = -1);     
 bool Combo(const std::string& label, std::int32_t& current_item, bool(*items_getter)(void* data, std::int32_t idx, const char**  out_text), void* data, std::int32_t items_count, std::int32_t popup_max_height_in_items = -1);
 
@@ -1027,7 +1028,7 @@ bool  Selectable(const std::string& label, bool selected = false, GuiSelectableF
 bool  Selectable(const std::string& label, bool* p_selected, GuiSelectableFlags flags = 0, const Vector2& size = Vector2(0, 0));
 
 
-bool ListBox(const std::string& label, std::int32_t& current_item, const std::vector< std::string>& arg_item,  std::int32_t height_in_items = -1);
+bool ListBox(const std::string& label, std::int32_t& current_item, const List< std::string>& arg_item,  std::int32_t height_in_items = -1);
 bool ListBox(const std::string& label, std::int32_t& current_item, char** arg_item, std::int32_t items_count, std::int32_t height_in_items = -1);
 bool ListBox(const std::string& label, std::int32_t& current_item, bool (*items_getter)(void* data, std::int32_t idx, const char** out_text), void* data, std::int32_t items_count, std::int32_t height_in_items = -1);
 bool ListBoxHeader(const std::string& label, const Vector2& size = Vector2(0, 0)); 
@@ -1103,7 +1104,7 @@ inline void Console(const std::string& message) {
 #ifdef _EDITORBUILD
 void WaitMessage();
 void MessageStreamStop();
-std::vector<Message>& GetGUIMessage();
+ButiEngine::List<Message>& GetGUIMessage();
 void ClearGUIMessage();
 #endif
 void PushNotification(const std::string& message, const Vector4& color );

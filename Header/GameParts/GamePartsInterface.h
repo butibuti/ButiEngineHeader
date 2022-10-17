@@ -27,6 +27,7 @@ namespace ButiEngine
 	class IScene;
 	class IApplication;
 	class SceneInformation;
+	class GameObject;
 	class GameObjectManager;
 	class MaterialEditor;
 	class ShaderEditor;
@@ -111,7 +112,7 @@ namespace ButiEngine
 		/// <param name="arg_prim">判定する形状</param>
 		/// <param name="index">レイヤーのインデックス</param>
 		/// <returns>衝突しているオブジェクトのvector</returns>
-		virtual std::vector<Value_ptr<GameObject>> GetWillHitObjects(Value_ptr< Collision::CollisionPrimitive>arg_prim,const std::int32_t index)= 0;
+		virtual List<Value_ptr<GameObject>> GetWillHitObjects(Value_ptr< Collision::CollisionPrimitive>arg_prim,const std::int32_t index)= 0;
 		/// <summary>
 		/// GUI呼び出し
 		/// </summary>
@@ -326,6 +327,7 @@ namespace ButiEngine
 		/// <returns>直近60フレームにおけるシーンの更新にかかった時間の平均(ミリ秒)</returns>
 		virtual float GetUpdateMilliSecondAverage()const = 0;
 		virtual void SceneChangeButtonPerform(const std::string& arg_sceneName) = 0;
+		virtual void Replay(const std::string& arg_logDir) = 0;
 #endif
 
 	};
@@ -376,15 +378,15 @@ namespace ButiEngine
 		/// <summary>
 		/// マテリアルの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">読み込み情報のvector</param>
+		/// <param name="arg_list_filePathAndDirectory">読み込み情報のvector</param>
 		/// <returns>読み込んだマテリアルのタグのvector</returns>
-		virtual std::vector < MaterialTag> LoadMaterial(const std::vector<GameAssetData::MaterialAssetData>& arg_vec_loadInfo) = 0;
+		virtual List < MaterialTag> LoadMaterial(const List<GameAssetData::MaterialAssetData>& arg_list_loadInfo) = 0;
 		/// <summary>
 		/// マテリアルの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">読み込みファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">読み込みファイルパスのvector</param>
 		/// <returns>読み込んだマテリアルのタグのvector</returns>
-		virtual std::vector < MaterialTag> LoadMaterial(const std::vector<std::string>& arg_vec_filePathAndDirectory) = 0;
+		virtual List < MaterialTag> LoadMaterial(const List<std::string>& arg_list_filePathAndDirectory) = 0;
 		/// <summary>
 		/// テクスチャ読み込み
 		/// </summary>
@@ -426,9 +428,9 @@ namespace ButiEngine
 		/// <summary>
 		/// テクスチャの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">テクスチャパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">テクスチャパスのvector</param>
 		/// <returns>読み込んだテクスチャのタグのvector</returns>
-		virtual std::vector < TextureTag> LoadTexture(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List < TextureTag> LoadTexture(const List<std::string>& arg_list_filePathAndDirectory)=0;
 		/// <summary>
 		/// ピクセルシェーダの読み込み
 		/// </summary>
@@ -444,9 +446,9 @@ namespace ButiEngine
 		/// <summary>
 		/// ピクセルシェーダの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだシェーダのタグのvector</returns>
-		virtual std::vector < PixelShaderTag> LoadPixelShader(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List < PixelShaderTag> LoadPixelShader(const List<std::string>& arg_list_filePathAndDirectory)=0;
 
 		/// <summary>
 		/// 頂点シェーダの読み込み
@@ -463,9 +465,9 @@ namespace ButiEngine
 		/// <summary>
 		/// 頂点シェーダの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだシェーダのタグのvector</returns>
-		virtual std::vector < VertexShaderTag> LoadVertexShader(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List < VertexShaderTag> LoadVertexShader(const List<std::string>& arg_list_filePathAndDirectory)=0;
 
 		/// <summary>
 		/// ジオメトリシェーダの読み込み
@@ -482,9 +484,9 @@ namespace ButiEngine
 		/// <summary>
 		/// ジオメトリシェーダの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだシェーダのタグのvector</returns>
-		virtual std::vector < GeometryShaderTag> LoadGeometryShader(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List < GeometryShaderTag> LoadGeometryShader(const List<std::string>& arg_list_filePathAndDirectory)=0;
 
 		/// <summary>
 		/// シェーダの生成
@@ -501,15 +503,15 @@ namespace ButiEngine
 		/// <summary>
 		/// シェーダの一括生成
 		/// </summary>
-		/// <param name="arg_vec_shaderPath">ファイルパスのvector</param>
+		/// <param name="arg_list_shaderPath">ファイルパスのvector</param>
 		/// <returns>生成したシェーダのvector</returns>
-		virtual std::vector < ShaderTag> LoadShader(const std::vector<std::string>& arg_vec_shaderPath)=0;
+		virtual List < ShaderTag> LoadShader(const List<std::string>& arg_list_shaderPath)=0;
 		/// <summary>
 		/// シェーダの一括生成
 		/// </summary>
-		/// <param name="arg_vec_shaderInfos">シェーダ情報のvector</param>
+		/// <param name="arg_list_shaderInfos">シェーダ情報のvector</param>
 		/// <returns>生成したシェーダのvector</returns>
-		virtual std::vector < ShaderTag> LoadShader(const std::vector<GameAssetData::ShaderAssetData>& arg_vec_shaderInfos) = 0;
+		virtual List < ShaderTag> LoadShader(const List<GameAssetData::ShaderAssetData>& arg_list_shaderInfos) = 0;
 		/// <summary>
 		/// 音声の読み込み
 		/// </summary>
@@ -519,9 +521,9 @@ namespace ButiEngine
 		/// <summary>
 		/// 音声の一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだ音声のvector</returns>
-		virtual std::vector < SoundTag> LoadSound(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List < SoundTag> LoadSound(const List<std::string>& arg_list_filePathAndDirectory)=0;
 
 		/// <summary>
 		/// モデルデータの読み込み
@@ -532,9 +534,9 @@ namespace ButiEngine
 		/// <summary>
 		/// モデルデータの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだモデルのタグのvector</returns>
-		virtual std::vector<ModelTag> LoadModel(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List<ModelTag> LoadModel(const List<std::string>& arg_list_filePathAndDirectory)=0;
 
 		/// <summary>
 		/// モーションデータの読み込み
@@ -545,9 +547,9 @@ namespace ButiEngine
 		/// <summary>
 		/// モーションデータの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだモーションのタグのvector</returns>
-		virtual std::vector<MotionTag> LoadMotion(const std::vector<std::string>& arg_vec_filePathAndDirectory)=0;
+		virtual List<MotionTag> LoadMotion(const List<std::string>& arg_list_filePathAndDirectory)=0;
 		/// <summary>
 		/// コンパイル済みスクリプトの読み込み
 		/// </summary>
@@ -557,9 +559,9 @@ namespace ButiEngine
 		/// <summary>
 		/// スクリプトの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだスクリプトのタグのvector</returns>
-		virtual std::vector<ScriptTag> LoadScript(const std::vector<std::string>& arg_vec_filePathAndDirectory) = 0;
+		virtual List<ScriptTag> LoadScript(const List<std::string>& arg_list_filePathAndDirectory) = 0;
 
 
 		/// <summary>
@@ -571,9 +573,9 @@ namespace ButiEngine
 		/// <summary>
 		/// フォントの一括読み込み
 		/// </summary>
-		/// <param name="arg_vec_filePathAndDirectory">ファイルパスのvector</param>
+		/// <param name="arg_list_filePathAndDirectory">ファイルパスのvector</param>
 		/// <returns>読み込んだフォントのタグのvector</returns>
-		virtual std::vector < FontTag> LoadFont(const std::vector<std::string>& arg_vec_filePathAndDirectory) = 0;
+		virtual List < FontTag> LoadFont(const List<std::string>& arg_list_filePathAndDirectory) = 0;
 		/// <summary>
 		/// テキスト描画用メッシュの生成
 		/// </summary>
@@ -586,31 +588,31 @@ namespace ButiEngine
 		/// </summary>
 		virtual void ScriptEditCheck() = 0;
 
-		virtual std::vector<TextureTag> GetTextureTags()const = 0;
-		virtual std::vector<ModelTag> GetModelTags()const = 0;
-		virtual std::vector<MeshTag> GetMeshTags()const = 0;
-		virtual std::vector<ScriptTag> GetScriptTags()const = 0;
-		virtual std::vector<SoundTag> GetSoundTags()const = 0;
-		virtual std::vector<MotionTag> GetMotionTags()const = 0;
-		virtual std::vector<FontTag> GetFontTags()const = 0;
-		virtual std::vector<VertexShaderTag> GetVertexShaderTags()const = 0;
-		virtual std::vector<GeometryShaderTag> GetGeometryShaderTags()const = 0;
-		virtual std::vector<PixelShaderTag> GetPixelShaderTags()const = 0;
-		virtual std::vector<ShaderTag> GetShaderTags()const = 0;
-		virtual std::vector<MaterialTag> GetMaterialTags()const = 0;
+		virtual List<TextureTag> GetTextureTags()const = 0;
+		virtual List<ModelTag> GetModelTags()const = 0;
+		virtual List<MeshTag> GetMeshTags()const = 0;
+		virtual List<ScriptTag> GetScriptTags()const = 0;
+		virtual List<SoundTag> GetSoundTags()const = 0;
+		virtual List<MotionTag> GetMotionTags()const = 0;
+		virtual List<FontTag> GetFontTags()const = 0;
+		virtual List<VertexShaderTag> GetVertexShaderTags()const = 0;
+		virtual List<GeometryShaderTag> GetGeometryShaderTags()const = 0;
+		virtual List<PixelShaderTag> GetPixelShaderTags()const = 0;
+		virtual List<ShaderTag> GetShaderTags()const = 0;
+		virtual List<MaterialTag> GetMaterialTags()const = 0;
 
-		virtual std::vector<std::string> GetLoadedTextureNames()const = 0;
-		virtual std::vector<std::string> GetLoadedModelNames()const = 0;
-		virtual std::vector<std::string> GetLoadedMeshNames()const = 0;
-		virtual std::vector<std::string> GetLoadedScriptNames()const = 0;
-		virtual std::vector<std::string> GetLoadedSoundNames()const = 0;
-		virtual std::vector<std::string> GetLoadedMotionNames()const = 0;
-		virtual std::vector<std::string> GetLoadedFontNames()const = 0;
-		virtual std::vector<std::string> GetLoadedVertexShaderNames()const = 0;
-		virtual std::vector<std::string> GetLoadedGeometryShaderNames()const = 0;
-		virtual std::vector<std::string> GetLoadedPixelShaderNames()const = 0;
-		virtual std::vector<std::string> GetLoadedShaderNames()const = 0;
-		virtual std::vector<std::string> GetLoadedMaterialNames()const = 0;
+		virtual List<std::string> GetLoadedTextureNames()const = 0;
+		virtual List<std::string> GetLoadedModelNames()const = 0;
+		virtual List<std::string> GetLoadedMeshNames()const = 0;
+		virtual List<std::string> GetLoadedScriptNames()const = 0;
+		virtual List<std::string> GetLoadedSoundNames()const = 0;
+		virtual List<std::string> GetLoadedMotionNames()const = 0;
+		virtual List<std::string> GetLoadedFontNames()const = 0;
+		virtual List<std::string> GetLoadedVertexShaderNames()const = 0;
+		virtual List<std::string> GetLoadedGeometryShaderNames()const = 0;
+		virtual List<std::string> GetLoadedPixelShaderNames()const = 0;
+		virtual List<std::string> GetLoadedShaderNames()const = 0;
+		virtual List<std::string> GetLoadedMaterialNames()const = 0;
 
 		/// <summary>
 		/// メッシュの削除
@@ -780,6 +782,8 @@ namespace ButiEngine
 		virtual Value_ptr<ShaderEditor> GetShaderEditor()const = 0;
 		virtual Value_ptr<TextureEditor> GetTextureEditor()const = 0;
 		virtual Value_ptr<ScriptCompiler> GetScriptCompiler()const = 0;
+
+		virtual Value_weak_ptr<IApplication> GetApplication()const = 0;
 	};
 
 	/// <summary>
@@ -814,11 +818,6 @@ namespace ButiEngine
 		/// </summary>
 		/// <returns>リソース管理インターフェース</returns>
 		virtual Value_ptr<IResourceContainer> GetResourceContainer()=0;
-		/// <summary>
-		/// ゲームオブジェクトタグ管理インスタンスの取得
-		/// </summary>
-		/// <returns>ゲームオブジェクトタグ管理インスタンス</returns>
-		virtual Value_ptr<GameObjectTagManager> GetGameObjectTagManager()=0;
 		/// <summary>
 		/// 音声管理インスタンスの取得
 		/// </summary>

@@ -10,9 +10,6 @@ public:
 	static void CreateInstance();
 
 	static  Value_ptr< ComponentsLoader> GetInstance();
-
-	void Initialize() {}
-	void PreInitialize() {}
 	void Release();
 	void AddGameComponent(Value_ptr<GameComponent> arg_gamecomponent);
 
@@ -33,10 +30,8 @@ public:
 
 
 private:
-
 	std::map<std::string, Value_ptr<GameComponent>> map_addGameComponents;
 	Value_ptr<GameComponent> vlp_currentSelectObj;
-
 	static Value_ptr< ComponentsLoader> instance;
 };
 }

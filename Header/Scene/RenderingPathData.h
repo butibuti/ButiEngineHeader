@@ -16,9 +16,9 @@ struct RenderingPathData :public IObject {
 struct ForwardCameraRenderingPathData :public RenderingPathData {
 	Value_ptr<Transform> m_vlp_cameraTransform;
 	Value_ptr<CameraProperty> m_vlp_cameraProp;
-	std::vector<TextureTag> m_vec_rendertarget;
-	std::vector<TextureTag> m_vec_shadowTextures;
-	std::vector<TextureTag> m_vec_staticShadowTextures;
+	List<TextureTag> m_list_rendertarget;
+	List<TextureTag> m_list_shadowTextures;
+	List<TextureTag> m_list_staticShadowTextures;
 	TextureTag m_depthStencil;
 	bool m_isPlayActive=true, m_isEditActive=false;
 	Value_ptr<IRenderingPath> CreateRenderingPath(Value_ptr<IRenderer> arg_vlp_renderer, Value_ptr<GraphicDevice> arg_vlp_graphicDevice, Value_ptr<IScene> arg_vlp_scene)override;
@@ -28,9 +28,9 @@ struct ForwardCameraRenderingPathData :public RenderingPathData {
 		ARCHIVE_BUTI(m_vlp_cameraTransform);
 		ARCHIVE_BUTI(m_vlp_cameraProp);
 		ARCHIVE_BUTI(m_layer);
-		ARCHIVE_BUTI(m_vec_rendertarget);
-		ARCHIVE_BUTI(m_vec_shadowTextures);
-		ARCHIVE_BUTI(m_vec_staticShadowTextures);
+		ARCHIVE_BUTI(m_list_rendertarget);
+		ARCHIVE_BUTI(m_list_shadowTextures);
+		ARCHIVE_BUTI(m_list_staticShadowTextures);
 		ARCHIVE_BUTI(m_depthStencil);
 		ARCHIVE_BUTI(m_isPlayActive);
 		ARCHIVE_BUTI(m_isEditActive);
@@ -40,7 +40,7 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 	Value_ptr<Transform> m_vlp_cameraTransform;
 	Value_ptr<CameraProperty> m_vlp_cameraProp;
 	std::string m_forwardCameraPathName;
-	std::vector<TextureTag> m_vec_rendertarget;
+	List<TextureTag> m_list_rendertarget;
 	TextureTag m_depthStencil;
 	bool m_isPlayActive = true, m_isEditActive = false;
 	Value_ptr<IRenderingPath> CreateRenderingPath(Value_ptr<IRenderer> arg_vlp_renderer, Value_ptr<GraphicDevice> arg_vlp_graphicDevice, Value_ptr<IScene> arg_vlp_scene)override;
@@ -51,7 +51,7 @@ struct DeferredCameraRenderingPathData :public RenderingPathData {
 		ARCHIVE_BUTI(m_vlp_cameraProp);
 		ARCHIVE_BUTI(m_forwardCameraPathName);
 		ARCHIVE_BUTI(m_layer);
-		ARCHIVE_BUTI(m_vec_rendertarget);
+		ARCHIVE_BUTI(m_list_rendertarget);
 		ARCHIVE_BUTI(m_depthStencil);
 		ARCHIVE_BUTI(m_isPlayActive);
 		ARCHIVE_BUTI(m_isEditActive);

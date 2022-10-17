@@ -13,21 +13,21 @@ struct CollisionLayerInfo {
 		ARCHIVE_BUTI(offset);
 		ARCHIVE_BUTI(level);
 		ARCHIVE_BUTI(isCheckSame);
-		ARCHIVE_BUTI(vec_checkOtherLayerIndex);
+		ARCHIVE_BUTI(list_checkOtherLayerIndex);
 	}
 	Vector3 size;
 	Vector3 offset;
 	std::int32_t level;
 	bool isCheckSame;
-	std::vector<std::int32_t> vec_checkOtherLayerIndex;
+	List<std::int32_t> list_checkOtherLayerIndex;
 };
 struct ColiisionLayerLoadData {
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
-		ARCHIVE_BUTI(vec_collisionLayerInfo);
+		ARCHIVE_BUTI(list_collisionLayerInfo);
 	}
-	std::vector<CollisionLayerInfo> vec_collisionLayerInfo;
+	List<CollisionLayerInfo> list_collisionLayerInfo;
 };
 
 Value_ptr<ICollisionManager> CreateCollisionManager(const std::int32_t arg_layerCount);

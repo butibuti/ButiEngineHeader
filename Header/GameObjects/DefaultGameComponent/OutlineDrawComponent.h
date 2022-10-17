@@ -37,7 +37,7 @@ namespace ButiEngine {
 	protected:
 		MeshTag m_outlineMeshTag;
 		ModelTag m_outlineModelTag;
-		std::vector<MaterialTag>m_outlineMaterialTag;
+		List<MaterialTag>m_outlineMaterialTag;
 
 		Value_ptr<ButiRendering::ObjectDrawData >m_vlp_outlineDrawInfo = nullptr;
 
@@ -75,7 +75,7 @@ namespace ButiEngine {
 	protected:
 		MeshTag m_outlineMeshTag;
 		ModelTag m_outlineModelTag;
-		std::vector<MaterialTag>m_outlineMaterialTag;
+		List<MaterialTag>m_outlineMaterialTag;
 
 		Value_ptr<ButiRendering::ObjectDrawData >m_vlp_outlineDrawInfo = nullptr;
 

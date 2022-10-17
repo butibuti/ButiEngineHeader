@@ -26,7 +26,7 @@ public:
 		}
 	}
 	void Compile(const std::string& arg_compilePath);
-	void Compile(const std::vector< std::string>& arg_vec_compilePath);
+	void Compile(const List< std::string>& arg_vec_compilePath);
 	void EditCheck();
 private:
 	void Compile(std::string& arg_compilePath, std::int32_t& arg_ref_compileCount, std::int32_t& arg_ref_successCount, std::int32_t& arg_ref_throughCount);

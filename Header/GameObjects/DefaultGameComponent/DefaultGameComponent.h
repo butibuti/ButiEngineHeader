@@ -246,7 +246,7 @@ public:
 	void serialize(Archive& archive)
 	{
 		ARCHIVE_BUTI(isActive);
-		ARCHIVE_BUTI(m_vec_ikData);
+		ARCHIVE_BUTI(m_list_ikData);
 	}
 
 
@@ -255,7 +255,7 @@ protected:
 private:
 	Value_ptr<ButiRendering::IModelObject> m_vlp_modelData;
 	List<Value_ptr<ButiRendering::Bone>> m_list_endBones;
-	std::vector<Value_ptr<ButiRendering::IKData>> m_vec_ikData;
+	List<Value_ptr<ButiRendering::IKData>> m_list_ikData;
 };
 
 
@@ -326,7 +326,7 @@ private:
 	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
 	Value_ptr<ButiRendering::Resource_DynamicMesh> m_vlp_mesh;
 	std::map < std::string, std::int32_t>m_map_particleControlIndex;
-	std::vector < std::function<void(Particle3D&)>>m_vec_particleControlFunction;
+	List < std::function<void(Particle3D&)>>m_list_particleControlFunction;
 	std::int32_t m_addParticleCount = 0;
 };
 class SpriteParticleController :public GameComponent
@@ -355,33 +355,33 @@ public:
 		splitScale.y = 1.0f / arg_verticalSplitScale;
 	}
 	void SetHorizontalSplitScale(const std::int32_t arg_horizontalSplitScale, const std::int32_t arg_verticalIndex) {
-		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
-			vec_splitCountAndRequiredFrame.resize(arg_verticalIndex + 1);
+		if (arg_verticalIndex >= list_splitCountAndRequiredFrame.GetSize()) {
+			list_splitCountAndRequiredFrame.Resize(arg_verticalIndex + 1);
 		}
 
-		vec_splitCountAndRequiredFrame[arg_verticalIndex].first = arg_horizontalSplitScale;
+		list_splitCountAndRequiredFrame[arg_verticalIndex].first = arg_horizontalSplitScale;
 	}
 	std::int32_t GetHorizontalSplitScale(const std::int32_t arg_verticalIndex) const {
-		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
+		if (arg_verticalIndex >= list_splitCountAndRequiredFrame.GetSize()) {
 			return -1;
 		}
-		return vec_splitCountAndRequiredFrame[arg_verticalIndex].first;
+		return list_splitCountAndRequiredFrame[arg_verticalIndex].first;
 	}
 	void SetHorizontalRequiredFrame(const std::int32_t arg_frame, const std::int32_t arg_verticalIndex) {
-		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
-			vec_splitCountAndRequiredFrame.resize(arg_verticalIndex + 1);
+		if (arg_verticalIndex >= list_splitCountAndRequiredFrame.GetSize()) {
+			list_splitCountAndRequiredFrame.Resize(arg_verticalIndex + 1);
 		}
 
-		vec_splitCountAndRequiredFrame[arg_verticalIndex].second= arg_frame;
+		list_splitCountAndRequiredFrame[arg_verticalIndex].second= arg_frame;
 	}
 	std::int32_t GetHorizontalRequiredFrame(const std::int32_t arg_verticalIndex) const {
-		if (arg_verticalIndex >= vec_splitCountAndRequiredFrame.size()) {
+		if (arg_verticalIndex >= list_splitCountAndRequiredFrame.GetSize()) {
 			return -1;
 		}
-		return vec_splitCountAndRequiredFrame[arg_verticalIndex].second;
+		return list_splitCountAndRequiredFrame[arg_verticalIndex].second;
 	}
 	std::int32_t GetVerticalSplitScale() const {
-		return vec_splitCountAndRequiredFrame.size();
+		return list_splitCountAndRequiredFrame.GetSize();
 	}
 	Vector2 GetSplitScale()const {
 		return splitScale;
@@ -391,7 +391,7 @@ public:
 	{
 		ARCHIVE_BUTI(isActive);
 		ARCHIVE_BUTI(m_meshTag);
-		ARCHIVE_BUTI(vec_splitCountAndRequiredFrame);
+		ARCHIVE_BUTI(list_splitCountAndRequiredFrame);
 		ARCHIVE_BUTI(splitScale);
 	}
 private:
@@ -400,9 +400,9 @@ private:
 	Value_ptr<ButiRendering::MeshPrimitive<Vertex::Vertex_UV_Normal_Color>> m_vlp_backUp;
 	Value_ptr<ButiRendering::Resource_DynamicMesh> m_vlp_mesh;
 	std::int32_t m_addParticleCount = 0;
-	std::vector<std::pair< std::int32_t,std::int32_t>> vec_splitCountAndRequiredFrame;
+	List<std::pair< std::int32_t,std::int32_t>> list_splitCountAndRequiredFrame;
 	std::map < std::string, std::int32_t>m_map_particleControlIndex;
-	std::vector < std::function<void(Particle2D&)>>m_vec_particleControlFunction;
+	List < std::function<void(Particle2D&)>>m_list_particleControlFunction;
 	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> m_vlp_param;
 	Vector2 splitScale = Vector2(1, 1);
 };
@@ -536,9 +536,9 @@ class MeshDrawComponent :public GameComponent
 {
 public:
 	MeshDrawComponent(const MeshTag& arg_meshTag,const MaterialTag& arg_materialTag,const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent(const MeshTag& arg_meshTag, const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent(const MeshTag& arg_meshTag, const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent(const ModelTag& arg_modelTag, const std::int32_t arg_layer,Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag,const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag,const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent() {}
 	std::string GetGameComponentName()const override {
 		return "MeshDraw";
@@ -551,7 +551,7 @@ public:
 	void SetModelTag(ModelTag  arg_modelTag);
 	const MeshTag& GetMeshTag();
 	const ModelTag& GetModelTag();
-	const std::vector<MaterialTag>& GetMaterialTag();
+	const List<MaterialTag>& GetMaterialTag();
 	Value_ptr<GameComponent> Clone()override;
 	virtual void Regist();
 	void ReRegist();
@@ -600,7 +600,7 @@ protected:
 	ModelTag m_modelTag;
 	Value_ptr<Transform> m_vlp_transform;
 	Value_ptr< ButiRendering::ObjectDrawData >m_vlp_drawInfo = nullptr;
-	std::vector<MaterialTag> m_materialTag;
+	List<MaterialTag> m_materialTag;
 	std::int32_t m_layer = 0;
 	bool isCereal = true, m_isRegisted = false;
 };
@@ -608,9 +608,9 @@ class MeshDrawComponent_Static :public MeshDrawComponent
 {
 public:
 	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const MaterialTag& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent_Static(const ModelTag& arg_modelTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag, const std::vector< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag, const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent_Static() {}
 	std::string GetGameComponentName()const override {
 		return "MeshDraw_Static";

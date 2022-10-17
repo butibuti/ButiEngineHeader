@@ -2,7 +2,6 @@
 #define GAMECOMPONENT_H
 
 #pragma once
-#include<memory>
 namespace ButiEngine {
 class GameComponent :public IObject
 {
@@ -55,7 +54,6 @@ protected:
 	Value_ptr<ButiRendering::ICamera> GetCamera(const std::string& arg_camName);
 	Value_weak_ptr<GameObjectManager> GetManager();
 	Value_weak_ptr<ICollisionManager> GetCollisionManager();
-	Value_ptr<GameObjectTagManager> GetTagManager();
 	Value_weak_ptr<GameObject> gameObject;
 
 	bool isActive = true;

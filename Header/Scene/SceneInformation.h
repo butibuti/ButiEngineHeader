@@ -12,7 +12,6 @@ namespace ButiRendering {
 		SceneInformation(const std::string& arg_sceneName) {
 			sceneName = arg_sceneName;
 		}
-		~SceneInformation();
 		std::string GetSceneName() {
 			return sceneName;
 		}
@@ -39,10 +38,10 @@ namespace ButiRendering {
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			ARCHIVE_BUTI(vec_renderingPathInfo);
+			ARCHIVE_BUTI(list_renderingPathInfo);
 			ARCHIVE_BUTI(layerCount);
 		}
-		std::vector<Value_ptr<ButiRendering::RenderingPathData>> vec_renderingPathInfo;
+		std::vector<Value_ptr<ButiRendering::RenderingPathData>> list_renderingPathInfo;
 		std::int32_t layerCount = 1;
 	private:
 	};

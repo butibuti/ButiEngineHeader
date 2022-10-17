@@ -30,15 +30,15 @@ protected:
 	Value_weak_ptr<ButiRendering::GraphicDevice> vwp_graphicDevice;
 	Value_weak_ptr<IResourceContainer> vwp_resourceContainer;
 private:
-	void ReadIndex(std::vector<std::uint32_t>& indices, char arg_indexByteCount, Value_ptr<IBinaryReader> arg_reader);
+	void ReadIndex(List<std::uint32_t>& indices, char arg_indexByteCount, Value_ptr<IBinaryReader> arg_reader);
 	template<typename T>
 	void ReadPosition(T& out, Value_ptr<IBinaryReader>& arg_reader) {
 		out.position = arg_reader->ReadVariable<Vector3>();
 	}
 	template<typename T>
-	void inline ReadVertex(std::vector< T>& out, const std::int32_t arg_vertexCount,Value_ptr<IBinaryReader> arg_reader, ButiRendering::BoxSurface& arg_ref_output_boxSurface) {
+	void inline ReadVertex(List< T>& out, const std::int32_t arg_vertexCount,Value_ptr<IBinaryReader> arg_reader, ButiRendering::BoxSurface& arg_ref_output_boxSurface) {
 		float up = 0, down = 0, left = 0, right = 0, front = 0, back = 0;
-		out.reserve(arg_vertexCount);
+		out.Reserve(arg_vertexCount);
 		for (std::uint32_t i = 0; i < arg_vertexCount; i++) {
 			auto vertex = arg_reader->ReadVariable<T>();
 			if (up < vertex.position.y) {

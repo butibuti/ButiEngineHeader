@@ -1,6 +1,7 @@
+#ifndef _BUTI_GAMEOBJECT_H
+#define _BUTI_GAMEOBJECT_H
+
 #pragma once
-#include<memory>
-#include<vector>
 #include<functional>
 namespace ButiEngine {
 class GameObject;
@@ -64,7 +65,7 @@ public:
 	template<class T, typename... Ts>
 	inline Value_ptr<T> AddGameComponent(Ts&&... params) {
 		auto addComponet = ObjectFactory::Create<T>(params...);
-		m_list_vec_newGameComponent.push_back(addComponet);
+		m_list_newGameComponent.push_back(addComponet);
 		addComponet->Set(GetThis<GameObject>());
 		return addComponet;
 	}
@@ -134,7 +135,7 @@ public:
 	std::string SetObjectName(const std::string& arg_objectName);
 
 	List<GameObjectTag> GetGameObjectTags()const;
-	GameObjectTag SetGameObjectTag(GameObjectTag& arg_tag) {
+	GameObjectTag SetGameObjectTag(const GameObjectTag& arg_tag) {
 		if (m_map_gameObjectTags.count(arg_tag)) {
 			return arg_tag;
 		}
@@ -194,7 +195,7 @@ protected:
 	bool m_isRemove = false;
 
 	List< Value_ptr<GameComponent>>  m_list_gameComponents;
-	List<Value_ptr<GameComponent>> m_list_vec_newGameComponent;
+	List<Value_ptr<GameComponent>> m_list_newGameComponent;
 
 	std::string m_objectName;
 
@@ -206,3 +207,6 @@ protected:
 	std::mutex mtx_collisionAdd;
 };
 }
+
+
+#endif // !_BUTI_GAMEOBJECT_H

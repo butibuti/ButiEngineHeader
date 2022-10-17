@@ -20,6 +20,7 @@ public:
 	static std::int32_t GetReturnCode();
 	static bool IsExceptionThrow();
 	static void SetIsExceptionThrow(const bool arg_isExThrow);
+	static std::chrono::system_clock::time_point GetBootTime();
 private:
 	GameDevice();
 };
