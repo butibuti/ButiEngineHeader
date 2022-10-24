@@ -13,7 +13,7 @@ struct ApplicationInitData {
 	std::string initSceneName = "Default";
 	WindowPopType popType = WindowPopType::normal;
 	std::int32_t windowWidth = 1920, windowHeight = 1080;
-	bool isFullScreen;
+	bool isFullScreen=false,isUseVRTracker=false;
 	Vector4 backGroundColor = Vector4(0, 0, 0, 1);
 	HINSTANCE hInstance = nullptr;
 	template<class Archive>
@@ -24,6 +24,7 @@ struct ApplicationInitData {
 		ARCHIVE_BUTI(windowWidth);
 		ARCHIVE_BUTI(windowHeight);
 		ARCHIVE_BUTI(isFullScreen);
+		ARCHIVE_BUTI(isUseVRTracker);
 		ARCHIVE_BUTI(backGroundColor);
 	}
 };

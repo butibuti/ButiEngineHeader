@@ -958,7 +958,7 @@ bool VSliderInt(const std::string& label, const Vector2& size, std::int32_t& v, 
 void Texture(void* arg_ptr,const Vector2& arg_size,const Vector2& leftTopUV=Vector2(0,0), const Vector2& rightDownUV = Vector2(1, 1), const Vector4& color = Vector4(1, 1, 1, 1), const Vector4& lineColor = Vector4(1, 1, 1, 1));
 
 void TextUnformatted(const std::string& text, const std::string& text_end = "");
-void Text(const std::string& fmt, ...);
+void Text(const std::string& fmt);
 void Text(const Vector2& v);
 void Text(const Vector3& v);
 void Text(const Vector4& v);
