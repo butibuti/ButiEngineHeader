@@ -802,7 +802,7 @@ namespace ButiEngine
 		/// ウィンドウの取得
 		/// </summary>
 		/// <returns></returns>
-		virtual std::unique_ptr<IWindow>& GetWindow()=0;
+		virtual Value_ptr<IWindow> GetWindow()=0;
 		/// <summary>
 		/// シーンマネージャーの取得
 		/// </summary>
@@ -962,7 +962,7 @@ namespace ButiEngine
 		/// ウィンドウ管理インスタンスの取得
 		/// </summary>
 		/// <returns>ウィンドウ管理インスタンス</returns>
-		virtual std::unique_ptr<IWindow>& GetWindow() = 0;
+		virtual Value_ptr<IWindow> GetWindow() = 0;
 		/// <summary>
 		/// 解放処理
 		/// </summary>

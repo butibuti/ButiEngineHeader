@@ -1199,7 +1199,7 @@ void Line(const Vector2& p1, const Vector2& p2, std::uint32_t col, float thickne
 float GetFontSize();
 
 GuiIO GetIO();
-void GUISetUP(std::unique_ptr<IWindow>& unq_window, Value_ptr<ButiRendering::GraphicDevice>vlp_graphicDevice);
+void GUISetUP(Value_ptr<IWindow> arg_vlp_window, Value_ptr<ButiRendering::GraphicDevice>vlp_graphicDevice);
 void Start();
 void Update();
 void EditorGUIUpdate();

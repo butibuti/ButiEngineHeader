@@ -16,7 +16,7 @@ class Application :public IApplication
 public:
 	Application() {};
 	void CreateInstances(GameAssetData::ApplicationInitData& arg_data);
-	std::unique_ptr<IWindow>& GetWindow()override;
+	Value_ptr<IWindow> GetWindow()override;
 	Value_ptr<ISceneManager> GetSceneManager()override;
 	Value_ptr<ButiRendering::GraphicDevice> GetGraphicDevice()override;
 	Value_ptr<IResourceContainer> GetResourceContainer()override;
@@ -31,7 +31,7 @@ public:
 	const GameAssetData::ApplicationInitData* GetAppInitData()const override;
 private:
 	Value_ptr<ButiRendering::GraphicDevice>vlp_graphicDevice;
-	std::unique_ptr<IWindow> unq_window;
+	Value_ptr<IWindow> vlp_window;
 	Value_ptr< ISceneManager> vlp_sceneManager;
 	Value_ptr<IResourceContainer>vlp_resourceContainer;
 	Value_ptr<ButiSound::ISoundManager>vlp_soundManager;
