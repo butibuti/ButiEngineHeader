@@ -27,7 +27,7 @@ public:
 
 	void SetGroup(std::int32_t arg_group);
 	void SetGroupMask(std::int32_t arg_groupMask);
-	Value_ptr<ButiBullet::ITriggerBody> GetRigidBody()const;
+	Value_ptr<ButiBullet::IRigidBody> GetRigidBody()const;
 
 	void Regist();
 	void UnRegist();
@@ -47,7 +47,7 @@ private:
 		ReleaseTriggerBody();
 		CreateTriggerBody();
 	}
-	Value_ptr<ButiBullet::TriggerBody> m_vlp_triggerBody;
+	Value_ptr<ButiBullet::RigidBody> m_vlp_triggerBody;
 	Value_ptr<RigidBodyComponent::ShapeParam> m_vlp_shapeParam;
 	RigidBodyComponent::RigidBodyParameter m_param;
 	bool m_isAffectedForGravity = true;
