@@ -48,37 +48,6 @@ namespace Collision {
 enum class CollisionPrimType {
 	cube, sphere, capsule
 };
-class ColliderComponent :public GameComponent
-{
-public:
-	ColliderComponent(Value_ptr<CollisionPrimitive> arg_vlp_collisionPrim, const std::uint32_t arg_layerNum = 0);
-	ColliderComponent() {}
-	void Initialize()override;
-	void OnSet()override;
-	void OnUpdate()override;
-	void OnRemove()override;
-	void Start()override;
-	void CollisionStart();
-	void CollisionStop();
-	std::string GetGameComponentName()const override {
-		return "ColliderComponent";
-	}
-	Value_ptr<GameComponent> Clone()override;
-	Value_ptr<CollisionPrimitive> GetCollisionPrimitive();
-	void SetCollisionPrimitive(Value_ptr<CollisionPrimitive> arg_vlp_collisionPrim);
-	void OnShowUI()override;
-
-	template<class Archive>
-	void serialize(Archive& archive)
-	{
-		ARCHIVE_BUTI(m_vlp_collisionPrim);
-		ARCHIVE_BUTI(m_layerNum);
-		ARCHIVE_BUTI(isActive);
-	}
-private:
-	std::uint32_t m_layerNum = 0;
-	Value_ptr<CollisionPrimitive> m_vlp_collisionPrim;
-};
 }
 
 
@@ -701,7 +670,6 @@ BUTI_REGIST_GAMECOMPONENT(UIComponent, true)
 
 CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::MeshDrawComponent, ButiEngine::MeshDrawComponent_Static);
 
-BUTI_REGIST_GAMECOMPONENT(Collision::ColliderComponent,true)
 BUTI_REGIST_GAMECOMPONENT(SucideComponent,true)
 BUTI_REGIST_GAMECOMPONENT(TransformAnimation,true)
 

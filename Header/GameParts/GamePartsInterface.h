@@ -37,96 +37,6 @@ namespace ButiEngine
 	struct TextureResourceData;
 	}
 
-	/// <summary>
-	/// ゲームオブジェクト衝突レイヤーの管理インターフェース
-	/// </summary>
-	class ICollisionManager :public IObject
-	{
-	public:
-		void Initialize()override {}
-		void PreInitialize()override {}
-		/// <summary>
-		/// ファイルからの復旧
-		/// </summary>
-		/// <param name="arg_path">ファイルパス</param>
-		virtual void InputLoadData(const std::string& arg_path) = 0;
-		/// <summary>
-		/// ファイルへの出力
-		/// </summary>
-		/// <param name="arg_path">ファイルパス</param>
-		virtual void OutputLoadData(const std::string& arg_path) = 0;
-
-		/// <summary>
-		/// レイヤーの作り直し
-		/// </summary>
-		virtual void ReCreateLayers() = 0;
-
-		virtual void Update()= 0;
-		/// <summary>
-		/// ゲームオブジェクトの衝突登録
-		/// </summary>
-		/// <param name="index">レイヤーの番号</param>
-		/// <param name="arg_prim">形状</param>
-		/// <param name="arg_registObj">ゲームオブジェクト</param>
-		virtual void RegistCollisionObject(const std::int32_t index,Value_ptr< Collision::CollisionPrimitive>arg_prim, Value_ptr<GameObject> arg_registObj)= 0;
-		/// <summary>
-		/// ゲームオブジェクトの衝突登録解除
-		/// </summary>
-		/// <param name="index">レイヤーの番号</param>
-		/// <param name="arg_registObj">ゲームオブジェクト</param>
-		virtual void UnRegistCollisionObject(const std::int32_t index,  Value_ptr<GameObject> arg_registObj)= 0;
-		/// <summary>
-		/// レイヤーの数
-		/// </summary>
-		/// <returns></returns>
-		virtual std::uint32_t GetLayerCount()= 0;
-		/// <summary>
-		/// レイヤーの追加
-		/// </summary>
-		/// <param name="size">レイヤーの大きさ</param>
-		/// <param name="level">八分木空間の分割レベル</param>
-		/// <param name="isCheckSame">同じレイヤーに登録されているオブジェクトと衝突するか</param>
-		virtual void AddLayer(const Vector3& size, const std::int32_t level, bool isCheckSame)= 0;
-		/// <summary>
-		/// レイヤーの削除
-		/// </summary>
-		/// <param name="index">レイヤーの番号</param>
-		virtual void RemoveLayer(const std::int32_t index)= 0;
-		/// <summary>
-		/// レイヤー登録外のオブジェクトとの衝突判定
-		/// </summary>
-		/// <param name="arg_prim">判定する形状</param>
-		/// <param name="index">レイヤーのインデックス</param>
-		/// <returns>trueで衝突している</returns>
-		virtual bool IsWillHit(Value_ptr< Collision::CollisionPrimitive>arg_prim,const std::int32_t index) = 0;
-		/// <summary>
-		/// レイヤー登録外のオブジェクトとの衝突判定
-		/// </summary>
-		/// <param name="arg_prim">判定する形状</param>
-		/// <param name="index">レイヤーのインデックス</param>
-		/// <returns>衝突しているオブジェクト</returns>
-		virtual Value_ptr<GameObject> GetWillHitObject(Value_ptr< Collision::CollisionPrimitive>arg_prim,const std::int32_t index) = 0;
-		/// <summary>
-		/// レイヤー登録外のオブジェクトとの衝突判定
-		/// </summary>
-		/// <param name="arg_prim">判定する形状</param>
-		/// <param name="index">レイヤーのインデックス</param>
-		/// <returns>衝突しているオブジェクトのvector</returns>
-		virtual List<Value_ptr<GameObject>> GetWillHitObjects(Value_ptr< Collision::CollisionPrimitive>arg_prim,const std::int32_t index)= 0;
-		/// <summary>
-		/// GUI呼び出し
-		/// </summary>
-		virtual void ShowGUI()= 0;
-		virtual void Start() = 0;
-		virtual void End() = 0;
-		virtual void Release()   = 0;
-	};
-
-	namespace Collision {
-		template<typename T>
-		class CollisionLayer;
-		class CollisionPrimitive_Box_OBB;
-	}
 
 	class IResourceContainer;
 
@@ -895,11 +805,6 @@ namespace ButiEngine
 		/// </summary>
 		virtual void EditCameraUpdate() = 0;
 		/// <summary>
-		/// 衝突判定クラスの起動
-		/// </summary>
-		/// <param name="arg_layerCount">衝突判定レイヤーの数</param>
-		virtual void ActiveCollision(const std::uint32_t arg_layerCount) = 0;
-		/// <summary>
 		/// カメラの取得
 		/// </summary>
 		/// <param name="arg_camName">カメラ名</param>
@@ -917,11 +822,6 @@ namespace ButiEngine
 		/// <param name="arg_path">描画パス</param>
 		/// <returns>追加された描画パス</returns>
 		virtual Value_ptr<ButiRendering::IRenderingPath> AddRenderingPath(Value_ptr<ButiRendering::IRenderingPath> arg_path) = 0;
-		/// <summary>
-		/// 衝突管理インスタンスの取得
-		/// </summary>
-		/// <returns>衝突管理インスタンス</returns>
-		virtual Value_weak_ptr<ICollisionManager> GetCollisionManager() = 0;
 		/// <summary>
 		/// 描画パスの削除
 		/// </summary>
