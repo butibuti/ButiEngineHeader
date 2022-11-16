@@ -158,6 +158,7 @@ public:
 
 	const RigidBodyParameter& GetRigidBodyParameter()const { return m_param; }
 
+	void SetIsAffectedGravity(const bool arg_isAffectedForGravity);
 	void SetIsKinematics(const bool arg_isKinematics);
 	void SetIsAdditionalDamping(const bool arg_isAdditionalDamping);
 	void SetMass(const float arg_mass);
