@@ -91,7 +91,7 @@ template<typename T>
 void OutputCereal(const T& v, const std::string& arg_fileName)
 {
 #ifdef _EDITORBUILD
-	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
+	Util::MakeDirectory(GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName));
 	std::stringstream stream;
 	{
 		cereal::JSONOutputArchive jsonOutARCHIVE_BUTI(stream);
