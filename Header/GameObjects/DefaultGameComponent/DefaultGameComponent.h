@@ -653,7 +653,7 @@ protected:
 	std::string m_text;
 	std::int32_t m_textMeshSize = 256;
 	TextJustified m_just=TextJustified::left;
-	Value_ptr<ButiRendering::Resource_DynamicMesh> m_vlp_mesh;
+	Value_weak_ptr<ButiRendering::Resource_DynamicMesh> m_vwp_mesh;
 };
 
 
