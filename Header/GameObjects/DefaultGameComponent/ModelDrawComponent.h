@@ -15,7 +15,6 @@ class IModelObject;
 			return "ModelDraw";
 		}
 
-		void OnSet()override;
 		virtual Value_ptr<ButiRendering::IModelObject> GetModelData();
 		Value_ptr<GameComponent> Clone()override;
 		Value_ptr<ButiRendering::IBoneObject> GetBone();
@@ -29,8 +28,10 @@ class IModelObject;
 			ARCHIVE_BUTI(m_modelTag);
 			ARCHIVE_BUTI(m_materialTag);
 			ARCHIVE_BUTI(isActive);
+			BeforeTransformSave();
 			ARCHIVE_BUTI(m_vlp_transform);
-			ARCHIVE_BUTI(m_vlp_drawInfo); 
+			AfterTransformSave();
+			ARCHIVE_BUTI(m_vlp_drawInfo);
 			ARCHIVE_BUTI(m_layer);
 		}
 

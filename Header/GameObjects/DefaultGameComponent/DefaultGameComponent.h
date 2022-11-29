@@ -245,19 +245,12 @@ struct Particle2D {
 	std::int32_t controlIndex = 0;
 };
 struct Particle3D {
-	Vector3 position = Vector3();
-	Vector3 axis = Vector3(1, 0, 0);
-
-	Vector4 color = Vector4(1, 1, 1, 1);
-	float size = 5.0f;
-	float angle = 0.0f;
-	float anglePase = 0.0f;
-	Vector3 velocity = Vector3();
-	Vector3 force = Vector3();
-	float accelation = 0;
-	float life = 60;
+	Vector3 position = Vector3(),axis = Vector3(1, 0, 0),color = Vector4(1, 1, 1, 1);
+	float size = 5.0f, angle = 0.0f, anglePase = 0.0f;
+	Vector3 velocity = Vector3(),force = Vector3();
+	float accelation = 0.0f,life = 60;
 	Vector4 colorPase = Vector4();
-	float sizePase = 0;
+	float sizePase = 0.0f;
 	Value_ptr<Transform> m_parentTransform = nullptr,m_targetTransform=nullptr;
 	std::int32_t controlIndex = 0;
 };
@@ -274,6 +267,15 @@ public:
 		return "ImmediateParticleController";
 	}
 	void AddParticle(const Particle3D& arg_particle);
+	void AddParticle(Vector3 arg_position = Vector3(),Vector3 arg_axis = Vector3(1, 0, 0),Vector4 arg_color = Vector4(1, 1, 1, 1),
+		float arg_size = 5.0f,float arg_angle = 0.0f,float arg_anglePase = 0.0f,Vector3 arg_velocity = Vector3(),
+		Vector3 arg_force = Vector3(),float arg_accelation = 0,float arg_life = 60,	Vector4 arg_colorPase = Vector4(),
+		float arg_sizePase = 0,Value_ptr<Transform> arg_parentTransform = nullptr, Value_ptr<Transform> arg_targetTransform = nullptr,
+		std::int32_t arg_controlIndex = 0) 
+	{
+		AddParticle(Particle3D{ arg_position ,arg_axis ,arg_color,arg_size ,arg_angle ,arg_anglePase ,arg_velocity ,arg_force ,
+		arg_accelation ,arg_life ,arg_colorPase ,arg_sizePase ,arg_parentTransform , arg_targetTransform ,arg_controlIndex });
+	}
 	void AddParticle(const Particle3D& arg_particle, Value_ptr<Transform> arg_particleTransform);
 	Value_ptr<GameComponent> Clone()override;
 	void OnRemove()override;
@@ -573,34 +575,6 @@ protected:
 	std::int32_t m_layer = 0;
 	bool isCereal = true, m_isRegisted = false;
 };
-class MeshDrawComponent_Static :public MeshDrawComponent
-{
-public:
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const MaterialTag& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const ModelTag& arg_modelTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag, const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent_Static() {}
-	std::string GetGameComponentName()const override {
-		return "MeshDraw_Static";
-	}
-	void OnUpdate()override;
-	Value_ptr<GameComponent> Clone()override;
-	template<class Archive>
-	void serialize(Archive& archive)
-	{
-		ARCHIVE_BUTI(m_meshTag);
-		ARCHIVE_BUTI(m_modelTag);
-		ARCHIVE_BUTI(m_materialTag);
-		ARCHIVE_BUTI(isActive);
-		BeforeTransformSave();
-		ARCHIVE_BUTI(m_vlp_transform);
-		AfterTransformSave();
-		ARCHIVE_BUTI(m_vlp_drawInfo);
-		ARCHIVE_BUTI(m_layer);
-	}
-protected:
-};
 class TextDrawComponent :public MeshDrawComponent
 {
 public:
@@ -663,12 +637,10 @@ protected:
 
 
 BUTI_REGIST_GAMECOMPONENT(MeshDrawComponent,true)
-BUTI_REGIST_GAMECOMPONENT(MeshDrawComponent_Static,true)
 BUTI_REGIST_GAMECOMPONENT(TextDrawComponent,false)
 
 BUTI_REGIST_GAMECOMPONENT(UIComponent, true)
 
-CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::MeshDrawComponent, ButiEngine::MeshDrawComponent_Static);
 
 BUTI_REGIST_GAMECOMPONENT(SucideComponent,true)
 BUTI_REGIST_GAMECOMPONENT(TransformAnimation,true)
