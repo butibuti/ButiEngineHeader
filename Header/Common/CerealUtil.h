@@ -66,7 +66,14 @@ void InputCereal(T& v, const std::string& arg_fileName)
 	std::ifstream inputFile(GlobalSettings::GetResourceDirectory() + arg_fileName);
 	stream << inputFile.rdbuf();
 	cereal::JSONInputArchive jsonInputARCHIVE_BUTI(stream);
-	jsonInputARCHIVE_BUTI(v);
+	try
+	{
+		jsonInputARCHIVE_BUTI(v);
+	}
+	catch (const ButiException& ex)
+	{
+		std::cout << arg_fileName << "‚Ì“Ç‚Ýž‚Ý’†‚É—áŠO”­¶:" << ex.GetErrorMessage() << std::endl;
+	}
 	stream.clear();
 #else
 
