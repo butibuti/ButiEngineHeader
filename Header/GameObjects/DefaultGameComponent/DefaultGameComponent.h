@@ -16,7 +16,6 @@ enum class TextJustified {
 };
 namespace ButiRendering {
 class Resource_DynamicMesh;
-class ModelAnimation;
 class IModelObject;
 }
 class CameraMan :public  GameComponent {
@@ -563,8 +562,8 @@ public:
 protected:
 	void ShowDrawSettingsUI(Value_ptr< ButiRendering::ObjectDrawData >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
 	void ShowExCBufferUI(Value_ptr<ButiRendering::ObjectDrawData >vlp_arg_drawInfo = nullptr, const std::string& arg_settingsName = "");
-	void BeforeTransformSave();
-	void AfterTransformSave();
+	virtual void BeforeTransformSave();
+	virtual void AfterTransformSave();
 	Value_ptr< ButiRendering::IDrawObject > m_data;
 	virtual void CreateData();
 	MeshTag m_meshTag;

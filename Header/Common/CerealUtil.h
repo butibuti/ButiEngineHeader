@@ -143,7 +143,7 @@ static inline Value_ptr<T> CreateFromCereal(const std::string& arg_filePath) {
 #endif
 		)
 		InputCereal(output, arg_filePath);
-	else {
+	if(!output) {
 		output = make_value<T>();
 	}
 	if constexpr (std::is_base_of_v<IObject, T>) {

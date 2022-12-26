@@ -636,7 +636,7 @@ namespace ButiEngine
 		/// </summary>
 		/// <param name="arg_key">検索タグ</param>
 		/// <returns>モーションのリソース</returns>
-		virtual Value_ptr<ButiRendering::ModelAnimation>GetMotion(const MotionTag& arg_key)=0;
+		virtual Value_weak_ptr<ButiRendering::IResource_Motion>GetMotion(const MotionTag& arg_key)=0;
 		/// <summary>
 		/// コンパイル済みスクリプトの取得
 		/// </summary>

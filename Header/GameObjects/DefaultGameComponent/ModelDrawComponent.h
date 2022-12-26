@@ -3,45 +3,49 @@
 
 namespace ButiEngine {
 namespace ButiRendering {
-class ModelAnimation;
 class IModelObject;
 }
-	class ModelDrawComponent :public MeshDrawComponent
+class ModelDrawComponent :public MeshDrawComponent
+{
+public:
+	ModelDrawComponent(const ModelTag& arg_modelTag, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo, Value_ptr<Transform> arg_vlp_transform = nullptr);
+	ModelDrawComponent() {}
+	std::string GetGameComponentName()const override {
+		return "ModelDraw";
+	}
+
+	virtual Value_ptr<ButiRendering::IModelObject> GetModelData();
+	Value_ptr<GameComponent> Clone()override;
+	Value_ptr<ButiRendering::IBoneObject> GetBone();
+	void OnShowUI()override;
+
+
+	template<class Archive>
+	void serialize(Archive& archive)
 	{
-	public:
-		ModelDrawComponent(const ModelTag& arg_modelTag,  Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo,  Value_ptr<Transform> arg_vlp_transform = nullptr);
-		ModelDrawComponent() {}
-		std::string GetGameComponentName()const override {
-			return "ModelDraw";
-		}
-
-		virtual Value_ptr<ButiRendering::IModelObject> GetModelData();
-		Value_ptr<GameComponent> Clone()override;
-		Value_ptr<ButiRendering::IBoneObject> GetBone();
-		void OnShowUI()override;
-
-
-		template<class Archive>
-		void serialize(Archive& archive)
-		{
-			ARCHIVE_BUTI(m_meshTag);
-			ARCHIVE_BUTI(m_modelTag);
-			ARCHIVE_BUTI(m_materialTag);
-			ARCHIVE_BUTI(isActive);
-			BeforeTransformSave();
-			ARCHIVE_BUTI(m_vlp_transform);
-			AfterTransformSave();
-			ARCHIVE_BUTI(m_vlp_drawInfo);
-			ARCHIVE_BUTI(m_layer);
-		}
+		ARCHIVE_BUTI(m_meshTag);
+		ARCHIVE_BUTI(m_modelTag);
+		ARCHIVE_BUTI(m_materialTag);
+		ARCHIVE_BUTI(isActive);
+		BeforeTransformSave();
+		ARCHIVE_BUTI(m_vlp_transform);
+		ARCHIVE_BUTI(m_list_vlp_boneTransform);
+		AfterTransformSave();
+		ARCHIVE_BUTI(m_vlp_drawInfo);
+		ARCHIVE_BUTI(m_vlp_drawInfo);
+		ARCHIVE_BUTI(m_layer);
+	}
 
 
-	protected:
-		Value_ptr<ButiRendering::IBoneObject> vlp_bone;
-		void CreateData()override;
-		Value_ptr<ButiRendering::IModelObject> vlp_modelData;
-	private:
-	};
+protected:
+	Value_ptr<ButiRendering::IBoneObject> m_vlp_bone;
+	void CreateData()override;
+	void BeforeTransformSave()override;
+	void AfterTransformSave()override;
+	Value_ptr<ButiRendering::IModelObject> m_vlp_modelData;
+	List<Value_ptr<BoneTransform>> m_list_vlp_boneTransform;
+private:
+};
 
 }
 
