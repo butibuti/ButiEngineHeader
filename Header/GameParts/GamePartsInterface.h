@@ -497,6 +497,7 @@ namespace ButiEngine
 		/// スクリプトのソースファイルが更新されていないかチェック
 		/// </summary>
 		virtual void ScriptEditCheck() = 0;
+		virtual void ShaderEditCheck() = 0;
 
 		virtual List<TextureTag> GetTextureTags()const = 0;
 		virtual List<ModelTag> GetModelTags()const = 0;
