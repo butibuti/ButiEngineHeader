@@ -44,6 +44,7 @@ protected:
 	void AfterTransformSave()override;
 	Value_ptr<ButiRendering::IModelObject> m_vlp_modelData;
 	List<Value_ptr<BoneTransform>> m_list_vlp_boneTransform;
+	bool m_isBoneTransformClone=false;
 private:
 };
 
