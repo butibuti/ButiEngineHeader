@@ -18,6 +18,7 @@ public:
 	Value_ptr<GameComponent> Clone()override;
 	Value_ptr<ButiRendering::IBoneObject> GetBone();
 	void OnShowUI()override;
+	void AddTransform()override;
 
 
 	template<class Archive>

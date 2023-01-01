@@ -527,7 +527,7 @@ public:
 	void ReRegist();
 	virtual void UnRegist();
 	Value_ptr< ButiRendering::ObjectDrawData > GetDrawInformation();
-	void AddTransform();
+	virtual void AddTransform();
 	void OnShowUI()override;
 	Value_ptr<Transform> GetTransform();
 	void SetColor(const Vector4& arg_color);

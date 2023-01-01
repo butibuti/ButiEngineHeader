@@ -165,7 +165,7 @@ public:
 	Value_weak_ptr<IApplication> GetApplication();
 	Value_ptr<IResourceContainer> GetResourceContainer();
 	Value_ptr<ButiRendering::GraphicDevice> GetGraphicDevice();
-	Value_ptr<GameObject> Clone();
+	Value_ptr<GameObject> Clone(const bool arg_isTransformSame=false);
 
 	template<class Archive>
 	void serialize(Archive& archive)
