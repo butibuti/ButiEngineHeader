@@ -85,8 +85,6 @@ protected:
 	std::int32_t m_direction = 1;
 	float m_t = 0;
 	Value_ptr<Transform> m_vlp_targetTransform;
-	Quat m_initRotate;
-	Quat m_targetRotate;
 	Value_ptr<Transform> m_vlp_initTransform;
 	float m_speed = 0.002f;
 	Easing::EasingType m_easeType = Easing::EasingType::EaseIn;
