@@ -12,8 +12,6 @@ public:
 	void Update();
 	void RegistNewGameObject();
 	void RegistGameObject();
-	void Initialize()override;
-	void PreInitialize()override;
 	void ShowGUI();
 	void Release();
 	void Initialize_cereal();
