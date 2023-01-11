@@ -16,6 +16,7 @@ const char* GetResourcePtr(const std::string& arg_resourceName);
 std::uint64_t GetResourceSize(const std::string& arg_resourceName);
 void GetAssetLoadData(GameAssetData::AssetLoadData& arg_ref_loadData);
 void GetScriptLoadData(GameAssetData::AssetLoadData& arg_ref_loadData);
+void OutputFile(std::stringstream& arg_stream, const std::string& arg_path);
 void End();
 }
 }

@@ -116,6 +116,14 @@ void OutputCereal(const T& v, const std::string& arg_fileName)
 	outputBinCerealFile.close();
 #else
 #ifdef RESOURCE_SYSTEM_H
+	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
+	std::stringstream stream;
+	{
+		cereal::PortableBinaryOutputArchive binOutARCHIVE_BUTI(stream);
+		binOutARCHIVE_BUTI(v);
+	}
+	ResourceSystem::OutputFile(stream, arg_fileName);
+	stream.clear();
 #else
 
 	_mkdir((GlobalSettings::GetResourceDirectory() + StringHelper::GetDirectory(arg_fileName)).c_str());
