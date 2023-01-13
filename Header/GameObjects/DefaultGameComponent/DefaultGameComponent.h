@@ -458,11 +458,14 @@ public:
 	SucideComponent(const float arg_count);
 	SucideComponent();
 	void OnUpdate()override;
+	void Start()override;
 	std::string GetGameComponentName()const override {
 		return "SucideComponent";
 	}
 	Value_ptr<GameComponent> Clone()override;
 	void OnShowUI()override;
+	float GetCount() {return m_count; }
+	void SetCount(const float arg_count);
 	template<class Archive>
 	void serialize(Archive& archive)
 	{
