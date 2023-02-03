@@ -6,8 +6,6 @@ namespace ButiEngine {
 class GameComponent :public IObject
 {
 public:
-	void Initialize()override {}
-	void PreInitialize()override {}
 	void Update();
 	virtual void Start() {}
 	virtual void End() {}
@@ -52,7 +50,7 @@ protected:
 	Value_ptr<ButiRendering::ICamera> GetCamera();
 	Value_ptr<ButiRendering::ICamera> GetCamera(const std::uint32_t arg_camNum);
 	Value_ptr<ButiRendering::ICamera> GetCamera(const std::string& arg_camName);
-	Value_weak_ptr<GameObjectManager> GetManager();
+	Value_weak_ptr<IGameObjectManager> GetManager();
 	Value_weak_ptr<GameObject> gameObject;
 
 	bool isActive = true;
@@ -60,12 +58,23 @@ protected:
 private:
 };
 
+template<typename T>
+Value_ptr<GameComponent> GenerateGameComponent() {
+	auto component = ObjectFactory::Create<T>();
+	return component;
+}
+
+using GameComponentGenerateFunctionType= Value_ptr<GameComponent>(*)();
+extern void RegistGenerateGameComponentFunction(GameComponentGenerateFunctionType arg_function,const std::string& arg_name);
+
+extern void RegistGameComponentOverrideOnUpdate(const std::string& arg_componentName,const bool isOverride);
+
+template<typename T, bool IsUpdate>
 struct GameComponentRegister {
-public:
-	GameComponentRegister(Value_ptr<GameComponent> arg_gameComponent,const bool isOverrideOnUpdate);
+	GameComponentRegister(const std::string& arg_name) {
+		RegistGenerateGameComponentFunction(GenerateGameComponent<T>, arg_name);
+		RegistGameComponentOverrideOnUpdate(arg_name, IsUpdate);
+	}
 };
-
-void RegistGameComponentOverrideOnUpdate(const std::string& arg_componentName,const bool isOverride);
-
 }
 #endif

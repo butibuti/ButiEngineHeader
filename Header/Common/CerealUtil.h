@@ -29,7 +29,7 @@ CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::IValuePtrRestoreObject,ButiEngi
 	CEREAL_REGISTER_TYPE(ButiEngine:: T);\
 	CEREAL_REGISTER_POLYMORPHIC_RELATION(ButiEngine::GameComponent, ButiEngine:: T);\
 namespace ComponentRegister{ namespace T {\
-	static const ButiEngine::GameComponentRegister  componentregister = ButiEngine::GameComponentRegister(ButiEngine::ObjectFactory::Create<ButiEngine:: T>(),IsOverrideOnUpdate);\
+	static const ButiEngine::GameComponentRegister<ButiEngine:: T,IsOverrideOnUpdate>  componentregister = ButiEngine::GameComponentRegister<ButiEngine:: T,IsOverrideOnUpdate>(#T);\
 	\
 }}
 

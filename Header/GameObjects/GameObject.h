@@ -14,7 +14,7 @@ class PhysicsObject;
 namespace ButiEngine {
 using GameObjectTag = ID<GameObject>;
 class GameComponent;
-class GameObjectManager;
+class IGameObjectManager;
 namespace ButiRendering {
 class GraphicDevice;
 }
@@ -33,7 +33,7 @@ public:
 
 	void SetActive(const bool arg_isActive);
 
-	void SetGameObjectManager(Value_weak_ptr<GameObjectManager> arg_vwp_gameObjectManager);
+	void SetGameObjectManager(Value_weak_ptr<IGameObjectManager> arg_vwp_gameObjectManager);
 	bool GetActive();
 
 	void SetIsRemove(const bool arg_isRemove);
@@ -124,7 +124,7 @@ public:
 	void AddCollisionEnterReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
 	void AddCollisionLeaveReaction(std::function< void(ButiBullet::ContactData&)> arg_reactionFunc);
 
-	Value_weak_ptr<GameObjectManager> GetGameObjectManager();
+	Value_weak_ptr<IGameObjectManager> GetGameObjectManager();
 	Value_weak_ptr<IApplication> GetApplication();
 	Value_ptr<IResourceContainer> GetResourceContainer();
 	Value_ptr<ButiRendering::GraphicDevice> GetGraphicDevice();
@@ -165,7 +165,7 @@ protected:
 
 	std::string m_objectName;
 
-	Value_weak_ptr<GameObjectManager> m_vwp_gameObjManager;
+	Value_weak_ptr<IGameObjectManager> m_vwp_gameObjManager;
 	std::unordered_map<GameObjectTag, std::uint32_t> m_map_gameObjectTags;
 	List<std::function< void(ButiBullet::ContactData&)> > m_list_physicsCollisionReactionStay, m_list_physicsCollisionReactionEnter, m_list_physicsCollisionReactionLeave;
 	List<ButiBullet::ContactData> m_list_contactDataStay, m_list_contactDataEnter, m_list_contactDataLeave;

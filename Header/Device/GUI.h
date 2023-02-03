@@ -647,13 +647,13 @@ enum  GUIState {
 struct GUIPayload
 {
 	void* Data;
-	int             DataSize; 
-	std::uint32_t         SourceId;      
-	std::uint32_t         SourceParentId;
-	int             DataFrameCount;   
-	char            DataType[32 + 1]; 
-	bool            Preview;          
-	bool            Delivery;         
+	std::int32_t DataSize; 
+	std::uint32_t SourceId;      
+	std::uint32_t  SourceParentId;
+	std::int32_t  DataFrameCount;
+	char DataType[32 + 1]; 
+	bool Preview;          
+	bool Delivery;         
 
 	GUIPayload() { Clear(); }
 	void Clear() { SourceId = SourceParentId = 0; Data = NULL; DataSize = 0; memset(DataType, 0, sizeof(DataType)); DataFrameCount = -1; Preview = Delivery = false; }
@@ -1231,22 +1231,25 @@ void EndDragDropTarget();
 const GUIPayload* GetDragDropPayload();
 const GUIPayload* GetAcceptDragDropPayload(const std::string& arg_type,GuiDragDropFlags arg_flag=GuiDragDropFlags_None);
 
-bool DragDropTag(const std::string& arg_label, const std::string& arg_currentName, MeshTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,SoundTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,MotionTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,MaterialTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ModelTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ShaderTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,VertexShaderTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,PixelShaderTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,GeometryShaderTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,FontTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,TextureTag& arg_ref_tag);
-bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ScriptTag& arg_ref_tag);
+bool DragDropObject(const std::string& arg_label, const std::string& arg_currentName, const std::string& arg_id, Value_ptr<IObject>& arg_ref_obj,const Vector2 arg_size=Vector2());
+bool DragDropString(const std::string& arg_label, const std::string& arg_currentName,const std::string& arg_id, std::string& arg_ref_output, const Vector2 arg_size = Vector2());
+bool DragDropTag(const std::string& arg_label, const std::string& arg_currentName, MeshTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,SoundTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,MotionTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,MaterialTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ModelTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ShaderTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,VertexShaderTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,PixelShaderTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,GeometryShaderTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,FontTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,TextureTag& arg_ref_tag,const Vector2 arg_size=Vector2());
+bool DragDropTag(const std::string& arg_label,const std::string& arg_currentName,ScriptTag& arg_ref_tag,const Vector2 arg_size=Vector2());
 
 bool IsMouseClicked(GUIMouseButton arg_button);
 bool IsMouseDoubleClicked(GUIMouseButton arg_button);
 bool IsMouseDown(GUIMouseButton arg_button);
+bool IsMouseDragging(GUIMouseButton arg_button);
 
 GUIWindowReaction DisplayTexture(const std::string& arg_windowName,Value_ptr<ButiRendering::IResource_Texture> arg_vlp_texture,GuiWindowFlags arg_winFlag);
 }

@@ -28,7 +28,7 @@ class IScene;
 class IApplication;
 class SceneInformation;
 class GameObject;
-class GameObjectManager;
+class IGameObjectManager;
 class MaterialEditor;
 class ShaderEditor;
 class TextureEditor;
@@ -914,7 +914,7 @@ public:
 	/// <summary>
 	/// GameObjectManagerの取得
 	/// </summary>
-	virtual Value_ptr<GameObjectManager> GetGameObjectManager() = 0;
+	virtual Value_ptr<IGameObjectManager> GetGameObjectManager() = 0;
 	/// <summary>
 	/// 物理シュミレーション管理クラスへのアクセス
 	/// </summary>

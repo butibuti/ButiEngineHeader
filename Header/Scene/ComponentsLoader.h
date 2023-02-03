@@ -2,8 +2,6 @@
 
 #include "../GameObjects/GameComponent.h"
 namespace ButiEngine {
-using makeComponentFunction = Value_ptr<GameComponent>(*)();
-
 class ComponentsLoader :public IObject {
 public:
 
@@ -11,27 +9,13 @@ public:
 
 	static  Value_ptr< ComponentsLoader> GetInstance();
 	void Release();
-	void AddGameComponent(Value_ptr<GameComponent> arg_gamecomponent);
-
-	void RemoveComponent(const std::string& arg_name);
+	void AddGameComponentGenerateFunctionType(GameComponentGenerateFunctionType arg_function,const std::string&arg_name);
 
 	Value_ptr<GameComponent> ShowAddGameComponentUI();
 
-	template <typename T>
-	void AddGameComponent() {
-		AddGameComponent(ObjectFactory::Create<T>());
-	}
-
-
-	template <typename T>
-	void RemoveComponent() {
-		RemoveComponent(ObjectFactory::Create<T>()->GetGameComponentName());
-	}
-
-
 private:
-	std::map<std::string, Value_ptr<GameComponent>> map_addGameComponents;
-	Value_ptr<GameComponent> vlp_currentSelectObj;
+	std::map<std::string, GameComponentGenerateFunctionType> m_map_gameComponentGenerateFunctions;
+	std::int32_t m_index=-1;
 	static Value_ptr< ComponentsLoader> instance;
 };
 }
