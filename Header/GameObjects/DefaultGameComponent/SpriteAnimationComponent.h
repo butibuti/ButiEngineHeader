@@ -26,18 +26,16 @@ public:
 	void serialize(Archive& archive)
 	{
 		ARCHIVE_BUTI(isActive);
-		ARCHIVE_BUTI(horizontalNum);
-		ARCHIVE_BUTI(verticalNum);
-		ARCHIVE_BUTI(splitScale);
+		ARCHIVE_BUTI(m_horizontalNum);
+		ARCHIVE_BUTI(m_verticalNum);
+		ARCHIVE_BUTI(m_splitScale);
 	}
 	Value_ptr<GameComponent> Clone()override;
 private:
 	void UpdateBuffer();
-	Vector2 splitScale;
-	std::int32_t horizontalSplitScale;
-	std::int32_t verticalSplitScale;
-	std::int32_t horizontalNum;
-	std::int32_t verticalNum;
+	void SearchMeshDraw();
+	Vector2 m_splitScale;
+	std::int32_t m_horizontalSplitScale,m_verticalSplitScale,m_horizontalNum,m_verticalNum,m_meshDrawIndex=0;
 	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> vlp_param;
 };
 }
