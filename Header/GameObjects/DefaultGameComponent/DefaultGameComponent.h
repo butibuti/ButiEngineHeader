@@ -510,9 +510,9 @@ public:
 	MeshDrawComponent(const MeshTag& arg_meshTag, const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr< ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent(const ModelTag& arg_modelTag, const std::int32_t arg_layer,Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
 	MeshDrawComponent(const MeshTag& arg_meshTag, const ModelTag& arg_modelTag,const List< MaterialTag>& arg_materialTag, const std::int32_t arg_layer, Value_ptr<ButiRendering::ObjectDrawData >arg_vlp_drawInfo = nullptr, Value_ptr<Transform> arg_vlp_transform = nullptr);
-	MeshDrawComponent() {}
+	MeshDrawComponent() { m_meshTag = MeshTag("Cube"); }
 	std::string GetGameComponentName()const override {
-		return "MeshDraw";
+		return "MeshDrawComponent";
 	}
 	void OnUpdate()override;
 	void OnSet()override;

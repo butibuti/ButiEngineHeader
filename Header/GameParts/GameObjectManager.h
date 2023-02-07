@@ -18,7 +18,8 @@ public:
 	virtual Value_weak_ptr<GameObject> AddObject(Value_ptr<Transform> arg_transform, std::string arg_objectName = "GameObject")=0;
 	virtual Value_weak_ptr<GameObject> AddObject(Value_ptr<GameObject> arg_gameObject) = 0;
 	virtual void ObjectUpdate(Value_ptr<GameObject> arg_gameObject,const bool arg_isTransformKeep=false)=0;
-	virtual void ChangeObjectIndex(Value_ptr<GameObject> arg_gameObject, const std::uint32_t arg_index)=0;
+	virtual void ChangeObjectIndex(Value_ptr<GameObject> arg_gameObject, const std::uint32_t arg_index) = 0;
+	virtual void RemoveObject(Value_ptr<GameObject> arg_gameObject)=0;
 	virtual Value_weak_ptr<GameObject>AddObjectFromCereal(std::string filePath, Value_ptr<Transform> arg_transform = nullptr)=0;
 	virtual Value_weak_ptr<GameObject>AddObjectFromCereal_Insert(std::string filePath, Value_ptr<Transform> arg_transform = nullptr)=0;
 	virtual Value_ptr<Transform> GetCerealTransform(std::string filePath)=0;
