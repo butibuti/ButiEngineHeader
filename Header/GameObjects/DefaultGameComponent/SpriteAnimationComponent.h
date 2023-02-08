@@ -29,6 +29,7 @@ public:
 		ARCHIVE_BUTI(m_horizontalNum);
 		ARCHIVE_BUTI(m_verticalNum);
 		ARCHIVE_BUTI(m_splitScale);
+		ARCHIVE_BUTI(m_meshDrawIndex);
 	}
 	Value_ptr<GameComponent> Clone()override;
 private:
@@ -36,7 +37,7 @@ private:
 	void SearchMeshDraw();
 	Vector2 m_splitScale;
 	std::int32_t m_horizontalSplitScale,m_verticalSplitScale,m_horizontalNum,m_verticalNum,m_meshDrawIndex=0;
-	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> vlp_param;
+	Value_ptr<ButiRendering::CBuffer<ButiRendering::ObjectInformation>> m_vlp_param;
 };
 }
 
